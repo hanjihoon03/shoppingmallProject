@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="en" data-bs-theme="auto">
-  <head><script src="/js/color-modes.js"></script>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <script th:src="@{/js/color-modes.js}"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +12,7 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
 
-    
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
@@ -96,7 +97,7 @@
       }
     </style>
 
-    
+
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -160,15 +161,15 @@
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li style="padding-right: 50px;"><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-        <li style="padding-right: 50px;"><a href="#" class="nav-link px-2">Features</a></li>
-        <li style="padding-right: 50px;"><a href="#" class="nav-link px-2">Pricing</a></li>
-        <li style="padding-right: 50px;"><a href="#" class="nav-link px-2">FAQs</a></li>
-        <li style="padding-right: 50px;"><a href="#" class="nav-link px-2">About</a></li>
+        <li style="padding-right: 50px;"><a href="clothes" class="nav-link px-2">clothes</a></li>
+        <li style="padding-right: 50px;"><a href="book" class="nav-link px-2">book</a></li>
+        <li style="padding-right: 50px;"><a href="electronics" class="nav-link px-2">electronics</a></li>
+        <li style="padding-right: 50px;"><a href="food" class="nav-link px-2">food</a></li>
       </ul>
 
       <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        <a href="/login" class="btn btn-outline-primary me-2">Login</a>
+        <a href="/sign-up" class="btn btn-primary">Sign-up</a>
       </div>
     </header>
 //
