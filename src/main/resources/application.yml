@@ -21,3 +21,6 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql: trace
+
+file:
+  dir: /Users/hanjihoon/Desktop/devel/storefile/

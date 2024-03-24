@@ -3,10 +3,15 @@ package shoppingmall.project.domain.item;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import shoppingmall.project.domain.UploadFile;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Book extends Item {
     private String isbn;
@@ -17,4 +22,5 @@ public class Book extends Item {
         this.isbn = isbn;
         this.author = author;
     }
+
 }

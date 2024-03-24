@@ -1,10 +1,13 @@
 package shoppingmall.project.domain.item;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shoppingmall.project.domain.Market;
+import shoppingmall.project.domain.UploadFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,9 +23,16 @@ public class Item {
 
     private int price;
     private int quantity;
+    @Column(name = "dtype", insertable = false, updatable = false)
+    private String dtype;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "market_id")
     private Market market;
+
+    @OneToMany(mappedBy = "item")
+    private List<UploadFile> uploadFiles = new ArrayList<>();
 
     public Item(String name, int price, int quantity) {
         this.name = name;

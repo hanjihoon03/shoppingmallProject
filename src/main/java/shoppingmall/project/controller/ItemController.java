@@ -1,6 +1,7 @@
 package shoppingmall.project.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +12,21 @@ import shoppingmall.project.form.itemform.ElectronicsForm;
 import shoppingmall.project.form.itemform.FoodForm;
 import shoppingmall.project.service.ItemService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 @RequiredArgsConstructor
 public class ItemController {
 
     private final ItemService itemService;
+
+    @Value("${file.dir}")
+    private String fileDir;
 
     @GetMapping("book")
     public String createBook(Model model) {
@@ -24,7 +35,7 @@ public class ItemController {
     }
 
     @PostMapping("book")
-    public String saveBook(BookForm bookForm) {
+    public String saveBook(BookForm bookForm) throws IOException {
         itemService.saveBook(bookForm);
         return "redirect:";
     }
@@ -36,7 +47,7 @@ public class ItemController {
     }
 
     @PostMapping("clothes")
-    public String saveClothes(ClothesForm clothesForm) {
+    public String saveClothes(ClothesForm clothesForm) throws IOException {
         itemService.saveClothes(clothesForm);
         return "redirect:";
     }
@@ -48,7 +59,7 @@ public class ItemController {
     }
 
     @PostMapping("food")
-    public String saveFood(FoodForm foodForm) {
+    public String saveFood(FoodForm foodForm) throws IOException {
         itemService.saveFood(foodForm);
         return "redirect:";
     }
@@ -60,9 +71,8 @@ public class ItemController {
     }
 
     @PostMapping("electronics")
-    public String saveElectronics(ElectronicsForm electronicsForm) {
+    public String saveElectronics(ElectronicsForm electronicsForm) throws IOException {
         itemService.saveElectronics(electronicsForm);
         return "redirect:";
     }
-
 }

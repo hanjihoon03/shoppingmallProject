@@ -2,7 +2,12 @@ package shoppingmall.project.domain.item;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 @Entity
+@AllArgsConstructor
+@Getter
 public class Clothes extends Item {
     @Embedded
     private ClothesType clothesType;
