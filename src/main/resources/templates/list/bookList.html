@@ -7,18 +7,26 @@
     <div>
         <table class="table table-striped">
             <thead> <tr>
-                <th>#</th> <th>상품명</th> <th>가격</th> <th>재고수량</th> <th></th>
+                <th>#</th> <th>상품</th> <th>상품명</th> <th>가격</th> <th>재고수량</th><th>저자</th><th>isbn</th> <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${items}">
-                <td th:text="${item.id}"></td>
-                <td th:text="${item.name}"></td>
-                <td th:text="${item.price}"></td>
-                <td th:text="${item.stockQuantity}"></td>
+            <tr th:each="bookAndFileDto, status : ${allBook}">
+                <!-- 첨부 파일 링크 -->
+                <td th:text="${status.index + 1}"></td>
                 <td>
-                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}" class="btn btn-primary" role="button">수정</a>
-                </td> </tr>
+                    <a th:href="@{/attach/{id}(id=${bookAndFileDto.id})}">
+                        <img th:if="${bookAndFileDto.uploadFileName != null}"
+                             th:src="@{/images/{filename}(filename=${bookAndFileDto.storeFileName})}"
+                             width="50" height="50"/>
+                    </a>
+                </td>
+                <td th:text="${bookAndFileDto.name}"></td>
+                <td th:text="${bookAndFileDto.price}"></td>
+                <td th:text="${bookAndFileDto.quantity}"></td>
+                <td th:text="${bookAndFileDto.author}"></td>
+                <td th:text="${bookAndFileDto.isbn}"></td>
+            </tr>
             </tbody>
         </table>
     </div>

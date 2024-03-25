@@ -4,9 +4,11 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Clothes extends Item {
     @Embedded

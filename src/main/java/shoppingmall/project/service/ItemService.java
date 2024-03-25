@@ -6,7 +6,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import shoppingmall.project.domain.UploadFile;
+import shoppingmall.project.domain.dto.BookAndFileDto;
+import shoppingmall.project.domain.dto.ClothesAndFileDto;
+import shoppingmall.project.domain.dto.ElectronicsAndFileDto;
+import shoppingmall.project.domain.dto.FoodAndFileDto;
 import shoppingmall.project.domain.item.*;
+
 import shoppingmall.project.form.itemform.BookForm;
 import shoppingmall.project.form.itemform.ClothesForm;
 import shoppingmall.project.form.itemform.ElectronicsForm;
@@ -19,7 +24,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -91,11 +95,21 @@ public class ItemService {
         itemRepository.save(electronics);
     }
 
+    public List<BookAndFileDto> findAllBook() {
+        return itemRepository.findBookWithUploadFile();
+    }
+    public List<ClothesAndFileDto> findAllClothes() {
+        return itemRepository.findClothesWithUploadFile();
+    }
+    public List<ElectronicsAndFileDto> findAllElectronics() {
+        return itemRepository.findElectronicsWithUploadFile();
+    }
+    public List<FoodAndFileDto> findAllFood() {
+        return itemRepository.findFoodWithUploadFile();
+    }
 
 
-
-
-    private String getFullPath(String filename) {
+    public String getFullPath(String filename) {
         return fileDir + filename;
     }
 

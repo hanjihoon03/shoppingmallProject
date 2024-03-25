@@ -1,6 +1,7 @@
 package shoppingmall.project.domain.item;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

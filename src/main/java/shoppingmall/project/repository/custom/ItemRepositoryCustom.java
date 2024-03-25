@@ -1,10 +1,18 @@
 package shoppingmall.project.repository.custom;
 
-import org.springframework.stereotype.Repository;
-import shoppingmall.project.domain.item.Book;
+
+import shoppingmall.project.domain.dto.BookAndFileDto;
+import shoppingmall.project.domain.dto.ClothesAndFileDto;
+import shoppingmall.project.domain.dto.ElectronicsAndFileDto;
+import shoppingmall.project.domain.dto.FoodAndFileDto;
 
 import java.util.List;
 
 public interface ItemRepositoryCustom{
-    List<Book> findBook();
+    List<BookAndFileDto> findBookWithUploadFile();
+    List<ClothesAndFileDto> findClothesWithUploadFile();
+    List<ElectronicsAndFileDto> findElectronicsWithUploadFile();
+    List<FoodAndFileDto> findFoodWithUploadFile();
+
+
 }
