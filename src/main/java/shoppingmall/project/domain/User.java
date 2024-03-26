@@ -1,6 +1,7 @@
 package shoppingmall.project.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,21 @@ public class User {
     @Column(name = "users_id")
     private Long id;
 
+    @NotEmpty
+    private String loginId;
+    @NotEmpty
     private String name;
-    private int age;
+
+    @NotEmpty
+    private String age;
+
+
+    @Column(nullable = false, unique = true)
+    @NotEmpty
+    private String email;
+
+    @NotEmpty
+    private String password;
 
     @Embedded
     private Address address;
@@ -32,9 +46,12 @@ public class User {
     @JoinColumn(name = "membership_id")
     private Membership membership;
 
-    public User(String name, int age, Address address) {
+    public User(String loginId, String name, String age, String email, String password, Address address) {
+        this.loginId = loginId;
         this.name = name;
         this.age = age;
+        this.email = email;
+        this.password = password;
         this.address = address;
     }
 }

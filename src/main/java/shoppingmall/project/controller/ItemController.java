@@ -91,7 +91,7 @@ public class ItemController {
         return "redirect:";
     }
 
-    @GetMapping("/listBook")
+    @GetMapping("/bookList")
     public String bookList(Model model) {
         List<BookAndFileDto> allBook = itemService.findAllBook();
 
@@ -99,7 +99,7 @@ public class ItemController {
 
         return "/list/bookList";
     }
-    @GetMapping("/listClothes")
+    @GetMapping("/clothesList")
     public String clothesList(Model model) {
         List<ClothesAndFileDto> allClothes = itemService.findAllClothes();
 
@@ -107,7 +107,7 @@ public class ItemController {
 
         return "/list/clothesList";
     }
-    @GetMapping("/listElectronics")
+    @GetMapping("/electronicsList")
     public String electronicsList(Model model) {
         List<ElectronicsAndFileDto> allElectronics = itemService.findAllElectronics();
 
@@ -115,7 +115,7 @@ public class ItemController {
 
         return "/list/electronicsList";
     }
-    @GetMapping("/listFood")
+    @GetMapping("/foodList")
     public String foodList(Model model) {
         List<FoodAndFileDto> allFood = itemService.findAllFood();
 

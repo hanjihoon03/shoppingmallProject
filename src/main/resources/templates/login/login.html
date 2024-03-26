@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="auto" >
+<html xmlns:th="http://www.thymeleaf.org" data-bs-theme="auto" >
   <head><script src="/js/color-modes.js"></script>
 
     <meta charset="utf-8">
@@ -154,17 +154,21 @@
 
     
 <main class="form-signin w-100 m-auto">
-  <form>
+  <form th:object="${loginForm}" method="post">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-    <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
+    <div>
+      <label for="loginId">로그인 ID</label>
+      <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
+             th:errorclass="field-error">
+      <div class="field-error" th:errors="*{loginId}" />
+    </div> <div>
+    <label for="password">비밀번호</label>
+    <input type="password" id="password" th:field="*{password}"
+           class="form-control"
+           th:errorclass="field-error">
+    <div class="field-error" th:errors="*{password}" />
+  </div>
 
     <div class="form-check text-start my-3">
       <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">

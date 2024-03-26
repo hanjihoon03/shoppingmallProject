@@ -27,9 +27,8 @@ public class Item {
     private String dtype;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "market_id")
-    private Market market;
+    @OneToMany(mappedBy = "item")
+    private List<Market> markets = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
     private List<UploadFile> uploadFiles = new ArrayList<>();

@@ -26,6 +26,13 @@
                 <td th:text="${bookAndFileDto.quantity}"></td>
                 <td th:text="${bookAndFileDto.author}"></td>
                 <td th:text="${bookAndFileDto.isbn}"></td>
+                <td>
+        <form th:action="@{/buy}" method="post">
+            <button class="btn btn-dark btn-lg" type="submit">
+                구매
+            </button>
+        </form>
+                </td>
             </tr>
             </tbody>
         </table>

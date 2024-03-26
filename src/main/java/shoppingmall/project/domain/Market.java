@@ -25,6 +25,7 @@ public class Market {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    @OneToMany(mappedBy = "market")
-    private List<Item> items = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
 }
