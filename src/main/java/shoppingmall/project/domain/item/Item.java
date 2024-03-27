@@ -27,7 +27,7 @@ public class Item {
     private String dtype;
 
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "items")
     private List<Market> markets = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")

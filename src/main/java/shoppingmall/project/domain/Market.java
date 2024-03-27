@@ -27,5 +27,15 @@ public class Market {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
-    private Item item;
+    private Item items;
+
+    public Market() {
+    }
+
+    public Market(int orderQuantity, User user, Delivery delivery, Item items) {
+        this.orderQuantity = orderQuantity;
+        this.user = user;
+        this.delivery = delivery;
+        this.items = items;
+    }
 }

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div>
+        <table class="table table-striped">
+            <thead> <tr>
+                <th>장바구니</th> <th>상품</th> <th>상품명</th> <th>가격</th> <th>수량</th> <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Clothes -->
+            <div th:if="${not #lists.isEmpty(allClothes)}">
+                <tr th:each="clothesAndFileDto, status : ${allClothes}">
+                    <th:block th:if="${#lists.contains(marketItemIds, clothesAndFileDto.id)}">
+                        <!-- 첨부 파일 링크 -->
+                        <td th:text="${status.index + 1}"></td>
+                        <td>
+                            <a th:href="@{/attach/{id}(id=${clothesAndFileDto.id})}">
+                                <img th:if="${clothesAndFileDto.uploadFileName != null}"
+                                     th:src="@{/images/{filename}(filename=${clothesAndFileDto.storeFileName})}"
+                                     width="50" height="50"/>
+                            </a>
+                        </td>
+                        <td th:text="${clothesAndFileDto.name}"></td>
+                        <td th:text="${clothesAndFileDto.price}"></td>
+                        <td th:text="${clothesAndFileDto.quantity}"></td>
+                    </th:block>
+                </tr>
+            </div>
+
+            <!-- Book -->
+            <div th:if="${not #lists.isEmpty(allBook)}">
+                <tr th:each="bookAndFileDto, status : ${allBook}">
+                    <th:block th:if="${#lists.contains(marketItemIds, bookAndFileDto.id)}">
+                        <!-- 첨부 파일 링크 -->
+                        <td th:text="${status.index + 1}"></td>
+                        <td>
+                            <a th:href="@{/attach/{id}(id=${bookAndFileDto.id})}">
+                                <img th:if="${bookAndFileDto.uploadFileName != null}"
+                                     th:src="@{/images/{filename}(filename=${bookAndFileDto.storeFileName})}"
+                                     width="50" height="50"/>
+                            </a>
+                        </td>
+                        <td th:text="${bookAndFileDto.name}"></td>
+                        <td th:text="${bookAndFileDto.price}"></td>
+                        <td th:text="${bookAndFileDto.quantity}"></td>
+                    </th:block>
+                </tr>
+            </div>
+
+            <!-- Electronics -->
+            <div th:if="${not #lists.isEmpty(allElectronics)}">
+                <tr th:each="electronicsAndFileDto, status : ${allElectronics}">
+                    <th:block th:if="${#lists.contains(marketItemIds, electronicsAndFileDto.id)}">
+                        <!-- 첨부 파일 링크 -->
+                        <td th:text="${status.index + 1}"></td>
+                        <td>
+                            <a th:href="@{/attach/{id}(id=${electronicsAndFileDto.id})}">
+                                <img th:if="${electronicsAndFileDto.uploadFileName != null}"
+                                     th:src="@{/images/{filename}(filename=${electronicsAndFileDto.storeFileName})}"
+                                     width="50" height="50"/>
+                            </a>
+                        </td>
+                        <td th:text="${electronicsAndFileDto.name}"></td>
+                        <td th:text="${electronicsAndFileDto.price}"></td>
+                        <td th:text="${electronicsAndFileDto.quantity}"></td>
+                    </th:block>
+                </tr>
+            </div>
+
+            <!-- Food -->
+            <div th:if="${not #lists.isEmpty(allFood)}">
+                <tr th:each="foodAndFileDto, status : ${allFood}">
+                    <th:block th:if="${#lists.contains(marketItemIds, foodAndFileDto.id)}">
+                        <!-- 첨부 파일 링크 -->
+                        <td th:text="${status.index + 1}"></td>
+                        <td>
+                            <a th:href="@{/attach/{id}(id=${foodAndFileDto.id})}">
+                                <img th:if="${foodAndFileDto.uploadFileName != null}"
+                                     th:src="@{/images/{filename}(filename=${foodAndFileDto.storeFileName})}"
+                                     width="50" height="50"/>
+                            </a>
+                        </td>
+                        <td th:text="${foodAndFileDto.name}"></td>
+                        <td th:text="${foodAndFileDto.price}"></td>
+                        <td th:text="${foodAndFileDto.quantity}"></td>
+                    </th:block>
+                </tr>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="buy-button-container">
+        <form th:action="@{/buy}" method="post">
+            <button class="btn btn-dark btn-lg" type="submit">
+                구매
+            </button>
+        </form>
+    </div>
+
+
+    <div th:replace="fragments/footer :: footer"/>
+</div> <!-- /container -->
+</body>
+</html>

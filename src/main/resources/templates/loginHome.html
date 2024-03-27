@@ -19,6 +19,12 @@
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+      .fixed-cart-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -116,40 +122,6 @@
       </symbol>
     </svg>
 
-    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-      <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-              id="bd-theme"
-              type="button"
-              aria-expanded="false"
-              data-bs-toggle="dropdown"
-              aria-label="Toggle theme (auto)">
-        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-            <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-            Light
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-            <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-            Dark
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-            <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#circle-half"></use></svg>
-            Auto
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-      </ul>
-    </div>
 
 
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -165,11 +137,6 @@
         <li style="padding-right: 50px;"><a href="book" class="nav-link px-2">book</a></li>
         <li style="padding-right: 50px;"><a href="electronics" class="nav-link px-2">electronics</a></li>
         <li style="padding-right: 50px;"><a href="food" class="nav-link px-2">food</a></li>
-      </ul>
-
-
-
-
       <div class="col-md-3 text-end">
         <div class="d-flex align-items-center">
           <h3 class="mb-3 me-3" th:text="|${user.loginId} 님|">로그인 사용자 이름</h3>
@@ -180,6 +147,11 @@
           </form>
         </div>
       </div>
+      </ul>
+
+
+
+
     </header>
 
 <main>
@@ -214,6 +186,8 @@
       </div>
     </div>
   </section>
+
+  <a href="/cart" class="btn btn-primary fixed-cart-button">장바구니</a>
 
 
 </main>

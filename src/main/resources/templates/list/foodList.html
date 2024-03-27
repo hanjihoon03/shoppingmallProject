@@ -25,6 +25,15 @@
                 <td th:text="${foodAndFileDto.price}"></td>
                 <td th:text="${foodAndFileDto.quantity}"></td>
                 <td th:text="${foodAndFileDto.brand}"></td>
+                <td>
+                    <form th:action="@{/buy}" method="post">
+                        <input type="hidden" name="itemId" th:value="${foodAndFileDto.id}">
+                        <input type="number" name="quantity" value="1" min="1" required>
+                        <button class="btn btn-dark btn-lg" type="submit">
+                            장바구니 추가
+                        </button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

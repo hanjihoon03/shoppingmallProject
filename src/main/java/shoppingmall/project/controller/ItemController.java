@@ -1,5 +1,7 @@
 package shoppingmall.project.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,10 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import shoppingmall.project.domain.dto.BookAndFileDto;
 import shoppingmall.project.domain.dto.ClothesAndFileDto;
 import shoppingmall.project.domain.dto.ElectronicsAndFileDto;
@@ -24,6 +24,7 @@ import shoppingmall.project.form.itemform.ClothesForm;
 import shoppingmall.project.form.itemform.ElectronicsForm;
 import shoppingmall.project.form.itemform.FoodForm;
 import shoppingmall.project.service.ItemService;
+import shoppingmall.project.service.MarketService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -39,6 +40,7 @@ import java.util.stream.Collectors;
 public class ItemController {
 
     private final ItemService itemService;
+    private final MarketService marketService;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -122,6 +124,17 @@ public class ItemController {
         model.addAttribute("allFood", allFood);
 
         return "/list/foodList";
+    }
+    @PostMapping("/buy")
+    public String buyItem(@RequestParam("itemId") Long itemId,
+                        @RequestParam(value = "quantity", defaultValue = "1") int quantity,
+                        HttpSession session) {
+        // 상품 아이디와 수량 세션에 저장
+        // 장바구니추가시마다 정보 누적 생성
+        Item cartAddItem = itemService.findById(itemId);
+        marketService.addToCart(itemId, quantity, session, cartAddItem);
+
+        return "redirect:";
     }
 
 

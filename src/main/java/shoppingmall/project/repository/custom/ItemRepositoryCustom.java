@@ -1,10 +1,7 @@
 package shoppingmall.project.repository.custom;
 
 
-import shoppingmall.project.domain.dto.BookAndFileDto;
-import shoppingmall.project.domain.dto.ClothesAndFileDto;
-import shoppingmall.project.domain.dto.ElectronicsAndFileDto;
-import shoppingmall.project.domain.dto.FoodAndFileDto;
+import shoppingmall.project.domain.dto.*;
 
 import java.util.List;
 

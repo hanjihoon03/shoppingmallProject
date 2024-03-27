@@ -2,11 +2,13 @@ package shoppingmall.project.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import shoppingmall.project.domain.subdomain.Address;
 import shoppingmall.project.domain.subdomain.DeliveryStatus;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class Delivery {
 
     @Id
@@ -19,4 +21,10 @@ public class Delivery {
     private Address address;
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+
+    public Delivery(Address address, DeliveryStatus status) {
+        this.address = address;
+        this.status = status;
+    }
 }

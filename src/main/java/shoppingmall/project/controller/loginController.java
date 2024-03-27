@@ -45,6 +45,7 @@ public class loginController {
 
         session.setAttribute(SessionConst.LOGIN_USER,loginUser);
 
+
         return "redirect:" + redirectURL;
     }
 

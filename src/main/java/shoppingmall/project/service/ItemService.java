@@ -1,5 +1,6 @@
 package shoppingmall.project.service;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -41,6 +44,10 @@ public class ItemService {
 
     public void saveItem(Item item){
         itemRepository.save(item);
+    }
+    public Item findById(Long id) {
+        Optional<Item> byId = itemRepository.findById(id);
+        return byId.orElse(null);
     }
 
     public void saveBook(BookForm bookForm) throws IOException {
@@ -112,6 +119,8 @@ public class ItemService {
     public String getFullPath(String filename) {
         return fileDir + filename;
     }
+
+
 
     private UploadFile storeFile(MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
