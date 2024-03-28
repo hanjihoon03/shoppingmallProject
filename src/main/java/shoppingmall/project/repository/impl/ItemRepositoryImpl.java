@@ -34,12 +34,19 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
+    /**
+     *         List<UploadFile> uploadFiles = queryFactory.selectFrom(uploadFile).fetch();
+     *         이 코드를 없애고 영속성 컨텍스트 안에 있을 uploadfiles를 사용해서 쿼리를 한 방만 나가게 수정해야함
+     *         수정하면 initializeUploadFileNameBook 메서드 삭제 가능
+     *         dto book 필드 먼저 설정 후 uploadFiles 필드 dto에 넣기 iter로 if(book.id = uploadfile.item.id)
+     */
     @Override
     public List<BookAndFileDto> findBookWithUploadFile() {
         List<Book> books = queryFactory
                 .selectFrom(book)
                 .leftJoin(book.uploadFiles).fetchJoin()
                 .fetch();
+
         List<UploadFile> uploadFiles = queryFactory.selectFrom(uploadFile).fetch();
 
         List<BookAndFileDto> dtos = new ArrayList<>();
@@ -56,7 +63,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
             );
             dtos.add(dto);
         }
-
         return dtos;
     }
 

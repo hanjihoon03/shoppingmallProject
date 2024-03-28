@@ -26,7 +26,7 @@
                 <td th:text="${electronicsAndFileDto.quantity}"></td>
                 <td th:text="${electronicsAndFileDto.brand}"></td>
                 <td>
-                    <form th:action="@{/buy}" method="post">
+                    <form th:action="@{/addCart}" method="post">
                         <input type="hidden" name="itemId" th:value="${electronicsAndFileDto.id}">
                         <input type="number" name="quantity" value="1" min="1" required>
                         <button class="btn btn-dark btn-lg" type="submit">

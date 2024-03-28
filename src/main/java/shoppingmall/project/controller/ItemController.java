@@ -125,7 +125,7 @@ public class ItemController {
 
         return "/list/foodList";
     }
-    @PostMapping("/buy")
+    @PostMapping("/addCart")
     public String buyItem(@RequestParam("itemId") Long itemId,
                         @RequestParam(value = "quantity", defaultValue = "1") int quantity,
                         HttpSession session) {
@@ -133,6 +133,8 @@ public class ItemController {
         // 장바구니추가시마다 정보 누적 생성
         Item cartAddItem = itemService.findById(itemId);
         marketService.addToCart(itemId, quantity, session, cartAddItem);
+        log.info("inCart={}, {}",itemId, quantity);
+        log.info("item={}", cartAddItem.getName());
 
         return "redirect:";
     }

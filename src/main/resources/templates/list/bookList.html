@@ -27,7 +27,7 @@
                 <td th:text="${bookAndFileDto.author}"></td>
                 <td th:text="${bookAndFileDto.isbn}"></td>
                 <td>
-                    <form th:action="@{/buy}" method="post">
+                    <form th:action="@{/addCart}" method="post">
                         <input type="hidden" name="itemId" th:value="${bookAndFileDto.id}">
                         <input type="number" name="quantity" value="1" min="1" required>
                         <button class="btn btn-dark btn-lg" type="submit">
