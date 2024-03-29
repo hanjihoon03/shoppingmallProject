@@ -4,7 +4,8 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <form th:action="@{/book}" th:object="${bookForm}" method="post" enctype="multipart/form-data">
+
+    <form th:object="${bookAndFileDto}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label th:for="name">상품명</label>
             <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력하세요">
@@ -28,10 +29,16 @@
         <div class="form-group">
         <ul>
             <li>첨부파일<input type="file" name="attachFile" ></li>
+
+            <a th:href="@{/attach/{id}(id=${bookAndFileDto.id})}">
+                <img th:if="${bookAndFileDto.uploadFileName != null}"
+                     th:src="@{/images/{filename}(filename=${bookAndFileDto.storeFileName})}"
+                     width="50" height="50"/>
+            </a>
+
         </ul>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="/modifyBook" class="btn btn-dark btn-lg">수정</a>
     </form>
     <br/>
     <div th:replace="fragments/footer :: footer" />

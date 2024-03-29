@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import shoppingmall.project.domain.UploadFile;
 import shoppingmall.project.domain.dto.BookAndFileDto;
 import shoppingmall.project.domain.dto.ClothesAndFileDto;
 import shoppingmall.project.domain.dto.ElectronicsAndFileDto;
@@ -23,6 +24,7 @@ import shoppingmall.project.form.itemform.BookForm;
 import shoppingmall.project.form.itemform.ClothesForm;
 import shoppingmall.project.form.itemform.ElectronicsForm;
 import shoppingmall.project.form.itemform.FoodForm;
+import shoppingmall.project.service.FileService;
 import shoppingmall.project.service.ItemService;
 import shoppingmall.project.service.MarketService;
 
@@ -41,6 +43,7 @@ public class ItemController {
 
     private final ItemService itemService;
     private final MarketService marketService;
+    private final FileService fileService;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -137,6 +140,45 @@ public class ItemController {
         log.info("item={}", cartAddItem.getName());
 
         return "redirect:";
+    }
+
+    @GetMapping("/modifyBook")
+    public String itemList(Model model) {
+        //수정을 위한 현재 아이템 표시
+        List<BookAndFileDto> allBook = itemService.findAllBook();
+
+        model.addAttribute("allBook", allBook);
+
+        return "/admin/modifyBook";
+    }
+
+    @GetMapping("modifyBook/{itemId}/edit")
+    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
+        Book oneBook = itemService.findOneBook(itemId);
+        UploadFile oneUploadFile = fileService.findUploadFileItemId(itemId);
+        //객체 생성 서비스로 빼기
+        BookAndFileDto bookAndFileDto = new BookAndFileDto(
+                oneBook.getId(),
+                oneBook.getIsbn(),
+                oneBook.getAuthor(),
+                oneBook.getName(),
+                oneBook.getPrice(),
+                oneBook.getQuantity(),
+                oneUploadFile.getUploadFileName(),
+                oneUploadFile.getStoreFileName()
+        );
+        model.addAttribute("bookAndFileDto", bookAndFileDto);
+
+
+        return "admin/updateItemBook";
+
+    }
+
+
+    @PostMapping("/modifyBook/{itemId}/edit")
+    public String updateBook(@PathVariable Long itemId, @ModelAttribute("form") BookForm bookForm) throws IOException {
+        itemService.updateBook(itemId, bookForm);
+        return "redirect:/modifyBook";
     }
 
 

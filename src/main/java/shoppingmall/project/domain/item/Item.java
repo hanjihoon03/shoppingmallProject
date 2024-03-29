@@ -39,4 +39,27 @@ public class Item {
         this.quantity = quantity;
     }
 
+    /**
+     * 구매 후 수량 맞추는 메서드
+     */
+    public void purchaseAfterQuantity(int quantity) {
+
+        this.quantity = this.getQuantity() - quantity;
+    }
+
+    public Item(Long id, String name, int price, int quantity, String dtype, List<Market> markets, List<UploadFile> uploadFiles) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.dtype = dtype;
+        this.markets = markets;
+        this.uploadFiles = uploadFiles;
+    }
+
+    public void updateItem(String name,int price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
 }

@@ -7,7 +7,7 @@
     <div>
         <table class="table table-striped">
             <thead> <tr>
-                <th>#</th> <th>상품</th> <th>상품명</th> <th>가격</th> <th>재고수량</th><th>브랜드</th><th>수량</th> <th></th>
+                <th>#</th> <th>상품</th> <th>상품명</th> <th>가격</th> <th>재고수량</th><th>브랜드</th> <th></th>
             </tr>
             </thead>
             <tbody>
@@ -26,13 +26,7 @@
                 <td th:text="${foodAndFileDto.quantity}"></td>
                 <td th:text="${foodAndFileDto.brand}"></td>
                 <td>
-                    <form th:action="@{/addCart}" method="post">
-                        <input type="hidden" name="itemId" th:value="${foodAndFileDto.id}">
-                        <input type="number" name="quantity" value="1" min="1" required>
-                        <button class="btn btn-dark btn-lg" type="submit">
-                            장바구니 추가
-                        </button>
-                    </form>
+                    <a href="#" th:href="@{/bookList/{id}/edit (id=${bookAndFileDto.id})}" class="btn btn-primary" role="button">수정</a>
                 </td>
             </tr>
             </tbody>

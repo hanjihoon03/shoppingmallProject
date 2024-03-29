@@ -60,27 +60,10 @@ public class MarketService {
         return marketRepository.findItemAndFile(purchaseCartItemId);
     }
 
-//    public Map<Long, Integer> findAllMarketItemQuantity() {
-//        List<Market> allMarkets = marketRepository.findAll();
-//        Map<Long, Integer> marketItemPrices = new HashMap<>();
-//
-//        for (Market market : allMarkets) {
-//            Long itemId = market.getItems().getId();
-//            int itemQuantity = market.getOrderQuantity();
-//            marketItemPrices.put(itemId, itemQuantity);
-//
-//            log.info("Item ID: {}, quantity: {}", itemId, itemQuantity);
-//        }
-//
-//        return marketItemPrices;
-//    }
-
-
-
-//    public List<Market> findAllMarket() {
-//        return marketRepository.findAll();
-//    }
-    public void deleteMarket(Long id) {
+    public void deleteMarketUser(Long id){
+        marketRepository.deleteMarketOfUser(id);
+    }
+    public void deleteMarketItem(Long id) {
         marketRepository.deleteMarketOfItem(id);
     }
 

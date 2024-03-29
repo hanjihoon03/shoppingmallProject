@@ -3,6 +3,7 @@ package shoppingmall.project.domain.dto;
 import jakarta.persistence.Lob;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 import shoppingmall.project.domain.UploadFile;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class BookAndFileDto {
     private int quantity;
     private String uploadFileName;
     private String storeFileName;
+    private MultipartFile attachFile;
 
     public BookAndFileDto() {
     }
@@ -34,5 +36,17 @@ public class BookAndFileDto {
         this.quantity = quantity;
         this.uploadFileName = uploadFileName;
         this.storeFileName = storeFileName;
+    }
+
+    public BookAndFileDto(Long id, String isbn, String author, String name, int price, int quantity, String uploadFileName, String storeFileName, MultipartFile attachFile) {
+        this.id = id;
+        this.isbn = isbn;
+        this.author = author;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.uploadFileName = uploadFileName;
+        this.storeFileName = storeFileName;
+        this.attachFile = attachFile;
     }
 }

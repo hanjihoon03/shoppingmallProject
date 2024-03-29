@@ -1,5 +1,6 @@
 package shoppingmall.project.repository.impl;
 
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -20,11 +21,10 @@ import static shoppingmall.project.domain.item.QBook.book;
 import static shoppingmall.project.domain.item.QClothes.*;
 import static shoppingmall.project.domain.item.QElectronics.*;
 import static shoppingmall.project.domain.item.QFood.*;
+import static shoppingmall.project.domain.item.QItem.item;
 
 
 @Repository
-
-@Transactional
 public class ItemRepositoryImpl implements ItemRepositoryCustom {
 
 
@@ -34,12 +34,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-    /**
-     *         List<UploadFile> uploadFiles = queryFactory.selectFrom(uploadFile).fetch();
-     *         이 코드를 없애고 영속성 컨텍스트 안에 있을 uploadfiles를 사용해서 쿼리를 한 방만 나가게 수정해야함
-     *         수정하면 initializeUploadFileNameBook 메서드 삭제 가능
-     *         dto book 필드 먼저 설정 후 uploadFiles 필드 dto에 넣기 iter로 if(book.id = uploadfile.item.id)
-     */
     @Override
     public List<BookAndFileDto> findBookWithUploadFile() {
         List<Book> books = queryFactory
@@ -146,6 +140,35 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 
         return dtos;
     }
+
+    @Override
+    public Book findBook(Long id) {
+        return queryFactory.select(book)
+                .from(book)
+                .where(book.id.eq(id)).fetchOne();
+    }
+
+    @Override
+    public Clothes findClothes(Long id) {
+        return queryFactory.select(clothes)
+                .from(clothes)
+                .where(clothes.id.eq(id)).fetchOne();
+    }
+
+    @Override
+    public Electronics findElectronics(Long id) {
+        return queryFactory.select(electronics)
+                .from(electronics)
+                .where(electronics.id.eq(id)).fetchOne();
+    }
+
+    @Override
+    public Food findFood(Long id) {
+        return queryFactory.select(food)
+                .from(food)
+                .where(food.id.eq(id)).fetchOne();
+    }
+
 
     private String initializeUploadFileNameBook(Book book, List<UploadFile> uploadFiles){
             for (UploadFile uploadFile : uploadFiles) {

@@ -18,4 +18,5 @@ public class BookForm {
     private int price;
     private int quantity;
     private MultipartFile attachFile;
+
 }

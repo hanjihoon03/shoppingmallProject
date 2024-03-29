@@ -105,19 +105,46 @@ public class ItemService {
     public List<BookAndFileDto> findAllBook() {
         return itemRepository.findBookWithUploadFile();
     }
+    public Book findOneBook(Long id) {
+        return itemRepository.findBook(id);
+    }
     public List<ClothesAndFileDto> findAllClothes() {
         return itemRepository.findClothesWithUploadFile();
+    }
+    public Clothes findOneClothes(Long id) {
+        return itemRepository.findClothes(id);
     }
     public List<ElectronicsAndFileDto> findAllElectronics() {
         return itemRepository.findElectronicsWithUploadFile();
     }
+    public Electronics findOneElectronics(Long id) {
+        return itemRepository.findElectronics(id);
+    }
     public List<FoodAndFileDto> findAllFood() {
         return itemRepository.findFoodWithUploadFile();
+    }
+    public Food findOneFood(Long id) {
+        return itemRepository.findFood(id);
     }
 
 
     public String getFullPath(String filename) {
         return fileDir + filename;
+    }
+
+    public void updateBook(Long bookId, BookForm bookForm) throws IOException {
+        Book book = itemRepository.findBook(bookId);
+        book.updateBook(
+                bookForm.getName(),
+                bookForm.getPrice(),
+                bookForm.getQuantity(),
+                bookForm.getIsbn(),
+                bookForm.getAuthor());
+        UploadFile attachFile = storeFile(bookForm.getAttachFile());
+
+        attachFile.updateUploadFile(
+                attachFile.getUploadFileName(),
+                attachFile.getUploadFileName());
     }
 
 
