@@ -26,7 +26,7 @@
                 <td th:text="${electronicsAndFileDto.quantity}"></td>
                 <td th:text="${electronicsAndFileDto.brand}"></td>
                 <td>
-                    <a href="#" th:href="@{/bookList/{id}/edit (id=${bookAndFileDto.id})}" class="btn btn-primary" role="button">수정</a>
+                    <a href="#" th:href="@{/modifyElectronics/{id}/edit (id=${electronicsAndFileDto.id})}" class="btn btn-primary" role="button">수정</a>
                 </td>
             </tr>
             </tbody>

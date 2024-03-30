@@ -1,15 +1,21 @@
 package shoppingmall.project.domain.subdomain;
 
 public enum Tier {
-    BRONZE(1), SILVER(2), GOLD(3);
+    /**
+     * 구매에 따른 할인 적용
+     * Bronze = 100만 이상
+     * Silver = 150만 이상
+     * Gold  = 200만 이상
+     */
+    BRONZE(0.05), SILVER(0.07), GOLD(0.1), NORMAL(0);
 
-    private final int value;
+    private final double value;
 
-    Tier(int value) {
+    Tier(double value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 }

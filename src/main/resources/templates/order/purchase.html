@@ -39,12 +39,16 @@
     </div>
     <div th:if="${not #lists.isEmpty(items)}">
         <div>
-            <h4>총 가격: <span th:text="${totalPrice} + '원'"></span></h4>
+            <h4 th:if="${discount} != 0">총 가격:
+                <span th:text="${totalPrice} + '원 - 할인률 ' + discount + '원'"></span>
+                (총 가격 <span th:text="${totalPrice} + '원'"></span>)
+            </h4>
+            <h4 th:if="${discount} == 0">총 가격: <span th:text="${totalPrice} + '원'"></span></h4>
         </div>
     </div>
 
     <div class="buy-button-container">
-    <a href="/buy" class="btn btn-dark btn-lg">구매</a>
+        <a th:href="@{/buy(totalPrice=${totalPrice})}" class="btn btn-dark btn-lg">구매</a>
     </div>
 
 

@@ -12,8 +12,10 @@ import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.ItemDto;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.domain.subdomain.DeliveryStatus;
+import shoppingmall.project.domain.subdomain.Tier;
 import shoppingmall.project.repository.DeliveryRepository;
 import shoppingmall.project.repository.MarketRepository;
+import shoppingmall.project.repository.UserRepository;
 
 import java.util.*;
 
@@ -25,6 +27,7 @@ public class MarketService {
 
     private final MarketRepository marketRepository;
     private final DeliveryRepository deliveryRepository;
+    private final UserRepository userRepository;
 
     public void addToCart(Long itemId, int quantity, HttpSession session, Item item) {
         session.setAttribute("itemId", itemId);
@@ -67,13 +70,46 @@ public class MarketService {
         marketRepository.deleteMarketOfItem(id);
     }
 
-    public int purchaseTotalPrice(List<ItemDto> itemDto) {
+    public int purchaseTotalPrice(List<ItemDto> itemDto, User user) {
         int totalPrice = 0;
 
         for (ItemDto dto : itemDto) {
             totalPrice += dto.getPrice() * dto.getQuantity();
         }
 
+        totalPrice = discountLogic(user, totalPrice);
+
+        return totalPrice;
+    }
+    public int discountAmount(int totalPrice, Tier tier) {
+        int discount = 0;
+
+        if (tier == Tier.BRONZE) {
+            discount = (int) (totalPrice / (1 - Tier.BRONZE.getValue()));
+        } else if (tier == Tier.SILVER) {
+            discount = (int) (totalPrice / (1 - Tier.SILVER.getValue()));
+        } else if (tier == Tier.GOLD) {
+            discount = (int) (totalPrice / (1 - Tier.GOLD.getValue()));
+        }
+
+        return discount;
+    }
+
+    private int discountLogic(User user, int totalPrice) {
+        int discountAmount = 0;
+        Optional<User> optionalUser = userRepository.findById(user.getId());
+        User findUser = optionalUser.orElseThrow(null);
+
+        if (findUser.getTier() == Tier.BRONZE) {
+            discountAmount = (int) (totalPrice * Tier.BRONZE.getValue());
+            totalPrice -= discountAmount;
+        } else if (findUser.getTier() == Tier.SILVER) {
+            discountAmount = (int) (totalPrice * Tier.SILVER.getValue());
+            totalPrice -= discountAmount;
+        } else if (findUser.getTier() == Tier.GOLD) {
+            discountAmount = (int) (totalPrice * Tier.GOLD.getValue());
+            totalPrice -= discountAmount;
+        }
         return totalPrice;
     }
 }

@@ -140,11 +140,63 @@ public class ItemService {
                 bookForm.getQuantity(),
                 bookForm.getIsbn(),
                 bookForm.getAuthor());
-        UploadFile attachFile = storeFile(bookForm.getAttachFile());
 
-        attachFile.updateUploadFile(
+        UploadFile attachFile = storeFile(bookForm.getAttachFile());
+        UploadFile uploadFile = fileRepository.findByItemId(bookId);
+
+        uploadFile.updateUploadFile(
                 attachFile.getUploadFileName(),
-                attachFile.getUploadFileName());
+                attachFile.getStoreFileName());
+    }
+    public void updateClothes(Long clothesId, ClothesForm clothesForm) throws IOException {
+        Clothes clothes = itemRepository.findClothes(clothesId);
+        clothes.updateClothes(
+                clothesForm.getName(),
+                clothesForm.getPrice(),
+                clothesForm.getQuantity(),
+                clothesForm.getClothesType(),
+                clothesForm.getBrand(),
+                clothesForm.getSize()
+        );
+        UploadFile attachFile = storeFile(clothesForm.getAttachFile());
+        UploadFile uploadFile = fileRepository.findByItemId(clothesId);
+
+        uploadFile.updateUploadFile(
+                attachFile.getUploadFileName(),
+                attachFile.getStoreFileName());
+    }
+
+    public void updateElectronics(Long electronicsId, ElectronicsForm electronicsForm) throws IOException {
+        Electronics electronics = itemRepository.findElectronics(electronicsId);
+        electronics.updateElectronics(
+                electronicsForm.getName(),
+                electronicsForm.getPrice(),
+                electronicsForm.getQuantity(),
+                electronicsForm.getBrand()
+        );
+
+        UploadFile attachFile = storeFile(electronicsForm.getAttachFile());
+        UploadFile uploadFile = fileRepository.findByItemId(electronicsId);
+
+        uploadFile.updateUploadFile(
+                attachFile.getUploadFileName(),
+                attachFile.getStoreFileName());
+    }
+    public void updateFood(Long foodId, FoodForm foodForm) throws IOException {
+
+        Food food = itemRepository.findFood(foodId);
+        food.updateFood(
+                foodForm.getName(),
+                foodForm.getPrice(),
+                foodForm.getQuantity(),
+                foodForm.getBrand()
+        );
+        UploadFile attachFile = storeFile(foodForm.getAttachFile());
+        UploadFile uploadFile = fileRepository.findByItemId(foodId);
+
+        uploadFile.updateUploadFile(
+                attachFile.getUploadFileName(),
+                attachFile.getStoreFileName());
     }
 
 

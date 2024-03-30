@@ -26,7 +26,7 @@
                 <td th:text="${foodAndFileDto.quantity}"></td>
                 <td th:text="${foodAndFileDto.brand}"></td>
                 <td>
-                    <a href="#" th:href="@{/bookList/{id}/edit (id=${bookAndFileDto.id})}" class="btn btn-primary" role="button">수정</a>
+                    <a href="#" th:href="@{/modifyFood/{id}/edit (id=${foodAndFileDto.id})}" class="btn btn-primary" role="button">수정</a>
                 </td>
             </tr>
             </tbody>

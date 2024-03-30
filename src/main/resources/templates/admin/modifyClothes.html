@@ -28,7 +28,7 @@
                 <td th:text="${clothesAndFileDto.brand}"></td>
                 <td th:text="${clothesAndFileDto.size}"></td>
                 <td>
-                    <a href="#" th:href="@{/bookList/{id}/edit (id=${bookAndFileDto.id})}" class="btn btn-primary" role="button">수정</a>
+                    <a href="#" th:href="@{/modifyClothes/{id}/edit (id=${clothesAndFileDto.id})}" class="btn btn-primary" role="button">수정</a>
                 </td>
             </tr>
 

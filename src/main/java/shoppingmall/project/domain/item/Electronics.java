@@ -16,4 +16,8 @@ public class Electronics extends Item {
         super(name, price, quantity);
         this.brand = brand;
     }
+    public void updateElectronics(String name, int price, int quantity, String brand) {
+        updateItem(name, price, quantity);
+        this.brand = brand;
+    }
 }

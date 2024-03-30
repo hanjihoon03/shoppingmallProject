@@ -16,4 +16,8 @@ public class Food extends Item {
         super(name, price, quantity);
         this.brand = brand;
     }
+    public void updateFood(String name, int price, int quantity, String brand) {
+        updateItem(name, price, quantity);
+        this.brand = brand;
+    }
 }

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.subdomain.Address;
+import shoppingmall.project.domain.subdomain.Tier;
 import shoppingmall.project.form.UserForm;
 import shoppingmall.project.repository.UserRepository;
 
@@ -36,7 +37,8 @@ public class UserService {
                 userForm.getAge(),
                 userForm.getEmail(),
                 userForm.getPassword(),
-                address);
+                address,
+                Tier.NORMAL);
         return userRepository.save(user);
     }
     public void clear() {
@@ -52,6 +54,16 @@ public class UserService {
         return userRepository.findByLoginId(id)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
+    }
+
+    public int addAccumulatedAmount(User user, int totalPrice) {
+        Optional<User> optionalUser = userRepository.findById(user.getId());
+        User findUser = optionalUser.orElseThrow(null);
+        int resultPrice = findUser.addAmount(totalPrice);
+        if (findUser.getAccumulatedAmount() <= 10000000) {
+        findUser.upgradeTier(findUser.getAccumulatedAmount());
+        }
+        return resultPrice;
     }
 
 

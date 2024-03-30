@@ -12,10 +12,14 @@ import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.*;
 import shoppingmall.project.domain.item.Item;
 
+import shoppingmall.project.domain.subdomain.Tier;
+import shoppingmall.project.repository.UserRepository;
 import shoppingmall.project.service.ItemService;
 import shoppingmall.project.service.MarketService;
+import shoppingmall.project.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -25,16 +29,22 @@ public class MarketController {
 
     private final MarketService marketService;
     private final ItemService itemService;
+    private final UserService userService;
 
 
     @GetMapping("/purchase")
     public String purchase(Model model, HttpSession session) {
-
+        User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
+        Tier tier = user.getTier();
 
         List<ItemDto> itemDtos = marketService.purchaseItem(session);
         model.addAttribute("items", itemDtos);
-        int totalPrice = marketService.purchaseTotalPrice(itemDtos);
+        int totalPrice = marketService.purchaseTotalPrice(itemDtos, user);
         model.addAttribute("totalPrice", totalPrice);
+
+        int discountAmount = marketService.discountAmount(totalPrice, tier);
+        log.info("discount==============================={}", discountAmount);
+        model.addAttribute("discount", discountAmount);
 
         return "/order/purchase";
     }
@@ -47,8 +57,15 @@ public class MarketController {
     }
 
     @GetMapping("/buy")
-    public String buyItem(HttpSession session) {
+    public String buyItem(HttpSession session, @RequestParam(required = false) Integer totalPrice) {
         User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
+
+        if (totalPrice != null) {
+            int newTotalPrice = userService.addAccumulatedAmount(user, totalPrice);
+            session.setAttribute("totalPrice", newTotalPrice);
+        } else {
+            // totalPrice가 없는 경우 예외 처리
+        }
 
         // 장바구니의 아이템 id find하고 수량만 set 열어서 사용
         List<ItemDto> itemDtos = marketService.purchaseItem(session);

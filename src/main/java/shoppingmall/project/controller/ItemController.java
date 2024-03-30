@@ -18,8 +18,7 @@ import shoppingmall.project.domain.dto.BookAndFileDto;
 import shoppingmall.project.domain.dto.ClothesAndFileDto;
 import shoppingmall.project.domain.dto.ElectronicsAndFileDto;
 import shoppingmall.project.domain.dto.FoodAndFileDto;
-import shoppingmall.project.domain.item.Book;
-import shoppingmall.project.domain.item.Item;
+import shoppingmall.project.domain.item.*;
 import shoppingmall.project.form.itemform.BookForm;
 import shoppingmall.project.form.itemform.ClothesForm;
 import shoppingmall.project.form.itemform.ElectronicsForm;
@@ -143,7 +142,7 @@ public class ItemController {
     }
 
     @GetMapping("/modifyBook")
-    public String itemList(Model model) {
+    public String itemBookList(Model model) {
         //수정을 위한 현재 아이템 표시
         List<BookAndFileDto> allBook = itemService.findAllBook();
 
@@ -153,10 +152,10 @@ public class ItemController {
     }
 
     @GetMapping("modifyBook/{itemId}/edit")
-    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
+    public String updateItemBook(@PathVariable("itemId") Long itemId, Model model) {
         Book oneBook = itemService.findOneBook(itemId);
         UploadFile oneUploadFile = fileService.findUploadFileItemId(itemId);
-        //객체 생성 서비스로 빼기
+
         BookAndFileDto bookAndFileDto = new BookAndFileDto(
                 oneBook.getId(),
                 oneBook.getIsbn(),
@@ -179,6 +178,127 @@ public class ItemController {
     public String updateBook(@PathVariable Long itemId, @ModelAttribute("form") BookForm bookForm) throws IOException {
         itemService.updateBook(itemId, bookForm);
         return "redirect:/modifyBook";
+    }
+
+    @GetMapping("/modifyClothes")
+    public String itemClothesList(Model model) {
+        //수정을 위한 현재 아이템 표시
+        List<ClothesAndFileDto> allClothes = itemService.findAllClothes();
+
+        model.addAttribute("allClothes", allClothes);
+
+        return "/admin/modifyClothes";
+    }
+
+    @GetMapping("modifyClothes/{itemId}/edit")
+    public String updateItemClothes(@PathVariable("itemId") Long itemId, Model model) {
+
+        Clothes oneClothes = itemService.findOneClothes(itemId);
+        UploadFile oneUploadFile = fileService.findUploadFileItemId(itemId);
+        //객체 생성 서비스로 빼기
+        ClothesAndFileDto clothesAndFileDto = new ClothesAndFileDto(
+                oneClothes.getId(),
+                oneClothes.getName(),
+                oneClothes.getPrice(),
+                oneClothes.getQuantity(),
+                oneUploadFile.getStoreFileName(),
+                oneUploadFile.getUploadFileName(),
+                oneClothes.getClothesType(),
+                oneClothes.getBrand(),
+                oneClothes.getSize()
+        );
+        model.addAttribute("clothesAndFileDto", clothesAndFileDto);
+
+
+        return "admin/updateItemClothes";
+
+    }
+
+
+    @PostMapping("/modifyClothes/{itemId}/edit")
+    public String updateClothes(@PathVariable Long itemId, @ModelAttribute("form") ClothesForm clothesForm) throws IOException {
+        itemService.updateClothes(itemId, clothesForm);
+        return "redirect:/modifyClothes";
+    }
+
+
+    @GetMapping("/modifyElectronics")
+    public String itemElectronicsList(Model model) {
+        //수정을 위한 현재 아이템 표시
+        List<ElectronicsAndFileDto> allElectronics = itemService.findAllElectronics();
+
+        model.addAttribute("allElectronics", allElectronics);
+        return "/admin/modifyElectronics";
+    }
+
+
+    @GetMapping("modifyElectronics/{itemId}/edit")
+    public String updateItemElectronics(@PathVariable("itemId") Long itemId, Model model) {
+        Electronics oneElectronics = itemService.findOneElectronics(itemId);
+
+        UploadFile oneUploadFile = fileService.findUploadFileItemId(itemId);
+
+        ElectronicsAndFileDto electronicsAndFileDto = new ElectronicsAndFileDto(
+                oneElectronics.getId(),
+                oneElectronics.getName(),
+                oneElectronics.getPrice(),
+                oneElectronics.getQuantity(),
+                oneElectronics.getBrand(),
+                oneUploadFile.getUploadFileName(),
+                oneUploadFile.getStoreFileName()
+        );
+        model.addAttribute("electronicsAndFileDto", electronicsAndFileDto);
+
+
+        return "admin/updateItemElectronics";
+
+    }
+
+
+    @PostMapping("/modifyElectronics/{itemId}/edit")
+    public String updateElectronics(@PathVariable Long itemId, @ModelAttribute("form") ElectronicsForm electronicsForm) throws IOException {
+        itemService.updateElectronics(itemId,electronicsForm);
+        return "redirect:/modifyElectronics";
+    }
+
+
+    @GetMapping("/modifyFood")
+    public String itemFoodList(Model model) {
+        //수정을 위한 현재 아이템 표시
+        List<FoodAndFileDto> allFood = itemService.findAllFood();
+
+        model.addAttribute("allFood", allFood);
+
+        return "/admin/modifyFood";
+    }
+
+
+    @GetMapping("modifyFood/{itemId}/edit")
+    public String updateItemFood(@PathVariable("itemId") Long itemId, Model model) {
+        Food oneFood = itemService.findOneFood(itemId);
+        UploadFile oneUploadFile = fileService.findUploadFileItemId(itemId);
+
+        FoodAndFileDto foodAndFileDto = new FoodAndFileDto(
+                oneFood.getId(),
+                oneFood.getName(),
+                oneFood.getPrice(),
+                oneFood.getQuantity(),
+                oneFood.getBrand(),
+                oneUploadFile.getUploadFileName(),
+                oneUploadFile.getStoreFileName()
+        );
+
+        model.addAttribute("foodAndFileDto", foodAndFileDto);
+
+        return "admin/updateItemFood";
+
+    }
+
+
+    @PostMapping("/modifyFood/{itemId}/edit")
+    public String updateFood(@PathVariable Long itemId, @ModelAttribute("form") FoodForm foodForm) throws IOException {
+        itemService.updateFood(itemId,foodForm);
+        return "redirect:/modifyFood";
     }
 
 
