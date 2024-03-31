@@ -26,8 +26,6 @@ public class Item {
     private int quantity;
     @Column(name = "dtype", insertable = false, updatable = false)
     private String dtype;
-    @OneToMany(mappedBy = "items")
-    private List<Delivery> deliveries = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "items")

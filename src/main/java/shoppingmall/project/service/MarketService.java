@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import shoppingmall.project.additional.web.session.SessionConst;
 import shoppingmall.project.domain.Delivery;
 import shoppingmall.project.domain.Market;
+import shoppingmall.project.domain.Purchase;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.ItemDto;
 import shoppingmall.project.domain.item.Item;
@@ -15,8 +16,10 @@ import shoppingmall.project.domain.subdomain.DeliveryStatus;
 import shoppingmall.project.domain.subdomain.Tier;
 import shoppingmall.project.repository.DeliveryRepository;
 import shoppingmall.project.repository.MarketRepository;
+import shoppingmall.project.repository.PurchaseRepository;
 import shoppingmall.project.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -28,6 +31,7 @@ public class MarketService {
     private final MarketRepository marketRepository;
     private final DeliveryRepository deliveryRepository;
     private final UserRepository userRepository;
+    private final PurchaseRepository purchaseRepository;
 
     public void addToCart(Long itemId, int quantity, HttpSession session, Item item) {
         session.setAttribute("itemId", itemId);
@@ -112,5 +116,23 @@ public class MarketService {
             totalPrice -= discountAmount;
         }
         return totalPrice;
+    }
+
+    public void addDelivery(ItemDto item, User user) {
+
+        Delivery delivery = new Delivery(
+                user.getAddress(),
+                DeliveryStatus.DELIVERY,
+                LocalDateTime.now(),
+                user
+        );
+        Purchase purchase = new Purchase(
+                item.getName(),
+                item.getPrice(),
+                item.getQuantity(),
+                delivery
+        );
+        deliveryRepository.save(delivery);
+        purchaseRepository.save(purchase);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import shoppingmall.project.additional.web.session.SessionConst;
+import shoppingmall.project.domain.Purchase;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.*;
 import shoppingmall.project.domain.item.Item;
@@ -78,6 +79,16 @@ public class MarketController {
         List<ItemDto> itemDtos = marketService.purchaseItem(session);
         for (ItemDto itemDto : itemDtos) {
             Item buyItem = itemService.findById(itemDto.getId());
+
+            ItemDto item = new ItemDto(
+                    itemDto.getId(),
+                    itemDto.getName(),
+                    itemDto.getPrice(),
+                    itemDto.getQuantity()
+            );
+            //딜리버리에 아이템 넣기
+            marketService.addDelivery(item, user);
+
             buyItem.purchaseAfterQuantity(itemDto.getQuantity());
         }
         log.info("============================delete========================");

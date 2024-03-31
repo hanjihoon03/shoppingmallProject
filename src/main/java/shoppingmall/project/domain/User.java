@@ -47,6 +47,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Market> markets = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Delivery> deliveries = new ArrayList<>();
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "membership_id")
     private Membership membership;

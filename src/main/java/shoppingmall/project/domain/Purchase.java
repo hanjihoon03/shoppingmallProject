@@ -28,4 +28,11 @@ public class Purchase {
         this.orderPrice = orderPrice;
         this.orderQuantity = orderQuantity;
     }
+
+    public Purchase(String itemName, int orderPrice, int orderQuantity, Delivery delivery) {
+        this.itemName = itemName;
+        this.orderPrice = orderPrice;
+        this.orderQuantity = orderQuantity;
+        this.delivery = delivery;
+    }
 }

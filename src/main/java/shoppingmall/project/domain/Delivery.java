@@ -27,16 +27,24 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item items;
-
     private LocalDateTime orderTime;
+
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private User user;
 
     @OneToMany(mappedBy = "delivery")
     private List<Purchase> purchases = new ArrayList<>();
-    public Delivery(Address address, DeliveryStatus status) {
+    public Delivery(Address address, DeliveryStatus status, LocalDateTime orderTime) {
         this.address = address;
         this.status = status;
+        this.orderTime = orderTime;
+    }
+
+    public Delivery(Address address, DeliveryStatus status, LocalDateTime orderTime, User user) {
+        this.address = address;
+        this.status = status;
+        this.orderTime = orderTime;
+        this.user = user;
     }
 }
