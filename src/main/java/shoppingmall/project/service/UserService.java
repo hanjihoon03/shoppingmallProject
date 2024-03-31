@@ -65,6 +65,11 @@ public class UserService {
         }
         return resultPrice;
     }
+    public Tier findUserTier(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        User findUser = user.orElseThrow(null);
+        return findUser.getTier();
+    }
 
 
 

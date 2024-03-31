@@ -3,6 +3,7 @@ package shoppingmall.project.domain.item;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import shoppingmall.project.domain.Delivery;
 import shoppingmall.project.domain.Market;
 import shoppingmall.project.domain.UploadFile;
 
@@ -25,6 +26,8 @@ public class Item {
     private int quantity;
     @Column(name = "dtype", insertable = false, updatable = false)
     private String dtype;
+    @OneToMany(mappedBy = "items")
+    private List<Delivery> deliveries = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "items")

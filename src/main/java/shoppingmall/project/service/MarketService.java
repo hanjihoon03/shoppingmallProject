@@ -34,10 +34,8 @@ public class MarketService {
         session.setAttribute("quantity", quantity);
 
         User loginUser = (User) session.getAttribute(SessionConst.LOGIN_USER);
-        Delivery delivery = new Delivery(loginUser.getAddress(), DeliveryStatus.WAIT);
-        deliveryRepository.save(delivery);
 
-        Market market = new Market(quantity, loginUser, delivery, item);
+        Market market = new Market(quantity, loginUser, item);
         //세션에 장바구니로 추가한 아이템정보 추가
         session.setAttribute(SessionConst.SHOPPING_CART,market);
         marketRepository.save(market);
@@ -66,8 +64,8 @@ public class MarketService {
     public void deleteMarketUser(Long id){
         marketRepository.deleteMarketOfUser(id);
     }
-    public void deleteMarketItem(Long id) {
-        marketRepository.deleteMarketOfItem(id);
+    public void deleteMarketItem(Long id, Long userId) {
+        marketRepository.deleteMarketOfItem(id, userId);
     }
 
     public int purchaseTotalPrice(List<ItemDto> itemDto, User user) {
@@ -85,11 +83,14 @@ public class MarketService {
         int discount = 0;
 
         if (tier == Tier.BRONZE) {
-            discount = (int) (totalPrice / (1 - Tier.BRONZE.getValue()));
+            totalPrice = (int) (totalPrice / (1 - Tier.BRONZE.getValue()));
+            discount = (int) (totalPrice * Tier.BRONZE.getValue());
         } else if (tier == Tier.SILVER) {
-            discount = (int) (totalPrice / (1 - Tier.SILVER.getValue()));
+            totalPrice = (int) (totalPrice / (1 - Tier.SILVER.getValue()));
+            discount = (int) (totalPrice * Tier.SILVER.getValue());
         } else if (tier == Tier.GOLD) {
-            discount = (int) (totalPrice / (1 - Tier.GOLD.getValue()));
+            totalPrice = (int) (totalPrice / (1 - Tier.GOLD.getValue()));
+            discount = (int) (totalPrice * Tier.GOLD.getValue());
         }
 
         return discount;

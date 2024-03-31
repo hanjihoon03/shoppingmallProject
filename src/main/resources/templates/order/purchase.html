@@ -39,11 +39,8 @@
     </div>
     <div th:if="${not #lists.isEmpty(items)}">
         <div>
-            <h4 th:if="${discount} != 0">총 가격:
-                <span th:text="${totalPrice} + '원 - 할인률 ' + discount + '원'"></span>
-                (총 가격 <span th:text="${totalPrice} + '원'"></span>)
-            </h4>
-            <h4 th:if="${discount} == 0">총 가격: <span th:text="${totalPrice} + '원'"></span></h4>
+            <h4>할인 가: <span th:text="${discount} + '원'"></span></h4>
+            <h4>총 가격: <span th:text="${totalPrice} + '원'"></span></h4>
         </div>
     </div>
 

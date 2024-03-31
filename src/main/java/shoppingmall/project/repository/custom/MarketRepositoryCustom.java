@@ -8,6 +8,6 @@ import java.util.List;
 public interface MarketRepositoryCustom {
      List<Item> findItemsByUserId(Long id);
      List<ItemDto> findItemAndFile(List<Long> itemIds);
-     void deleteMarketOfItem(Long itemId);
+     void deleteMarketOfItem(Long itemId, Long userId);
      void deleteMarketOfUser(Long userId);
 }

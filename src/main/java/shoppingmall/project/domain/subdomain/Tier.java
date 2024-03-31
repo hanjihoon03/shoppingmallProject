@@ -18,4 +18,11 @@ public enum Tier {
     public double getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "Tier{" +
+                "value=" + value +
+                '}';
+    }
 }

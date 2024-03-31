@@ -32,10 +32,9 @@ public class Market {
     public Market() {
     }
 
-    public Market(int orderQuantity, User user, Delivery delivery, Item items) {
+    public Market(int orderQuantity, User user, Item items) {
         this.orderQuantity = orderQuantity;
         this.user = user;
-        this.delivery = delivery;
         this.items = items;
     }
 }

@@ -60,16 +60,17 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
     }
 
     @Override
-    public void deleteMarketOfItem(Long itemId) {
+    public void deleteMarketOfItem(Long itemId, Long userId) {
+        //userId가 현재 세션 사용자라는 것을 조건으로 걸어야 함
         queryFactory.delete(market)
-                .where(market.items.id.eq(itemId))
+                .where(market.user.id.eq(userId).and(market.items.id.eq(itemId)))
                 .execute();
     }
 
     @Override
     public void deleteMarketOfUser(Long userId) {
         queryFactory.delete(market)
-                .where(market.id.eq(userId))
+                .where(market.user.id.eq(userId))
                 .execute();
     }
 

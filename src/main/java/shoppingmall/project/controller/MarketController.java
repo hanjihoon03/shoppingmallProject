@@ -18,6 +18,7 @@ import shoppingmall.project.service.ItemService;
 import shoppingmall.project.service.MarketService;
 import shoppingmall.project.service.UserService;
 
+import java.nio.channels.SeekableByteChannel;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,23 +36,29 @@ public class MarketController {
     @GetMapping("/purchase")
     public String purchase(Model model, HttpSession session) {
         User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
-        Tier tier = user.getTier();
 
         List<ItemDto> itemDtos = marketService.purchaseItem(session);
         model.addAttribute("items", itemDtos);
+
         int totalPrice = marketService.purchaseTotalPrice(itemDtos, user);
         model.addAttribute("totalPrice", totalPrice);
 
-        int discountAmount = marketService.discountAmount(totalPrice, tier);
-        log.info("discount==============================={}", discountAmount);
+        //유저 찾아서 티어 다시 부여해야함
+        Tier userTier = userService.findUserTier(user.getId());
+
+
+        int discountAmount = marketService.discountAmount(totalPrice, userTier);
         model.addAttribute("discount", discountAmount);
 
         return "/order/purchase";
     }
     @GetMapping("/purchase/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable Long id, HttpSession session) {
         // 삭제 작업 수행
-        marketService.deleteMarketItem(id);
+        User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
+
+        marketService.deleteMarketItem(id, user.getId());
+
         // 삭제 후 목록 페이지로 redirect
         return "redirect:/purchase";
     }
@@ -73,7 +80,10 @@ public class MarketController {
             Item buyItem = itemService.findById(itemDto.getId());
             buyItem.purchaseAfterQuantity(itemDto.getQuantity());
         }
+        log.info("============================delete========================");
         marketService.deleteMarketUser(user.getId());
+        log.info("============================delete========================");
+
 
         // 영속성 컨텍스트에 올라가니까 올려서 수량 바꾸고 플러시
         return "order/buyItem";
