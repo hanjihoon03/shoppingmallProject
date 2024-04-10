@@ -1,6 +1,8 @@
 package shoppingmall.project.domain.dto;
 
 import jakarta.persistence.Lob;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +21,8 @@ public class BookAndFileDto {
     private String name;
 
     private int price;
-    private int quantity;
+    @Min(value = 1)
+    private Integer quantity;
     private String uploadFileName;
     private String storeFileName;
     private MultipartFile attachFile;
@@ -27,7 +30,7 @@ public class BookAndFileDto {
     public BookAndFileDto() {
     }
 
-    public BookAndFileDto(Long id, String isbn, String author, String name, int price, int quantity, String uploadFileName, String storeFileName) {
+    public BookAndFileDto(Long id, String isbn, String author, String name, int price, Integer quantity, String uploadFileName, String storeFileName) {
         this.id = id;
         this.isbn = isbn;
         this.author = author;
@@ -38,7 +41,7 @@ public class BookAndFileDto {
         this.storeFileName = storeFileName;
     }
 
-    public BookAndFileDto(Long id, String isbn, String author, String name, int price, int quantity, String uploadFileName, String storeFileName, MultipartFile attachFile) {
+    public BookAndFileDto(Long id, String isbn, String author, String name, int price, Integer quantity, String uploadFileName, String storeFileName, MultipartFile attachFile) {
         this.id = id;
         this.isbn = isbn;
         this.author = author;

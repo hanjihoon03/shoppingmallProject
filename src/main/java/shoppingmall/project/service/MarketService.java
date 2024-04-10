@@ -1,10 +1,10 @@
 package shoppingmall.project.service;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shoppingmall.project.additional.web.session.SessionConst;
 import shoppingmall.project.domain.Delivery;
 import shoppingmall.project.domain.Market;
@@ -47,10 +47,8 @@ public class MarketService {
     public List<ItemDto> purchaseItem(HttpSession session) {
         User loginUser = (User) session.getAttribute(SessionConst.LOGIN_USER);
         if (loginUser == null) {
-            // 세션에서 로그인 사용자를 가져올 수 없는 경우 처리
             log.error("로그인 사용자를 찾을 수 없습니다.");
-            // 예외처리 또는 기본적인 처리 로직을 추가
-            return null; // 또는 null을 반환하거나 다른 적절한 처리를 수행합니다.
+            return null;
         }
 
         // 로그인 한 사용자의 아이디를 사용하여 구매된 상품 목록을 가져옵니다.

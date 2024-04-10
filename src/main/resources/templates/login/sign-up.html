@@ -25,6 +25,10 @@
         -moz-user-select: none;
         user-select: none;
       }
+      .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+            }
 
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
@@ -162,68 +166,82 @@
 
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">회원 가입</h4>
+
         <form class="needs-validation" role="form" action="/sign-up" th:object="${userForm}" method="post">
+          <div th:if="${errors?.containsKey('globalError')}">
+            <p class="field-error" th:text="${errors['globalError']}">전체 오류 메세지 </p>
+          </div>
 
           <div class="row g-3">
 
             <div class="col-sm-6">
 
               <label th:for="name" class="form-label">Name</label>
-              <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력하세요">
-              <div class="invalid-feedback">
-                Valid first name is required.
+              <input type="text" th:field="*{name}" th:errorclass="field-error"
+                     class="form-control" placeholder="이름을 입력하세요.">
+
+              <div class ="field-error" th:errors="*{name}">
+                이름 오류
               </div>
+
             </div>
 
             <div class="col-sm-6">
               <label th:for="age" class="form-label">age</label>
-              <input type="text" class="form-control" th:field="*{age}" placeholder="나이">
-              <div class="invalid-feedback">
-                Valid first age is required.
+              <input type="text" class="form-control" th:field="*{age}" th:errorclass="field-error" placeholder="나이를 입력하세요.">
+
+              <div class ="field-error" th:errors="*{age}">
+                나이 오류
               </div>
             </div>
 
             <div class="col-12">
               <label th:for="loginId" class="form-label">id</label>
-              <input type="text" class="form-control" th:field="*{loginId}" placeholder="loginId">
-              <div class="invalid-feedback">
-                Valid first age is required.
+              <input type="text" class="form-control" th:field="*{loginId}" th:errorclass="field-error" placeholder="아이디를 입력하세요.">
+              <div class ="field-error" th:errors="*{loginId}">
+                아이디 오류
               </div>
             </div>
 
 
             <div class="col-12">
               <label th:for="email" class="form-label">email</label>
-              <input type="text" class="form-control" th:field="*{email}" placeholder="email">
-              <div class="invalid-feedback">
-                Valid first age is required.
+              <input type="text" class="form-control" th:field="*{email}" th:errorclass="field-error" placeholder="email">
+              <div class ="field-error" th:errors="*{email}">
+                이메일 오류
               </div>
             </div>
 
             <div class="col-12">
               <label th:for="password" class="form-label">password</label>
-              <input type="password" class="form-control" th:field="*{password}" placeholder="비밀번호">
-              <div class="invalid-feedback">
-                Valid first age is required.
+              <input type="password" class="form-control" th:field="*{password}" th:errorclass="field-error" placeholder="비밀번호">
+              <div class ="field-error" th:errors="*{password}">
+                비밀번호 오류
               </div>
             </div>
 
 
             <div class="col-12">
               <label th:for="zipcode" class="form-label">zipcode</label>
-              <input type="text" class="form-control" th:field="*{zipcode}" placeholder="우편번호를 입력하세요" required>
-              <div class="invalid-feedback">
-                Please enter your shipping address.
+              <input type="text" class="form-control" th:field="*{zipcode}" th:errorclass="field-error" placeholder="우편번호를 입력하세요" required>
+              <div class ="field-error" th:errors="*{zipcode}">
+                우편번호 오류
               </div>
             </div>
 
             <div class="col-12">
-              <label th:for="city" class="form-label">city <span class="text-body-secondary">(Optional)</span></label>
-              <input type="text" th:field="*{city}" class="form-control" placeholder="도시를 입력하세요">
+              <label th:for="city" class="form-label">city <span class="text-body-secondary"></span></label>
+              <input type="text" th:field="*{city}" class="form-control" th:errorclass="field-error" placeholder="도시를 입력하세요">
+              <div class ="field-error" th:errors="*{city}">
+                도시 입력 오류
+              </div>
             </div>
             <div class="col-12">
-              <label th:for="street" class="form-label">street <span class="text-body-secondary">(Optional)</span></label>
-              <input type="text" th:field="*{street}" class="form-control" placeholder="거리를 입력하세요">
+              <label th:for="street" class="form-label">street <span class="text-body-secondary"></span></label>
+              <input type="text" th:field="*{street}" class="form-control" th:errorclass="field-error" placeholder="거리를 입력하세요">
+              <div class ="field-error" th:errors="*{street}">
+                거리 입력 오류
+              </div>
             </div>
 
           <button class="w-100 btn btn-primary btn-lg" type="submit">회원가입</button>

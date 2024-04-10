@@ -2,6 +2,7 @@ package shoppingmall.project.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import shoppingmall.project.domain.UploadFile;
 import shoppingmall.project.domain.dto.BookAndFileDto;
@@ -43,6 +49,7 @@ public class ItemController {
     private final ItemService itemService;
     private final MarketService marketService;
     private final FileService fileService;
+    private final HttpServletRequest request;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -54,9 +61,15 @@ public class ItemController {
     }
 
     @PostMapping("book")
-    public String saveBook(BookForm bookForm) throws IOException {
-        itemService.saveBook(bookForm);
-        return "redirect:";
+    public String saveBook(@ModelAttribute BookForm bookForm){
+        try {
+            itemService.saveBook(bookForm);
+            return "redirect:";
+        } catch (IOException ex) {
+            log.error("IOException = {}", ex.getMessage());
+            return "redirect:/ioError";
+        }
+
     }
 
     @GetMapping("clothes")
@@ -66,9 +79,14 @@ public class ItemController {
     }
 
     @PostMapping("clothes")
-    public String saveClothes(ClothesForm clothesForm) throws IOException {
+    public String saveClothes(@ModelAttribute ClothesForm clothesForm) {
+        try {
         itemService.saveClothes(clothesForm);
         return "redirect:";
+        }catch (IOException ex) {
+            log.error("IOException = {}", ex.getMessage());
+            return "redirect:/ioError";
+        }
     }
 
     @GetMapping("food")
@@ -78,9 +96,15 @@ public class ItemController {
     }
 
     @PostMapping("food")
-    public String saveFood(FoodForm foodForm) throws IOException {
+    public String saveFood(@ModelAttribute FoodForm foodForm){
+        try {
         itemService.saveFood(foodForm);
         return "redirect:";
+
+        }catch (IOException ex) {
+            log.error("IOException = {}", ex.getMessage());
+            return "redirect:/ioError";
+        }
     }
 
     @GetMapping("electronics")
@@ -90,9 +114,15 @@ public class ItemController {
     }
 
     @PostMapping("electronics")
-    public String saveElectronics(ElectronicsForm electronicsForm) throws IOException {
+    public String saveElectronics(@ModelAttribute ElectronicsForm electronicsForm){
+        try {
         itemService.saveElectronics(electronicsForm);
         return "redirect:";
+
+        }catch (IOException ex) {
+            log.error("IOException = {}", ex.getMessage());
+            return "redirect:/ioError";
+        }
     }
 
     @GetMapping("/bookList")
@@ -130,15 +160,25 @@ public class ItemController {
     @PostMapping("/addCart")
     public String buyItem(@RequestParam("itemId") Long itemId,
                         @RequestParam(value = "quantity", defaultValue = "1") int quantity,
-                        HttpSession session) {
+                          HttpSession session) {
+
         // 상품 아이디와 수량 세션에 저장
         // 장바구니추가시마다 정보 누적 생성
+        log.info("itemId={}", itemId);
         Item cartAddItem = itemService.findById(itemId);
+
+        if (quantity > cartAddItem.getQuantity()) {
+            return "error/cartError";
+        }
+
+
         marketService.addToCart(itemId, quantity, session, cartAddItem);
         log.info("inCart={}, {}",itemId, quantity);
         log.info("item={}", cartAddItem.getName());
 
         return "redirect:";
+
+
     }
 
     @GetMapping("/modifyBook")
@@ -175,9 +215,15 @@ public class ItemController {
 
 
     @PostMapping("/modifyBook/{itemId}/edit")
-    public String updateBook(@PathVariable Long itemId, @ModelAttribute("form") BookForm bookForm) throws IOException {
+    public String updateBook(@PathVariable Long itemId, @ModelAttribute("form") BookForm bookForm){
+        try {
         itemService.updateBook(itemId, bookForm);
         return "redirect:/modifyBook";
+
+        }catch (IOException ex) {
+            log.error("IOException = {}", ex.getMessage());
+            return "redirect:/ioError";
+        }
     }
 
     @GetMapping("/modifyClothes")
@@ -216,9 +262,14 @@ public class ItemController {
 
 
     @PostMapping("/modifyClothes/{itemId}/edit")
-    public String updateClothes(@PathVariable Long itemId, @ModelAttribute("form") ClothesForm clothesForm) throws IOException {
+    public String updateClothes(@PathVariable Long itemId, @ModelAttribute("form") ClothesForm clothesForm){
+        try {
         itemService.updateClothes(itemId, clothesForm);
         return "redirect:/modifyClothes";
+        }catch (IOException ex) {
+            log.error("IOException = {}", ex.getMessage());
+            return "redirect:/ioError";
+        }
     }
 
 
@@ -256,9 +307,15 @@ public class ItemController {
 
 
     @PostMapping("/modifyElectronics/{itemId}/edit")
-    public String updateElectronics(@PathVariable Long itemId, @ModelAttribute("form") ElectronicsForm electronicsForm) throws IOException {
+    public String updateElectronics(@PathVariable Long itemId, @ModelAttribute("form") ElectronicsForm electronicsForm){
+        try {
         itemService.updateElectronics(itemId,electronicsForm);
         return "redirect:/modifyElectronics";
+
+        }catch (IOException ex) {
+            log.error("IOException = {}", ex.getMessage());
+            return "redirect:/ioError";
+        }
     }
 
 
@@ -296,10 +353,25 @@ public class ItemController {
 
 
     @PostMapping("/modifyFood/{itemId}/edit")
-    public String updateFood(@PathVariable Long itemId, @ModelAttribute("form") FoodForm foodForm) throws IOException {
+    public String updateFood(@PathVariable Long itemId, @ModelAttribute("form") FoodForm foodForm){
+        try {
         itemService.updateFood(itemId,foodForm);
         return "redirect:/modifyFood";
+
+        }catch (IOException ex) {
+            log.error("IOException = {}", ex.getMessage());
+            return "redirect:/ioError";
+        }
     }
+    @PostMapping("/deleteBook/{itemId}")
+    public String deleteBook(@PathVariable Long itemId){
+        log.info("id=================={}", itemId);
+        itemService.deleteFileByItemId(itemId);
+        itemService.deleteItemByItemId(itemId);
+        return "redirect:/modifyBook"; // 적절한 리다이렉션 경로로 수정해야 합니다.
+    }
+
+
 
 
 
@@ -321,5 +393,27 @@ public class ItemController {
             // 파일이 존재하지 않거나 허용되지 않은 디렉토리에 있는 경우 404 에러 반환
             return (Resource) ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("uploadFileError")
+    public String uploadFileError() {
+        return "error/uploadFileError";
+    }
+
+    /**
+     * 아이템을 저장 할 떄 이미지 파일이 없다면 nullpointexception이 발생하므로 여기서 잡아준다.
+     */
+    @ExceptionHandler(NullPointerException.class)
+    public String handleNullPointException(NullPointerException ex) {
+        log.error("Exception ={}", ex.getMessage());
+        return "redirect:/uploadFileError";
+    }
+
+    /**
+     *ioException 발생시 이동
+     */
+    @GetMapping("ioError")
+    public String ioError() {
+        return "error/ioError";
     }
 }

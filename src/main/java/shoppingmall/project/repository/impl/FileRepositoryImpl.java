@@ -24,4 +24,10 @@ public class FileRepositoryImpl implements FileRepositoryCustom {
                 .from(uploadFile)
                 .where(uploadFile.item.id.eq(id)).fetchOne();
     }
+    @Override
+    public void deleteFromItemId(Long id) {
+        queryFactory.delete(uploadFile)
+                .where(uploadFile.item.id.eq(id))
+                .execute();
+    }
 }

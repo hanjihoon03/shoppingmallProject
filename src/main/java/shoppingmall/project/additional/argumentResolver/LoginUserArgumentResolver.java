@@ -1,4 +1,4 @@
-package shoppingmall.project.additional.ArgumentResolver;
+package shoppingmall.project.additional.argumentResolver;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

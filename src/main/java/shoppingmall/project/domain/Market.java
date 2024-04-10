@@ -1,6 +1,7 @@
 package shoppingmall.project.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.domain.subdomain.DeliveryStatus;
@@ -15,6 +16,7 @@ public class Market {
     @Id @GeneratedValue
     @Column(name = "market_id")
     private Long id;
+
     private int orderQuantity; //주문 수량
 
     @ManyToOne(fetch = FetchType.LAZY)

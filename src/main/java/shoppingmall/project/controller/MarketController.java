@@ -44,7 +44,6 @@ public class MarketController {
         int totalPrice = marketService.purchaseTotalPrice(itemDtos, user);
         model.addAttribute("totalPrice", totalPrice);
 
-        //유저 찾아서 티어 다시 부여해야함
         Tier userTier = userService.findUserTier(user.getId());
 
 
@@ -77,6 +76,8 @@ public class MarketController {
 
         // 장바구니의 아이템 id find하고 수량만 set 열어서 사용
         List<ItemDto> itemDtos = marketService.purchaseItem(session);
+
+
         for (ItemDto itemDto : itemDtos) {
             Item buyItem = itemService.findById(itemDto.getId());
 
@@ -91,9 +92,8 @@ public class MarketController {
 
             buyItem.purchaseAfterQuantity(itemDto.getQuantity());
         }
-        log.info("============================delete========================");
+
         marketService.deleteMarketUser(user.getId());
-        log.info("============================delete========================");
 
 
         // 영속성 컨텍스트에 올라가니까 올려서 수량 바꾸고 플러시

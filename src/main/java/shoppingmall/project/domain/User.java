@@ -20,20 +20,18 @@ public class User {
     @Column(name = "users_id")
     private Long id;
 
-    @NotEmpty
+
     private String loginId;
-    @NotEmpty
+
     private String name;
 
-    @NotEmpty
-    private String age;
+
+    private Integer age;
 
 
     @Column(nullable = false, unique = true)
-    @NotEmpty
     private String email;
 
-    @NotEmpty
     private String password;
 
     @Embedded
@@ -51,11 +49,8 @@ public class User {
     private List<Delivery> deliveries = new ArrayList<>();
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "membership_id")
-    private Membership membership;
 
-    public User(String loginId, String name, String age, String email, String password, Address address, Tier tier) {
+    public User(String loginId, String name, Integer age, String email, String password, Address address, Tier tier) {
         this.loginId = loginId;
         this.name = name;
         this.age = age;

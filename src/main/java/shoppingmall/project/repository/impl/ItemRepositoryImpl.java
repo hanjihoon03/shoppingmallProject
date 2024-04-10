@@ -11,6 +11,7 @@ import shoppingmall.project.domain.dto.ClothesAndFileDto;
 import shoppingmall.project.domain.dto.ElectronicsAndFileDto;
 import shoppingmall.project.domain.dto.FoodAndFileDto;
 import shoppingmall.project.domain.item.*;
+import shoppingmall.project.exception.MyDbException;
 import shoppingmall.project.repository.custom.ItemRepositoryCustom;
 
 import java.util.ArrayList;
@@ -29,9 +30,11 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 
 
     private final JPAQueryFactory queryFactory;
+    private final EntityManager entityManager;
 
-    public ItemRepositoryImpl(EntityManager em) {
-        this.queryFactory = new JPAQueryFactory(em);
+    public ItemRepositoryImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+        this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
     @Override

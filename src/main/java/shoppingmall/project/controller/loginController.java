@@ -6,8 +6,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import shoppingmall.project.additional.annotation.Trace;
+import shoppingmall.project.additional.log.Trace2;
+import shoppingmall.project.additional.log.template.AbstractTemplate;
+import shoppingmall.project.additional.log.trace.LogTrace;
+import shoppingmall.project.additional.log.trace.TraceStatus;
 import shoppingmall.project.additional.web.session.SessionConst;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.form.LoginForm;
@@ -21,15 +27,18 @@ public class loginController {
 
     private final UserService userService;
 
+
     @GetMapping("login")
     public String loginPage(@ModelAttribute("loginForm") LoginForm loginForm) {
+
         return "login/login";
+
     }
 
     @PostMapping("login")
     public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
                         HttpServletRequest request,
-                        @RequestParam(defaultValue = "/") String redirectURL) {
+                        Model model) {
 
         if (bindingResult.hasErrors()){
             return "login/login";
@@ -39,6 +48,7 @@ public class loginController {
 
         if (loginUser == null) {
             bindingResult.reject("loginFail", "아이디 혹은 비밀번호가 다릅니다.");
+            model.addAttribute("error","아이디 혹은 비밀번호가 다릅니다.");
             return "login/login";
         }
         HttpSession session = request.getSession();
@@ -46,27 +56,24 @@ public class loginController {
         session.setAttribute(SessionConst.LOGIN_USER,loginUser);
 
 
-        return "redirect:" + redirectURL;
+        return "redirect:/";
     }
-
-
-
-
 
 
     @GetMapping("sign-up")
     public String signUp(@ModelAttribute("userForm") UserForm userForm) {
-        return "login/sign-up";
+            return "login/sign-up";
     }
 
     @PostMapping("sign-up")
     public String createUser(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "login/sign-up";
-        }
-        userService.createSaveUser(userForm);
 
-        return "redirect:/";
+            if (bindingResult.hasErrors()) {
+                return "login/sign-up";
+            }
+            userService.createSaveUser(userForm);
+
+            return "redirect:/";
     }
 
 
@@ -77,5 +84,11 @@ public class loginController {
             session.invalidate();
         }
         return "redirect:/";
+    }
+    //어드민 페이지 이동
+    //물품 추가 및 제거 수정
+    @GetMapping("/adminPage")
+    public String adminPage() {
+        return "/admin/adminPage";
     }
 }

@@ -32,6 +32,9 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <a href="/modifyBook" class="btn btn-dark btn-lg">수정</a>
+
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <span th:text="${error}"></span>
     </form>
     <br/>
     <div th:replace="fragments/footer :: footer" />

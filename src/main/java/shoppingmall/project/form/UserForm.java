@@ -1,7 +1,10 @@
 package shoppingmall.project.form;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 @Data
 public class UserForm {
@@ -9,18 +12,20 @@ public class UserForm {
     private String loginId;
     @NotEmpty
     private String name;
-    @NotEmpty
-    private String age;
-    @NotEmpty
+    @NotNull
+    @Range(min = 1, max = 130)
+    private Integer age;
+    @Email
     private String email;
     @NotEmpty
     private String password;
 
 
+    @NotEmpty
     private String zipcode;
-
+    @NotEmpty
     private String city;
-
+    @NotEmpty
     private String street;
 
     public UserForm() {
@@ -31,7 +36,7 @@ public class UserForm {
         this.password = password;
     }
 
-    public UserForm(String name, String age, String email, String password, String zipcode, String city, String street) {
+    public UserForm(String name, Integer age, String email, String password, String zipcode, String city, String street) {
         this.name = name;
         this.age = age;
         this.email = email;
