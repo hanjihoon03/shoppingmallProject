@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.repository.custom.ItemRepositoryCustom;
 
+import java.util.List;
+
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Long> , ItemRepositoryCustom {
+public interface ItemRepository extends JpaRepository<Item, Long> , ItemRepositoryCustom{
+    List<Item> findByDtype(String dtype);
 }

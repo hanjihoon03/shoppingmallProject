@@ -91,4 +91,5 @@ public class loginController {
     public String adminPage() {
         return "/admin/adminPage";
     }
+
 }

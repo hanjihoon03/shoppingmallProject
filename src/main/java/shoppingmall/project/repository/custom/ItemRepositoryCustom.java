@@ -1,6 +1,7 @@
 package shoppingmall.project.repository.custom;
 
 
+import shoppingmall.project.domain.apidto.ItemCond;
 import shoppingmall.project.domain.dto.*;
 import shoppingmall.project.domain.item.*;
 import shoppingmall.project.repository.FileRepository;
@@ -16,6 +17,11 @@ public interface ItemRepositoryCustom{
     Clothes findClothes(Long id);
     Electronics findElectronics(Long id);
     Food findFood(Long id);
+
+    List<Item> findPriceRange(ItemCond itemCond);
+
+
+    List<Item> findDtypePriceRange(ItemCond itemCond);
 
 
 }

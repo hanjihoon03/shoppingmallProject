@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import shoppingmall.project.domain.UploadFile;
+import shoppingmall.project.domain.apidto.ItemCond;
 import shoppingmall.project.domain.dto.BookAndFileDto;
 import shoppingmall.project.domain.dto.ClothesAndFileDto;
 import shoppingmall.project.domain.dto.ElectronicsAndFileDto;
@@ -171,6 +172,24 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .from(food)
                 .where(food.id.eq(id)).fetchOne();
     }
+
+    //api
+    @Override
+    public List<Item> findPriceRange(ItemCond itemCond) {
+        return queryFactory.selectFrom(item)
+                .where(item.price.between(itemCond.getMin(), itemCond.getMax()))
+                .fetch();
+    }
+
+    @Override
+    public List<Item> findDtypePriceRange(ItemCond itemCond) {
+        return queryFactory.selectFrom(item)
+                .where(item.dtype.eq(itemCond.getDtype()).and(item.price.between(itemCond.getMin(), itemCond.getMax())))
+                .fetch();
+    }
+
+
+
 
 
     private String initializeUploadFileNameBook(Book book, List<UploadFile> uploadFiles){
