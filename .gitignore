@@ -180,4 +180,4 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
-*.yml
+application.yml
