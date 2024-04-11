@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - DbExceptionAspectTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>DbExceptionAspectTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/shoppingmall.project.aop.html">shoppingmall.project.aop</a> &gt; DbExceptionAspectTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.802s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">testFindBookById()</td>
+<td class="success">1.802s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>17:27:42.930 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [shoppingmall.project.aop.DbExceptionAspectTest]: DbExceptionAspectTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:27:43.129 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration shoppingmall.project.ProjectApplication for test class shoppingmall.project.aop.DbExceptionAspectTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2024-04-09T17:27:43.800+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.DbExceptionAspectTest      : Starting DbExceptionAspectTest using Java 21.0.1 with PID 78116 (started by hanjihoon in /Users/hanjihoon/Desktop/devel/project)
+2024-04-09T17:27:43.802+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.DbExceptionAspectTest      : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-04-09T17:27:45.271+09:00  INFO 78116 --- [project] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-09T17:27:45.433+09:00  INFO 78116 --- [project] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 152 ms. Found 6 JPA repository interfaces.
+2024-04-09T17:27:47.043+09:00  INFO 78116 --- [project] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-09T17:27:47.100+09:00  INFO 78116 --- [project] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-09T17:27:47.130+09:00  INFO 78116 --- [project] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-04-09T17:27:47.358+09:00  INFO 78116 --- [project] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-09T17:27:47.391+09:00  INFO 78116 --- [project] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-09T17:27:47.494+09:00  INFO 78116 --- [project] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/myproject user=SA
+2024-04-09T17:27:47.496+09:00  INFO 78116 --- [project] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-09T17:27:47.793+09:00  WARN 78116 --- [project] [    Test worker] o.h.boot.model.internal.EntityBinder     : HHH000457: Joined inheritance hierarchy [shoppingmall.project.domain.item.Item] defined explicit @DiscriminatorColumn.  Legacy Hibernate behavior was to ignore the @DiscriminatorColumn.  However, as part of issue HHH-6911 we now apply the explicit @DiscriminatorColumn.  If you would prefer the legacy behavior, enable the `hibernate.discriminator.ignore_explicit_for_joined` setting (hibernate.discriminator.ignore_explicit_for_joined=true)
+2024-04-09T17:27:47.895+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651267895 | took 5ms | statement | connection 1| url jdbc:h2:tcp://localhost/~/myproject
+select * from INFORMATION_SCHEMA.SEQUENCES
+select * from INFORMATION_SCHEMA.SEQUENCES;
+2024-04-09T17:27:49.283+09:00  INFO 78116 --- [project] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-09T17:27:49.306+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists book cascade 
+2024-04-09T17:27:49.318+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269318 | took 1ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists book cascade 
+
+    drop table if exists book cascade ;
+2024-04-09T17:27:49.319+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists clothes cascade 
+2024-04-09T17:27:49.320+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269320 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists clothes cascade 
+
+    drop table if exists clothes cascade ;
+2024-04-09T17:27:49.320+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists delivery cascade 
+2024-04-09T17:27:49.320+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269320 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists delivery cascade 
+
+    drop table if exists delivery cascade ;
+2024-04-09T17:27:49.320+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists electronics cascade 
+2024-04-09T17:27:49.321+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269321 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists electronics cascade 
+
+    drop table if exists electronics cascade ;
+2024-04-09T17:27:49.322+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists food cascade 
+2024-04-09T17:27:49.324+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269324 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists food cascade 
+
+    drop table if exists food cascade ;
+2024-04-09T17:27:49.324+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists item cascade 
+2024-04-09T17:27:49.325+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269325 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists item cascade 
+
+    drop table if exists item cascade ;
+2024-04-09T17:27:49.325+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists market cascade 
+2024-04-09T17:27:49.327+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269327 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists market cascade 
+
+    drop table if exists market cascade ;
+2024-04-09T17:27:49.327+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists purchase cascade 
+2024-04-09T17:27:49.328+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269328 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists purchase cascade 
+
+    drop table if exists purchase cascade ;
+2024-04-09T17:27:49.328+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists upload_file cascade 
+2024-04-09T17:27:49.329+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269329 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists upload_file cascade 
+
+    drop table if exists upload_file cascade ;
+2024-04-09T17:27:49.329+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists users cascade 
+2024-04-09T17:27:49.331+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269331 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop table if exists users cascade 
+
+    drop table if exists users cascade ;
+2024-04-09T17:27:49.332+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop sequence if exists delivery_seq
+2024-04-09T17:27:49.332+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269332 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop sequence if exists delivery_seq
+
+    drop sequence if exists delivery_seq;
+2024-04-09T17:27:49.333+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop sequence if exists item_seq
+2024-04-09T17:27:49.333+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269333 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop sequence if exists item_seq
+
+    drop sequence if exists item_seq;
+2024-04-09T17:27:49.334+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop sequence if exists market_seq
+2024-04-09T17:27:49.336+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269336 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop sequence if exists market_seq
+
+    drop sequence if exists market_seq;
+2024-04-09T17:27:49.336+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop sequence if exists purchase_seq
+2024-04-09T17:27:49.337+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269337 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop sequence if exists purchase_seq
+
+    drop sequence if exists purchase_seq;
+2024-04-09T17:27:49.337+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop sequence if exists upload_file_seq
+2024-04-09T17:27:49.337+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269337 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop sequence if exists upload_file_seq
+
+    drop sequence if exists upload_file_seq;
+2024-04-09T17:27:49.337+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    drop sequence if exists users_seq
+2024-04-09T17:27:49.338+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269337 | took 0ms | statement | connection 2| url jdbc:h2:tcp://localhost/~/myproject
+
+    drop sequence if exists users_seq
+
+    drop sequence if exists users_seq;
+2024-04-09T17:27:49.352+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create sequence delivery_seq start with 1 increment by 50
+2024-04-09T17:27:49.353+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269353 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create sequence delivery_seq start with 1 increment by 50
+
+    create sequence delivery_seq start with 1 increment by 50;
+2024-04-09T17:27:49.353+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create sequence item_seq start with 1 increment by 50
+2024-04-09T17:27:49.354+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269354 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create sequence item_seq start with 1 increment by 50
+
+    create sequence item_seq start with 1 increment by 50;
+2024-04-09T17:27:49.355+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create sequence market_seq start with 1 increment by 50
+2024-04-09T17:27:49.356+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269356 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create sequence market_seq start with 1 increment by 50
+
+    create sequence market_seq start with 1 increment by 50;
+2024-04-09T17:27:49.357+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create sequence purchase_seq start with 1 increment by 50
+2024-04-09T17:27:49.357+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269357 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create sequence purchase_seq start with 1 increment by 50
+
+    create sequence purchase_seq start with 1 increment by 50;
+2024-04-09T17:27:49.357+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create sequence upload_file_seq start with 1 increment by 50
+2024-04-09T17:27:49.357+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269357 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create sequence upload_file_seq start with 1 increment by 50
+
+    create sequence upload_file_seq start with 1 increment by 50;
+2024-04-09T17:27:49.360+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create sequence users_seq start with 1 increment by 50
+2024-04-09T17:27:49.360+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269360 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create sequence users_seq start with 1 increment by 50
+
+    create sequence users_seq start with 1 increment by 50;
+2024-04-09T17:27:49.365+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table book (
+        item_id bigint not null,
+        author varchar(255),
+        isbn varchar(255),
+        primary key (item_id)
+    )
+2024-04-09T17:27:49.368+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269368 | took 1ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table book (
+        item_id bigint not null,
+        author varchar(255),
+        isbn varchar(255),
+        primary key (item_id)
+    )
+
+    create table book (
+        item_id bigint not null,
+        author varchar(255),
+        isbn varchar(255),
+        primary key (item_id)
+    );
+2024-04-09T17:27:49.370+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table clothes (
+        size integer not null,
+        item_id bigint not null,
+        brand varchar(255),
+        clothes_type varchar(255) check (clothes_type in ('PANTS','SHIRTS')),
+        primary key (item_id)
+    )
+2024-04-09T17:27:49.373+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269373 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table clothes (
+        size integer not null,
+        item_id bigint not null,
+        brand varchar(255),
+        clothes_type varchar(255) check (clothes_type in ('PANTS','SHIRTS')),
+        primary key (item_id)
+    )
+
+    create table clothes (
+        size integer not null,
+        item_id bigint not null,
+        brand varchar(255),
+        clothes_type varchar(255) check (clothes_type in ('PANTS','SHIRTS')),
+        primary key (item_id)
+    );
+2024-04-09T17:27:49.376+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table delivery (
+        delivery_id bigint not null,
+        order_time timestamp(6),
+        users_id bigint,
+        city varchar(255),
+        status varchar(255) check (status in ('WAIT','CANCEL','DELIVERY')),
+        street varchar(255),
+        zipcode varchar(255),
+        primary key (delivery_id)
+    )
+2024-04-09T17:27:49.379+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269379 | took 1ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table delivery (
+        delivery_id bigint not null,
+        order_time timestamp(6),
+        users_id bigint,
+        city varchar(255),
+        status varchar(255) check (status in ('WAIT','CANCEL','DELIVERY')),
+        street varchar(255),
+        zipcode varchar(255),
+        primary key (delivery_id)
+    )
+
+    create table delivery (
+        delivery_id bigint not null,
+        order_time timestamp(6),
+        users_id bigint,
+        city varchar(255),
+        status varchar(255) check (status in ('WAIT','CANCEL','DELIVERY')),
+        street varchar(255),
+        zipcode varchar(255),
+        primary key (delivery_id)
+    );
+2024-04-09T17:27:49.383+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table electronics (
+        item_id bigint not null,
+        brand varchar(255),
+        primary key (item_id)
+    )
+2024-04-09T17:27:49.385+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269385 | took 1ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table electronics (
+        item_id bigint not null,
+        brand varchar(255),
+        primary key (item_id)
+    )
+
+    create table electronics (
+        item_id bigint not null,
+        brand varchar(255),
+        primary key (item_id)
+    );
+2024-04-09T17:27:49.387+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table food (
+        item_id bigint not null,
+        brand varchar(255),
+        primary key (item_id)
+    )
+2024-04-09T17:27:49.388+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269388 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table food (
+        item_id bigint not null,
+        brand varchar(255),
+        primary key (item_id)
+    )
+
+    create table food (
+        item_id bigint not null,
+        brand varchar(255),
+        primary key (item_id)
+    );
+2024-04-09T17:27:49.389+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table item (
+        price integer not null,
+        quantity integer not null,
+        item_id bigint not null,
+        dtype varchar(31) not null,
+        name varchar(255),
+        primary key (item_id)
+    )
+2024-04-09T17:27:49.391+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269391 | took 1ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table item (
+        price integer not null,
+        quantity integer not null,
+        item_id bigint not null,
+        dtype varchar(31) not null,
+        name varchar(255),
+        primary key (item_id)
+    )
+
+    create table item (
+        price integer not null,
+        quantity integer not null,
+        item_id bigint not null,
+        dtype varchar(31) not null,
+        name varchar(255),
+        primary key (item_id)
+    );
+2024-04-09T17:27:49.395+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table market (
+        order_quantity integer not null,
+        delivery_id bigint unique,
+        item_id bigint,
+        market_id bigint not null,
+        user_id bigint,
+        primary key (market_id)
+    )
+2024-04-09T17:27:49.397+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269397 | took 1ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table market (
+        order_quantity integer not null,
+        delivery_id bigint unique,
+        item_id bigint,
+        market_id bigint not null,
+        user_id bigint,
+        primary key (market_id)
+    )
+
+    create table market (
+        order_quantity integer not null,
+        delivery_id bigint unique,
+        item_id bigint,
+        market_id bigint not null,
+        user_id bigint,
+        primary key (market_id)
+    );
+2024-04-09T17:27:49.398+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table purchase (
+        order_price integer not null,
+        order_quantity integer not null,
+        delivery_id bigint,
+        purchase_id bigint not null,
+        item_name varchar(255),
+        primary key (purchase_id)
+    )
+2024-04-09T17:27:49.399+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269399 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table purchase (
+        order_price integer not null,
+        order_quantity integer not null,
+        delivery_id bigint,
+        purchase_id bigint not null,
+        item_name varchar(255),
+        primary key (purchase_id)
+    )
+
+    create table purchase (
+        order_price integer not null,
+        order_quantity integer not null,
+        delivery_id bigint,
+        purchase_id bigint not null,
+        item_name varchar(255),
+        primary key (purchase_id)
+    );
+2024-04-09T17:27:49.399+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table upload_file (
+        file_id bigint not null,
+        item_id bigint,
+        store_file_name clob,
+        upload_file_name clob,
+        primary key (file_id)
+    )
+2024-04-09T17:27:49.400+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269400 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table upload_file (
+        file_id bigint not null,
+        item_id bigint,
+        store_file_name clob,
+        upload_file_name clob,
+        primary key (file_id)
+    )
+
+    create table upload_file (
+        file_id bigint not null,
+        item_id bigint,
+        store_file_name clob,
+        upload_file_name clob,
+        primary key (file_id)
+    );
+2024-04-09T17:27:49.401+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    create table users (
+        accumulated_amount integer not null,
+        age integer,
+        users_id bigint not null,
+        city varchar(255),
+        email varchar(255) not null unique,
+        login_id varchar(255),
+        name varchar(255),
+        password varchar(255),
+        street varchar(255),
+        tier varchar(255) check (tier in ('BRONZE','SILVER','GOLD','NORMAL')),
+        zipcode varchar(255),
+        primary key (users_id)
+    )
+2024-04-09T17:27:49.404+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269404 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    create table users (
+        accumulated_amount integer not null,
+        age integer,
+        users_id bigint not null,
+        city varchar(255),
+        email varchar(255) not null unique,
+        login_id varchar(255),
+        name varchar(255),
+        password varchar(255),
+        street varchar(255),
+        tier varchar(255) check (tier in ('BRONZE','SILVER','GOLD','NORMAL')),
+        zipcode varchar(255),
+        primary key (users_id)
+    )
+
+    create table users (
+        accumulated_amount integer not null,
+        age integer,
+        users_id bigint not null,
+        city varchar(255),
+        email varchar(255) not null unique,
+        login_id varchar(255),
+        name varchar(255),
+        password varchar(255),
+        street varchar(255),
+        tier varchar(255) check (tier in ('BRONZE','SILVER','GOLD','NORMAL')),
+        zipcode varchar(255),
+        primary key (users_id)
+    );
+2024-04-09T17:27:49.406+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists book 
+       add constraint FKgohd8evkxf3j9a0p4jk5evpiv 
+       foreign key (item_id) 
+       references item
+2024-04-09T17:27:49.408+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269408 | took 1ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists book 
+       add constraint FKgohd8evkxf3j9a0p4jk5evpiv 
+       foreign key (item_id) 
+       references item
+
+    alter table if exists book 
+       add constraint FKgohd8evkxf3j9a0p4jk5evpiv 
+       foreign key (item_id) 
+       references item;
+2024-04-09T17:27:49.409+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists clothes 
+       add constraint FKfrrypr5bounfnme0otnw6ntnj 
+       foreign key (item_id) 
+       references item
+2024-04-09T17:27:49.410+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269410 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists clothes 
+       add constraint FKfrrypr5bounfnme0otnw6ntnj 
+       foreign key (item_id) 
+       references item
+
+    alter table if exists clothes 
+       add constraint FKfrrypr5bounfnme0otnw6ntnj 
+       foreign key (item_id) 
+       references item;
+2024-04-09T17:27:49.410+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists delivery 
+       add constraint FKrj4x1c3g9p0sokuwtxhl9531o 
+       foreign key (users_id) 
+       references users
+2024-04-09T17:27:49.411+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269411 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists delivery 
+       add constraint FKrj4x1c3g9p0sokuwtxhl9531o 
+       foreign key (users_id) 
+       references users
+
+    alter table if exists delivery 
+       add constraint FKrj4x1c3g9p0sokuwtxhl9531o 
+       foreign key (users_id) 
+       references users;
+2024-04-09T17:27:49.412+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists electronics 
+       add constraint FK8kyxyeb1taaggxitjp8ggykur 
+       foreign key (item_id) 
+       references item
+2024-04-09T17:27:49.413+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269413 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists electronics 
+       add constraint FK8kyxyeb1taaggxitjp8ggykur 
+       foreign key (item_id) 
+       references item
+
+    alter table if exists electronics 
+       add constraint FK8kyxyeb1taaggxitjp8ggykur 
+       foreign key (item_id) 
+       references item;
+2024-04-09T17:27:49.415+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists food 
+       add constraint FKgw9gw7sxmirs8u5hdgqu5pvdy 
+       foreign key (item_id) 
+       references item
+2024-04-09T17:27:49.416+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269416 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists food 
+       add constraint FKgw9gw7sxmirs8u5hdgqu5pvdy 
+       foreign key (item_id) 
+       references item
+
+    alter table if exists food 
+       add constraint FKgw9gw7sxmirs8u5hdgqu5pvdy 
+       foreign key (item_id) 
+       references item;
+2024-04-09T17:27:49.417+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists market 
+       add constraint FKowhcoktbhmu9etvo6hlvlwfx4 
+       foreign key (delivery_id) 
+       references delivery
+2024-04-09T17:27:49.417+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269417 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists market 
+       add constraint FKowhcoktbhmu9etvo6hlvlwfx4 
+       foreign key (delivery_id) 
+       references delivery
+
+    alter table if exists market 
+       add constraint FKowhcoktbhmu9etvo6hlvlwfx4 
+       foreign key (delivery_id) 
+       references delivery;
+2024-04-09T17:27:49.417+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists market 
+       add constraint FK5oeg9umhsehgqdg9xdc604ncs 
+       foreign key (item_id) 
+       references item
+2024-04-09T17:27:49.418+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269418 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists market 
+       add constraint FK5oeg9umhsehgqdg9xdc604ncs 
+       foreign key (item_id) 
+       references item
+
+    alter table if exists market 
+       add constraint FK5oeg9umhsehgqdg9xdc604ncs 
+       foreign key (item_id) 
+       references item;
+2024-04-09T17:27:49.418+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists market 
+       add constraint FKnc9o1jahbb6fhmsvvnt33xb5r 
+       foreign key (user_id) 
+       references users
+2024-04-09T17:27:49.419+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269419 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists market 
+       add constraint FKnc9o1jahbb6fhmsvvnt33xb5r 
+       foreign key (user_id) 
+       references users
+
+    alter table if exists market 
+       add constraint FKnc9o1jahbb6fhmsvvnt33xb5r 
+       foreign key (user_id) 
+       references users;
+2024-04-09T17:27:49.419+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists purchase 
+       add constraint FKl6vafu62b771btlc33ihwh78t 
+       foreign key (delivery_id) 
+       references delivery
+2024-04-09T17:27:49.419+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269419 | took 0ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists purchase 
+       add constraint FKl6vafu62b771btlc33ihwh78t 
+       foreign key (delivery_id) 
+       references delivery
+
+    alter table if exists purchase 
+       add constraint FKl6vafu62b771btlc33ihwh78t 
+       foreign key (delivery_id) 
+       references delivery;
+2024-04-09T17:27:49.419+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists upload_file 
+       add constraint FKp2rhly1wcbh80jlxl2b4w8ed8 
+       foreign key (item_id) 
+       references item
+2024-04-09T17:27:49.421+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651269421 | took 1ms | statement | connection 3| url jdbc:h2:tcp://localhost/~/myproject
+
+    alter table if exists upload_file 
+       add constraint FKp2rhly1wcbh80jlxl2b4w8ed8 
+       foreign key (item_id) 
+       references item
+
+    alter table if exists upload_file 
+       add constraint FKp2rhly1wcbh80jlxl2b4w8ed8 
+       foreign key (item_id) 
+       references item;
+2024-04-09T17:27:49.428+09:00  INFO 78116 --- [project] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-09T17:27:50.282+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    select
+        next value for users_seq
+2024-04-09T17:27:50.286+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651270286 | took 0ms | statement | connection 4| url jdbc:h2:tcp://localhost/~/myproject
+select next value for users_seq
+select next value for users_seq;
+2024-04-09T17:27:50.453+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (accumulated_amount, city, street, zipcode, age, email, login_id, name, password, tier, users_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-04-09T17:27:50.490+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651270490 | took 1ms | statement | connection 4| url jdbc:h2:tcp://localhost/~/myproject
+insert into users (accumulated_amount,city,street,zipcode,age,email,login_id,name,password,tier,users_id) values (?,?,?,?,?,?,?,?,?,?,?)
+insert into users (accumulated_amount,city,street,zipcode,age,email,login_id,name,password,tier,users_id) values (0,'1','1','1',1,'1@1','1','1','1','NORMAL',1);
+2024-04-09T17:27:50.501+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651270501 | took 0ms | commit | connection 4| url jdbc:h2:tcp://localhost/~/myproject
+
+;
+2024-04-09T17:27:52.457+09:00  WARN 78116 --- [project] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-09T17:27:53.732+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.DbExceptionAspectTest      : Started DbExceptionAspectTest in 10.429 seconds (process running for 12.098)
+2024-04-09T17:27:54.913+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    select
+        b1_0.item_id,
+        b1_1.dtype,
+        b1_1.name,
+        b1_1.price,
+        b1_1.quantity,
+        b1_0.author,
+        b1_0.isbn,
+        b1_1.item_id 
+    from
+        book b1_0 
+    join
+        item b1_1 
+            on b1_0.item_id=b1_1.item_id 
+    where
+        b1_0.item_id=?
+2024-04-09T17:27:54.934+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651274934 | took 0ms | statement | connection 5| url jdbc:h2:tcp://localhost/~/myproject
+select b1_0.item_id,b1_1.dtype,b1_1.name,b1_1.price,b1_1.quantity,b1_0.author,b1_0.isbn,b1_1.item_id from book b1_0 join item b1_1 on b1_0.item_id=b1_1.item_id where b1_0.item_id=?
+select b1_0.item_id,b1_1.dtype,b1_1.name,b1_1.price,b1_1.quantity,b1_0.author,b1_0.isbn,b1_1.item_id from book b1_0 join item b1_1 on b1_0.item_id=b1_1.item_id where b1_0.item_id=1;
+2024-04-09T17:27:54.943+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    select
+        next value for item_seq
+2024-04-09T17:27:54.945+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651274945 | took 0ms | statement | connection 5| url jdbc:h2:tcp://localhost/~/myproject
+select next value for item_seq
+select next value for item_seq;
+2024-04-09T17:27:54.955+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        item
+        (name, price, quantity, dtype, item_id) 
+    values
+        (?, ?, ?, 'Book', ?)
+2024-04-09T17:27:54.958+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651274958 | took 0ms | statement | connection 5| url jdbc:h2:tcp://localhost/~/myproject
+insert into item (name,price,quantity,dtype,item_id) values (?,?,?,'Book',?)
+insert into item (name,price,quantity,dtype,item_id) values ('Test Book',1,1,'Book',1);
+2024-04-09T17:27:54.959+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        book
+        (author, isbn, item_id) 
+    values
+        (?, ?, ?)
+2024-04-09T17:27:54.960+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651274960 | took 0ms | statement | connection 5| url jdbc:h2:tcp://localhost/~/myproject
+insert into book (author,isbn,item_id) values (?,?,?)
+insert into book (author,isbn,item_id) values ('1','1234567890',1);
+2024-04-09T17:27:54.962+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651274962 | took 0ms | commit | connection 5| url jdbc:h2:tcp://localhost/~/myproject
+
+;
+Before invoking method: ItemRepositoryImpl.findBook(..)
+2024-04-09T17:27:54.979+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.DbExceptionAspect          : ================repository exception check start==================
+2024-04-09T17:27:54.979+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.LogTraceAspect             : ==============advice 실행==============
+2024-04-09T17:27:54.983+09:00  INFO 78116 --- [project] [    Test worker] s.p.a.log.trace.ThreadLocalLogTrace      : [fd3da10a] Book shoppingmall.project.repository.impl.ItemRepositoryImpl.findBook(Long)
+2024-04-09T17:27:55.473+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    select
+        b1_0.item_id,
+        b1_1.dtype,
+        b1_1.item_id,
+        b1_1.name,
+        b1_1.price,
+        b1_1.quantity,
+        b1_0.author,
+        b1_0.isbn 
+    from
+        book b1_0 
+    join
+        item b1_1 
+            on b1_0.item_id=b1_1.item_id 
+    where
+        b1_0.item_id=?
+2024-04-09T17:27:55.478+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651275478 | took 0ms | statement | connection 6| url jdbc:h2:tcp://localhost/~/myproject
+select b1_0.item_id,b1_1.dtype,b1_1.item_id,b1_1.name,b1_1.price,b1_1.quantity,b1_0.author,b1_0.isbn from book b1_0 join item b1_1 on b1_0.item_id=b1_1.item_id where b1_0.item_id=?
+select b1_0.item_id,b1_1.dtype,b1_1.item_id,b1_1.name,b1_1.price,b1_1.quantity,b1_0.author,b1_0.isbn from book b1_0 join item b1_1 on b1_0.item_id=b1_1.item_id where b1_0.item_id=1;
+2024-04-09T17:27:55.483+09:00  INFO 78116 --- [project] [    Test worker] s.p.a.log.trace.ThreadLocalLogTrace      : [fd3da10a] Book shoppingmall.project.repository.impl.ItemRepositoryImpl.findBook(Long) time=500ms
+2024-04-09T17:27:55.484+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.LogTraceAspect             : ==============advice 종료==============
+2024-04-09T17:27:55.484+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.DbExceptionAspect          : ================repository exception check end==================
+After invoking method: ItemRepositoryImpl.findBook(..)
+Before invoking method: ItemRepositoryImpl.findBook(..)
+2024-04-09T17:27:55.533+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.DbExceptionAspect          : ================repository exception check start==================
+2024-04-09T17:27:55.533+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.LogTraceAspect             : ==============advice 실행==============
+2024-04-09T17:27:55.534+09:00  INFO 78116 --- [project] [    Test worker] s.p.a.log.trace.ThreadLocalLogTrace      : [4fc99e10] Book shoppingmall.project.repository.impl.ItemRepositoryImpl.findBook(Long)
+2024-04-09T17:27:55.539+09:00 DEBUG 78116 --- [project] [    Test worker] org.hibernate.SQL                        : 
+    select
+        b1_0.item_id,
+        b1_1.dtype,
+        b1_1.item_id,
+        b1_1.name,
+        b1_1.price,
+        b1_1.quantity,
+        b1_0.author,
+        b1_0.isbn 
+    from
+        book b1_0 
+    join
+        item b1_1 
+            on b1_0.item_id=b1_1.item_id 
+    where
+        b1_0.item_id=?
+2024-04-09T17:27:55.540+09:00  INFO 78116 --- [project] [    Test worker] p6spy                                    : #1712651275540 | took 0ms | statement | connection 7| url jdbc:h2:tcp://localhost/~/myproject
+select b1_0.item_id,b1_1.dtype,b1_1.item_id,b1_1.name,b1_1.price,b1_1.quantity,b1_0.author,b1_0.isbn from book b1_0 join item b1_1 on b1_0.item_id=b1_1.item_id where b1_0.item_id=?
+select b1_0.item_id,b1_1.dtype,b1_1.item_id,b1_1.name,b1_1.price,b1_1.quantity,b1_0.author,b1_0.isbn from book b1_0 join item b1_1 on b1_0.item_id=b1_1.item_id where b1_0.item_id=1000;
+2024-04-09T17:27:55.543+09:00  INFO 78116 --- [project] [    Test worker] s.p.a.log.trace.ThreadLocalLogTrace      : [4fc99e10] Book shoppingmall.project.repository.impl.ItemRepositoryImpl.findBook(Long) time=9ms
+2024-04-09T17:27:55.543+09:00  INFO 78116 --- [project] [    Test worker] s.project.aop.LogTraceAspect             : ==============advice 종료==============
+2024-04-09T17:27:55.543+09:00 ERROR 78116 --- [project] [    Test worker] s.project.aop.DbExceptionAspect          : repository method exception: Entity not found in the repository
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>WARNING: A Java agent has been loaded dynamically (/Users/hanjihoon/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.12/be4984cb6fd1ef1d11f218a648889dfda44b8a15/byte-buddy-agent-1.14.12.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Exception occurred in method: ItemRepositoryImpl.findBook(..)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.6</a> at 2024. 4. 9. 오후 5:27:55</p>
+</div>
+</div>
+</body>
+</html>
