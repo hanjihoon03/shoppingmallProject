@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div>
+        <table class="table table-striped">
+            <thead> <tr>
+                <th>#</th> <th>상품</th> <th>상품명</th> <th>가격</th><th>재고수량</th> <th>종류</th><th>브랜드</th><th>size</th><th>수량</th> <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="clothesAndFileDto, status : ${allClothes}">
+                <!-- 첨부 파일 링크 -->
+                <td th:text="${status.index + 1}"></td>
+                <td>
+                    <a th:href="@{/attach/{id}(id=${clothesAndFileDto.id})}">
+                        <img th:if="${clothesAndFileDto.uploadFileName != null}"
+                             th:src="@{/images/{filename}(filename=${clothesAndFileDto.storeFileName})}"
+                             width="50" height="50"/>
+                    </a>
+                </td>
+                <td th:text="${clothesAndFileDto.name}"></td>
+                <td th:text="${clothesAndFileDto.price}"></td>
+                <td th:text="${clothesAndFileDto.quantity}"></td>
+                <td th:text="${clothesAndFileDto.clothesType}"></td>
+                <td th:text="${clothesAndFileDto.brand}"></td>
+                <td th:text="${clothesAndFileDto.size}"></td>
+                <td>
+                    <form th:action="@{/addCart}" method="post">
+                        <input type="hidden" name="itemId" th:value="${clothesAndFileDto.id}">
+                        <input type="number" name="quantity" value="1" min="1" required>
+                        <button class="btn btn-dark btn-lg" type="submit">
+                            장바구니 추가
+                        </button>
+                    </form>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer"/>
+</div> <!-- /container -->
+</body>
+</html>
