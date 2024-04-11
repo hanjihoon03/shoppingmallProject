@@ -57,6 +57,20 @@ public class ItemApiService {
                     return itemApiDto;
                 }).toList();
     }
+    public List<ItemApiDto> findDtypePriceRange(String dtype, int min, int max) {
+        ItemCond itemCond = new ItemCond(min, max, dtype);
+        List<Item> allItem = itemRepository.findPriceRange(itemCond);
+        return allItem.stream()
+                .map(item -> {
+                    ItemApiDto itemApiDto = new ItemApiDto();
+                    itemApiDto.setId(item.getId());
+                    itemApiDto.setName(item.getName());
+                    itemApiDto.setPrice(item.getPrice());
+                    itemApiDto.setQuantity(item.getQuantity());
+                    itemApiDto.setDtype(item.getDtype());
+                    return itemApiDto;
+                }).toList();
+    }
 
 
 }
