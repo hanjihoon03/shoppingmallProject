@@ -2,11 +2,9 @@ package shoppingmall.project.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import shoppingmall.project.domain.apidto.ItemApiDto;
+import shoppingmall.project.domain.apidto.UpdateItemDto;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.repository.ItemRepository;
 import shoppingmall.project.service.ItemService;
@@ -41,6 +39,29 @@ public class ItemApiController {
 
         return ResponseEntity.ok()
                 .body(rangePriceItem);
+    }
+
+    @GetMapping("/api/item/condition/{dtype}")
+    public ResponseEntity<List<ItemApiDto>> getItemDtypeByRange(@PathVariable String dtype, @RequestParam("min") int min, @RequestParam("max") int max) {
+        List<ItemApiDto> rangePriceItem = itemApiService.findDtypePriceRange(dtype, min, max);
+
+        return ResponseEntity.ok()
+                .body(rangePriceItem);
+    }
+
+    @PostMapping("/api/item/{id}")
+    public ResponseEntity<ItemApiDto> updateItem(@PathVariable Long id,
+                                                 @RequestBody UpdateItemDto request) {
+        ItemApiDto itemApiDto = itemApiService.updateItem(id, request);
+        return ResponseEntity.ok()
+                .body(itemApiDto);
+    }
+    @DeleteMapping("/api/item/{id}")
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+        itemApiService.deleteByItemId(id);
+
+        return ResponseEntity.ok()
+                .build();
     }
 
 
