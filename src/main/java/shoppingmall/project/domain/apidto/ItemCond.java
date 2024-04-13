@@ -3,7 +3,7 @@ package shoppingmall.project.domain.apidto;
 import lombok.Data;
 
 /**
- * 조건을 가지고 아이템을 찾을 도메인
+ * 조건을 가지고 아이템을 찾을 item의 condition객체
  */
 @Data
 public class ItemCond {

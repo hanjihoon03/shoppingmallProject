@@ -15,6 +15,7 @@ import shoppingmall.project.domain.item.Item;
 
 import shoppingmall.project.domain.subdomain.Tier;
 import shoppingmall.project.repository.UserRepository;
+import shoppingmall.project.service.DeliveryService;
 import shoppingmall.project.service.ItemService;
 import shoppingmall.project.service.MarketService;
 import shoppingmall.project.service.UserService;
@@ -32,6 +33,7 @@ public class MarketController {
     private final MarketService marketService;
     private final ItemService itemService;
     private final UserService userService;
+    private final DeliveryService deliveryService;
 
 
     @GetMapping("/purchase")
@@ -88,7 +90,7 @@ public class MarketController {
                     itemDto.getQuantity()
             );
             //딜리버리에 아이템 넣기
-            marketService.addDelivery(item, user);
+            deliveryService.addDelivery(item, user);
 
             buyItem.purchaseAfterQuantity(itemDto.getQuantity());
         }

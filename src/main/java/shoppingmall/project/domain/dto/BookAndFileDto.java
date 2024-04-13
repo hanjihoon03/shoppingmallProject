@@ -1,16 +1,15 @@
 package shoppingmall.project.domain.dto;
 
-import jakarta.persistence.Lob;
+
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
-import shoppingmall.project.domain.UploadFile;
 
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * 저장한 item과 해당하는 저장된 이미지 파일을 불러오기 위한 dto
+ */
 @Setter
 @Getter
 public class BookAndFileDto {

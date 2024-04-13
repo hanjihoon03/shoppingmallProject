@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
+/**
+ * 회원 가입에 필요한 필드와 조건을 가진 form
+ */
 @Data
 public class UserForm {
     @NotEmpty

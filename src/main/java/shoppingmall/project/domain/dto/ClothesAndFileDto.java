@@ -1,15 +1,20 @@
 package shoppingmall.project.domain.dto;
 
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 import shoppingmall.project.domain.item.ClothesType;
 
+/**
+ * 저장한 item과 해당하는 저장된 이미지 파일을 불러오기 위한 dto
+ */
 @Getter
 @Setter
 public class ClothesAndFileDto {
     private Long id;
     private String name;
     private int price;
+    @Min(value = 1)
     private int quantity;
     private String uploadFileName;
     private String storeFileName;

@@ -2,6 +2,9 @@ package shoppingmall.project.domain.apidto;
 
 import lombok.Data;
 
+/**
+ * item을 업데이트 하기 위해 필요한 필드만 가진 dto
+ */
 @Data
 public class UpdateItemDto {
 

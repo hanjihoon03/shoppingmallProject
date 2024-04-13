@@ -116,21 +116,4 @@ public class MarketService {
         return totalPrice;
     }
 
-    public void addDelivery(ItemDto item, User user) {
-
-        Delivery delivery = new Delivery(
-                user.getAddress(),
-                DeliveryStatus.DELIVERY,
-                LocalDateTime.now(),
-                user
-        );
-        Purchase purchase = new Purchase(
-                item.getName(),
-                item.getPrice(),
-                item.getQuantity(),
-                delivery
-        );
-        deliveryRepository.save(delivery);
-        purchaseRepository.save(purchase);
-    }
 }

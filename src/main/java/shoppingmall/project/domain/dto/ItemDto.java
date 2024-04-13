@@ -3,6 +3,9 @@ package shoppingmall.project.domain.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 저장한 item과 해당하는 저장된 이미지 파일을 불러오기 위한 dto
+ */
 @Getter
 @Setter
 public class ItemDto {

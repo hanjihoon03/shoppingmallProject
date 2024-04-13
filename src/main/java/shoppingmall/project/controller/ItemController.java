@@ -1,8 +1,7 @@
 package shoppingmall.project.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,13 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import shoppingmall.project.domain.UploadFile;
 import shoppingmall.project.domain.dto.BookAndFileDto;
 import shoppingmall.project.domain.dto.ClothesAndFileDto;
@@ -39,7 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -49,7 +42,6 @@ public class ItemController {
     private final ItemService itemService;
     private final MarketService marketService;
     private final FileService fileService;
-    private final HttpServletRequest request;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -374,12 +366,12 @@ public class ItemController {
 
 
 
-
+//필요없을듯
     @ResponseBody
     @GetMapping("/images/{filename}")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
         // 파일 경로를 이용하여 실제 파일의 위치를 확인
-        String fullPath = itemService.getFullPath(filename);
+        String fullPath = fileService.getFullPath(filename);
         Path filePath = Paths.get(fullPath);
 
         // 파일이 존재하고, 허용된 디렉토리에 있는지 확인
