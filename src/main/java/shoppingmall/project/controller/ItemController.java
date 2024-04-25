@@ -46,17 +46,17 @@ public class ItemController {
     @Value("${file.dir}")
     private String fileDir;
 
-    @GetMapping("book")
+    @GetMapping("/admin/book")
     public String createBook(Model model) {
         model.addAttribute("bookForm", new BookForm());
         return "items/createItemBook";
     }
 
-    @PostMapping("book")
+    @PostMapping("/admin/book")
     public String saveBook(@ModelAttribute BookForm bookForm){
         try {
             itemService.saveBook(bookForm);
-            return "redirect:";
+            return "redirect:/adminPage";
         } catch (IOException ex) {
             log.error("IOException = {}", ex.getMessage());
             return "redirect:/ioError";
@@ -64,34 +64,34 @@ public class ItemController {
 
     }
 
-    @GetMapping("clothes")
+    @GetMapping("/admin/clothes")
     public String createClothes(Model model) {
         model.addAttribute("clothesForm", new ClothesForm());
         return "items/createItemClothes";
     }
 
-    @PostMapping("clothes")
+    @PostMapping("/admin/clothes")
     public String saveClothes(@ModelAttribute ClothesForm clothesForm) {
         try {
         itemService.saveClothes(clothesForm);
-        return "redirect:";
+        return "redirect:/adminPage";
         }catch (IOException ex) {
             log.error("IOException = {}", ex.getMessage());
             return "redirect:/ioError";
         }
     }
 
-    @GetMapping("food")
+    @GetMapping("/admin/food")
     public String createFood(Model model) {
         model.addAttribute("foodForm", new FoodForm());
         return "items/createItemFood";
     }
 
-    @PostMapping("food")
+    @PostMapping("/admin/food")
     public String saveFood(@ModelAttribute FoodForm foodForm){
         try {
         itemService.saveFood(foodForm);
-        return "redirect:";
+            return "redirect:/adminPage";
 
         }catch (IOException ex) {
             log.error("IOException = {}", ex.getMessage());
@@ -99,17 +99,17 @@ public class ItemController {
         }
     }
 
-    @GetMapping("electronics")
+    @GetMapping("/admin/electronics")
     public String createElectronics(Model model) {
         model.addAttribute("electronicsForm", new ElectronicsForm());
         return "items/createItemElectronics";
     }
 
-    @PostMapping("electronics")
+    @PostMapping("/admin/electronics")
     public String saveElectronics(@ModelAttribute ElectronicsForm electronicsForm){
         try {
         itemService.saveElectronics(electronicsForm);
-        return "redirect:";
+            return "redirect:/adminPage";
 
         }catch (IOException ex) {
             log.error("IOException = {}", ex.getMessage());
@@ -173,7 +173,7 @@ public class ItemController {
 
     }
 
-    @GetMapping("/modifyBook")
+    @GetMapping("/admin/modifyBook")
     public String itemBookList(Model model) {
         //수정을 위한 현재 아이템 표시
         List<BookAndFileDto> allBook = itemService.findAllBook();
@@ -183,7 +183,7 @@ public class ItemController {
         return "/admin/modifyBook";
     }
 
-    @GetMapping("modifyBook/{itemId}/edit")
+    @GetMapping("/admin/modifyBook/{itemId}/edit")
     public String updateItemBook(@PathVariable("itemId") Long itemId, Model model) {
         Book oneBook = itemService.findOneBook(itemId);
         UploadFile oneUploadFile = fileService.findUploadFileItemId(itemId);
@@ -206,11 +206,11 @@ public class ItemController {
     }
 
 
-    @PostMapping("/modifyBook/{itemId}/edit")
+    @PostMapping("/admin/modifyBook/{itemId}/edit")
     public String updateBook(@PathVariable Long itemId, @ModelAttribute("form") BookForm bookForm){
         try {
         itemService.updateBook(itemId, bookForm);
-        return "redirect:/modifyBook";
+        return "redirect:/admin/modifyBook";
 
         }catch (IOException ex) {
             log.error("IOException = {}", ex.getMessage());
@@ -218,7 +218,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping("/modifyClothes")
+    @GetMapping("/admin/modifyClothes")
     public String itemClothesList(Model model) {
         //수정을 위한 현재 아이템 표시
         List<ClothesAndFileDto> allClothes = itemService.findAllClothes();
@@ -228,7 +228,7 @@ public class ItemController {
         return "/admin/modifyClothes";
     }
 
-    @GetMapping("modifyClothes/{itemId}/edit")
+    @GetMapping("/admin/modifyClothes/{itemId}/edit")
     public String updateItemClothes(@PathVariable("itemId") Long itemId, Model model) {
 
         Clothes oneClothes = itemService.findOneClothes(itemId);
@@ -253,11 +253,11 @@ public class ItemController {
     }
 
 
-    @PostMapping("/modifyClothes/{itemId}/edit")
+    @PostMapping("/admin/modifyClothes/{itemId}/edit")
     public String updateClothes(@PathVariable Long itemId, @ModelAttribute("form") ClothesForm clothesForm){
         try {
         itemService.updateClothes(itemId, clothesForm);
-        return "redirect:/modifyClothes";
+        return "redirect:/admin/modifyClothes";
         }catch (IOException ex) {
             log.error("IOException = {}", ex.getMessage());
             return "redirect:/ioError";
@@ -265,7 +265,7 @@ public class ItemController {
     }
 
 
-    @GetMapping("/modifyElectronics")
+    @GetMapping("/admin/modifyElectronics")
     public String itemElectronicsList(Model model) {
         //수정을 위한 현재 아이템 표시
         List<ElectronicsAndFileDto> allElectronics = itemService.findAllElectronics();
@@ -275,7 +275,7 @@ public class ItemController {
     }
 
 
-    @GetMapping("modifyElectronics/{itemId}/edit")
+    @GetMapping("/admin/modifyElectronics/{itemId}/edit")
     public String updateItemElectronics(@PathVariable("itemId") Long itemId, Model model) {
         Electronics oneElectronics = itemService.findOneElectronics(itemId);
 
@@ -298,11 +298,11 @@ public class ItemController {
     }
 
 
-    @PostMapping("/modifyElectronics/{itemId}/edit")
+    @PostMapping("/admin/modifyElectronics/{itemId}/edit")
     public String updateElectronics(@PathVariable Long itemId, @ModelAttribute("form") ElectronicsForm electronicsForm){
         try {
         itemService.updateElectronics(itemId,electronicsForm);
-        return "redirect:/modifyElectronics";
+        return "redirect:/admin/modifyElectronics";
 
         }catch (IOException ex) {
             log.error("IOException = {}", ex.getMessage());
@@ -311,7 +311,7 @@ public class ItemController {
     }
 
 
-    @GetMapping("/modifyFood")
+    @GetMapping("/admin/modifyFood")
     public String itemFoodList(Model model) {
         //수정을 위한 현재 아이템 표시
         List<FoodAndFileDto> allFood = itemService.findAllFood();
@@ -322,7 +322,7 @@ public class ItemController {
     }
 
 
-    @GetMapping("modifyFood/{itemId}/edit")
+    @GetMapping("/admin/modifyFood/{itemId}/edit")
     public String updateItemFood(@PathVariable("itemId") Long itemId, Model model) {
         Food oneFood = itemService.findOneFood(itemId);
         UploadFile oneUploadFile = fileService.findUploadFileItemId(itemId);
@@ -344,48 +344,27 @@ public class ItemController {
     }
 
 
-    @PostMapping("/modifyFood/{itemId}/edit")
+    @PostMapping("/admin/modifyFood/{itemId}/edit")
     public String updateFood(@PathVariable Long itemId, @ModelAttribute("form") FoodForm foodForm){
         try {
         itemService.updateFood(itemId,foodForm);
-        return "redirect:/modifyFood";
+        return "redirect:/admin/modifyFood";
 
         }catch (IOException ex) {
             log.error("IOException = {}", ex.getMessage());
             return "redirect:/ioError";
         }
     }
-    @PostMapping("/deleteBook/{itemId}")
-    public String deleteBook(@PathVariable Long itemId){
+    @PostMapping("/deleteItem/{itemId}")
+    public String deleteItem(@PathVariable Long itemId){
         log.info("id=================={}", itemId);
         itemService.deleteFileByItemId(itemId);
         itemService.deleteItemByItemId(itemId);
-        return "redirect:/modifyBook"; // 적절한 리다이렉션 경로로 수정해야 합니다.
+        return "redirect:/adminPage";
     }
 
 
 
-
-//필요없을듯
-    @ResponseBody
-    @GetMapping("/images/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-        // 파일 경로를 이용하여 실제 파일의 위치를 확인
-        String fullPath = fileService.getFullPath(filename);
-        Path filePath = Paths.get(fullPath);
-
-        // 파일이 존재하고, 허용된 디렉토리에 있는지 확인
-        if (Files.exists(filePath) && filePath.startsWith(Paths.get(fileDir))) {
-            // UrlResource를 사용하여 리소스를 반환
-            Resource resource = new UrlResource(filePath.toUri());
-            return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG) // 이미지인 경우에는 적절한 미디어 타입을 설정
-                    .body(resource).getBody();
-        } else {
-            // 파일이 존재하지 않거나 허용되지 않은 디렉토리에 있는 경우 404 에러 반환
-            return (Resource) ResponseEntity.notFound().build();
-        }
-    }
 
     @GetMapping("uploadFileError")
     public String uploadFileError() {

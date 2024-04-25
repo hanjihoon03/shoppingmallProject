@@ -1,5 +1,6 @@
 package shoppingmall.project.domain.apidto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import shoppingmall.project.domain.subdomain.Address;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
  * user가 구매한 정보를 가져오기 위한 필요 정보를 필드를 담은 dto
  */
 @Data
+@Schema(description = "find user PurchaseList")
 public class UserPurchaseDto {
     private Long userId;
     private LocalDateTime purchaseTime;

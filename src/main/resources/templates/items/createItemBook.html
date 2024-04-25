@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <form th:action="@{/book}" th:object="${bookForm}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/admin/book}" th:object="${bookForm}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label th:for="name">상품명</label>
             <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력하세요">
@@ -31,7 +31,7 @@
         </ul>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="/modifyBook" class="btn btn-dark btn-lg">수정</a>
+        <a href="/admin/modifyBook" class="btn btn-dark btn-lg">수정</a>
 
         <div th:if="${error}" class="alert alert-danger" role="alert">
             <span th:text="${error}"></span>

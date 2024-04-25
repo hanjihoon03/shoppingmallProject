@@ -2,7 +2,6 @@ package shoppingmall.project.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import shoppingmall.project.domain.apidto.ItemApiDto;
-import shoppingmall.project.domain.apidto.UpdateItemDto;
+import shoppingmall.project.domain.apidto.update.UpdateItemDto;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.repository.ItemRepository;
 import shoppingmall.project.service.api.ItemApiService;
 
-import java.nio.channels.Pipe;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;

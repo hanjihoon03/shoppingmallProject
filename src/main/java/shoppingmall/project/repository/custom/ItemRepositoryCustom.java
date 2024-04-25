@@ -13,6 +13,8 @@ public interface ItemRepositoryCustom{
     List<ClothesAndFileDto> findClothesWithUploadFile();
     List<ElectronicsAndFileDto> findElectronicsWithUploadFile();
     List<FoodAndFileDto> findFoodWithUploadFile();
+
+
     Book findBook(Long id);
     Clothes findClothes(Long id);
     Electronics findElectronics(Long id);
@@ -22,6 +24,11 @@ public interface ItemRepositoryCustom{
 
 
     List<Item> findDtypePriceRange(ItemCond itemCond);
+
+    Book updateBook(Long id);
+    Clothes updateClothes(Long id);
+    Electronics updateElectronics(Long id);
+    Food updateFood(Long id);
 
 
 }

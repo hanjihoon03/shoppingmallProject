@@ -29,6 +29,9 @@ public class InitData {
         Address address = new Address("1","1","1");
         User user = new User("1","1",1,"1@1","1",address, Tier.NORMAL);
         userRepository.save(user);
+        Address adminaddress = new Address("1","1","1");
+        User admin = new User("admin","1",1,"2@2","1",address, Tier.NORMAL);
+        userRepository.save(admin);
     }
     @EventListener(value = ApplicationReadyEvent.class)
     @Transactional

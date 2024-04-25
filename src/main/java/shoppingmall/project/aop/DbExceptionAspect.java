@@ -16,11 +16,10 @@ public class DbExceptionAspect {
     @Around("shoppingmall.project.aop.Pointcuts.allRepository()")
     public Object dbException(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
-            log.info("================repository exception check start==================");
             Object result = joinPoint.proceed();
 
-            log.info("================repository exception check end==================");
             return result;
+            //db에서 일어나는 예외를 로그를 남기는 Aspect
         } catch (MyDbException ex) {
             log.error("repository method exception: {}", ex.getMessage());
             throw ex;

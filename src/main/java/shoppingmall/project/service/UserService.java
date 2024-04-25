@@ -1,9 +1,9 @@
 package shoppingmall.project.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shoppingmall.project.additional.log.template.AbstractTemplate;
 import shoppingmall.project.additional.log.trace.LogTrace;
 import shoppingmall.project.additional.log.trace.TraceId;
@@ -25,7 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
 
 
-
+    @Transactional(readOnly = true)
     public User findByLoginId(String loginId) {
         Optional<User> optionalUser = userRepository.findByLoginId(loginId);
                 //호출부에서 null 반환시 처리하는 로직 필요
@@ -33,6 +33,7 @@ public class UserService {
 
     }
 
+    //회원 가입시 유저를 생성하고 저장하는 로직
     public User createSaveUser(UserForm userForm) {
         Address address = new Address(userForm.getZipcode(), userForm.getCity(), userForm.getStreet());
 
@@ -46,6 +47,13 @@ public class UserService {
                 Tier.NORMAL);
         return userRepository.save(user);
     }
+    public boolean existsId(String loginId) {
+        return userRepository.existsByLoginId(loginId);
+    }
+
+    /**
+     * 테스트에 사용되는 서비스 로직
+     */
     public void clear() {
         userRepository.deleteAll();
     }
@@ -55,6 +63,7 @@ public class UserService {
      * 로그인 로직
      * @return 비밀번호가 틀릴 시 null 반환
      */
+    @Transactional(readOnly = true)
     public User login(String id, String password) {
         return userRepository.findByLoginId(id)
                 .filter(m -> m.getPassword().equals(password))
@@ -64,6 +73,7 @@ public class UserService {
     /**
      * 구매시 구매한 item의 총 가격만큼 누적금액을 더하고 티어를 바꿔주는 로직
      */
+    @Transactional(readOnly = true)
     public int addAccumulatedAmount(User user, int totalPrice) {
         Optional<User> optionalUser = userRepository.findById(user.getId());
         User findUser = optionalUser.orElseThrow(null);
@@ -76,6 +86,11 @@ public class UserService {
 
         return resultPrice;
     }
+
+    /**
+     * 구매에서 할인에 필요한 user의 tier를 가져오기 위한 로직
+     */
+    @Transactional(readOnly = true)
     public Tier findUserTier(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         User findUser = user.orElseThrow(null);

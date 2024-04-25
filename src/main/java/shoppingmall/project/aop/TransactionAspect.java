@@ -7,6 +7,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 트랜젝션의 이름을 로그로 남기고 트랜젝션이 실패했는지 성공했는지 로그로 남기는 Aspect
+ */
 @Slf4j
 @Component
 @Aspect
@@ -16,7 +19,6 @@ public class TransactionAspect {
     public Object logTransaction(ProceedingJoinPoint joinPoint, Transactional transactional) throws Throwable {
         String transactionName = transactional.value();
         log.info("Transaction = {} started", transactionName );
-
 
         try {
             // Proceed with the method invocation

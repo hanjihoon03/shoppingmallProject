@@ -9,11 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import shoppingmall.project.additional.annotation.Trace;
-import shoppingmall.project.additional.log.Trace2;
-import shoppingmall.project.additional.log.template.AbstractTemplate;
-import shoppingmall.project.additional.log.trace.LogTrace;
-import shoppingmall.project.additional.log.trace.TraceStatus;
 import shoppingmall.project.additional.web.session.SessionConst;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.form.LoginForm;
@@ -38,6 +33,7 @@ public class loginController {
     @PostMapping("login")
     public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
                         HttpServletRequest request,
+                        HttpSession session,
                         Model model) {
 
         if (bindingResult.hasErrors()){
@@ -51,7 +47,12 @@ public class loginController {
             model.addAttribute("error","아이디 혹은 비밀번호가 다릅니다.");
             return "login/login";
         }
-        HttpSession session = request.getSession();
+        if (loginUser.getLoginId().equals("admin")) {
+            session = request.getSession();
+            session.setAttribute(SessionConst.ADMIN,loginUser);
+            return "/admin/adminPage";
+        }
+        session = request.getSession();
 
         session.setAttribute(SessionConst.LOGIN_USER,loginUser);
 
@@ -68,7 +69,11 @@ public class loginController {
     @PostMapping("sign-up")
     public String createUser(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult) {
 
-            if (bindingResult.hasErrors()) {
+        if (userService.existsId(userForm.getLoginId())) {
+            bindingResult.rejectValue("loginId", "duplicate", "이미 사용 중인 아이디입니다.");
+        }
+
+        if (bindingResult.hasErrors()) {
                 return "login/sign-up";
             }
             userService.createSaveUser(userForm);
@@ -81,6 +86,7 @@ public class loginController {
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
+            //세션 해제
             session.invalidate();
         }
         return "redirect:/";

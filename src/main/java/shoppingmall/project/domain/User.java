@@ -60,10 +60,28 @@ public class User {
         this.tier = tier;
     }
 
-    //구매 금액 누적
+    public User(String loginId, String name, Integer age, String email, String password, Address address, Tier tier, int accumulatedAmount) {
+        this.loginId = loginId;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.tier = tier;
+        this.accumulatedAmount = accumulatedAmount;
+    }
+
+    /**
+     * 구매 금액 누적
+     */
     public int addAmount(int totalPrice) {
         return this.accumulatedAmount = accumulatedAmount + totalPrice;
     }
+
+    /**
+     * 사용자가 구매한 구매 가격 누적에 따라 tier가 변경하는 로직
+     * @param accumulatedAmount 누적금액 파라미터
+     */
     public void upgradeTier(int accumulatedAmount) {
 
         if (accumulatedAmount >= 2000000) {

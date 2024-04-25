@@ -13,7 +13,6 @@ import shoppingmall.project.repository.ItemRepository;
 import shoppingmall.project.service.ItemService;
 
 @Slf4j
-@Import(AspectV6Advice.class)
 @SpringBootTest
 public class AopTest {
 

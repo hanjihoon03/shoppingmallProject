@@ -6,6 +6,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import shoppingmall.project.additional.argumentResolver.LoginUserArgumentResolver;
+import shoppingmall.project.additional.intercepter.AdminInterceptor;
 import shoppingmall.project.additional.intercepter.LogInterceptor;
 import shoppingmall.project.additional.intercepter.LoginCheckInterceptor;
 
@@ -27,12 +28,15 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/css/**","/*.ico","/error");
 
         registry.addInterceptor(new LoginCheckInterceptor())
-                .order(2)
+                .order(3)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/","/login/**","logout",
-                        "/css/**","/js/**","/*.ico","/error/**", "/sign-up","/bookList",
-                        "/clothesList","/electronicsList","/foodList","/purchase/**","/api/**"
+                        "/css/**","/js/**","/*.ico","/error/**", "/sign-up","/bookList","/admin/**","/adminPage",
+                        "/clothesList","/electronicsList","/foodList","/purchase/**","/api/**","/swagger-ui/**","/deleteItem/**"
                 );
+        registry.addInterceptor(new AdminInterceptor())
+                .order(2)
+                .addPathPatterns("/admin/*");
 
     }
 

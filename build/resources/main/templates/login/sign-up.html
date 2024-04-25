@@ -198,8 +198,8 @@
             <div class="col-12">
               <label th:for="loginId" class="form-label">id</label>
               <input type="text" class="form-control" th:field="*{loginId}" th:errorclass="field-error" placeholder="아이디를 입력하세요.">
-              <div class ="field-error" th:errors="*{loginId}">
-                아이디 오류
+              <div class ="field-error" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}">
+                이미 사용 중인 아이디입니다.
               </div>
             </div>
 

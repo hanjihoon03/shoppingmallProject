@@ -21,6 +21,7 @@ import shoppingmall.project.repository.ItemRepository;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,7 +103,15 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public List<BookAndFileDto> findAllBook() {
+
+
+
+
         return itemRepository.findBookWithUploadFile();
+
+
+
+
     }
     public Book findOneBook(Long id) {
         return itemRepository.findBook(id);
