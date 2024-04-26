@@ -15,11 +15,11 @@
                 <!-- 첨부 파일 링크 -->
                 <td th:text="${status.index + 1}"></td>
                 <td>
-                    <a th:href="@{/attach/{id}(id=${clothesAndFileDto.id})}">
+
                         <img th:if="${clothesAndFileDto.uploadFileName != null}"
                              th:src="@{/images/{filename}(filename=${clothesAndFileDto.storeFileName})}"
                              width="50" height="50"/>
-                    </a>
+
                 </td>
                 <td th:text="${clothesAndFileDto.name}"></td>
                 <td th:text="${clothesAndFileDto.price}"></td>

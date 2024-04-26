@@ -27,9 +27,9 @@ public class FileService {
 
     private final FileRepository fileRepository;
 
-
     @Value("${file.dir}")
     private String fileDir;
+
 
     //아이템 아이디에 해당하는 아이템의 이미지 파일을 찾아오기 위한 메서드
     public UploadFile findUploadFileItemId(Long id) {

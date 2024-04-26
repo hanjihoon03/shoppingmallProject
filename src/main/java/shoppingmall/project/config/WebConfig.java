@@ -31,7 +31,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(3)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/","/login/**","logout",
-                        "/css/**","/js/**","/*.ico","/error/**", "/sign-up","/bookList","/admin/**","/adminPage",
+                        "/css/**","/js/**","/*.ico","/error/**", "/sign-up","/bookList","/admin/**","/adminPage","/ioError",
                         "/clothesList","/electronicsList","/foodList","/purchase/**","/api/**","/swagger-ui/**","/deleteItem/**"
                 );
         registry.addInterceptor(new AdminInterceptor())

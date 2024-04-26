@@ -3,7 +3,40 @@
 <head th:replace="fragments/header :: header" />
 <body>
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+
+    <ul class="nav nav-pills pull-right">
+        <li><a href="/adminPage">Home</a></li>
+    </ul>
+    <nav class="navbar navbar-expand-md bg-white sticky-top border-bottom" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand d-md-none text-dark" href="#">
+                <svg class="bi" width="24" height="24"><use xlink:href="#aperture"/></svg>
+                Aperture
+            </a>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title text-dark" id="offcanvasLabel">Aperture</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav flex-grow-1 justify-content-between">
+                        <li class="nav-item"><a class="nav-link text-dark" href="#">
+                            <svg class="bi" width="24" height="24"><use xlink:href="#aperture"/></svg>
+                        </a></li>
+                        <li style="padding-right: 50px;"><a href="/adminPage" class="nav-link px-2 link-secondary text-dark">Home</a></li>
+                        <li style="padding-right: 50px;"><a th:href="@{/clothesList}" class="nav-link px-2 text-dark">clothes</a></li>
+                        <li style="padding-right: 50px;"><a th:href="@{/bookList}" class="nav-link px-2 text-dark">book</a></li>
+                        <li style="padding-right: 50px;"><a th:href="@{/electronicsList}" class="nav-link px-2 text-dark">electronics</a></li>
+                        <li style="padding-right: 50px;"><a th:href="@{/foodList}" class="nav-link px-2 text-dark">food</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
     <form th:action="@{/admin/food}" th:object="${foodForm}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label th:for="name">상품명</label>

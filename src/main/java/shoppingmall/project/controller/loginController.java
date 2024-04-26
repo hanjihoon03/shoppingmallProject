@@ -50,7 +50,7 @@ public class loginController {
         if (loginUser.getLoginId().equals("admin")) {
             session = request.getSession();
             session.setAttribute(SessionConst.ADMIN,loginUser);
-            return "/admin/adminPage";
+            return "admin/adminPage";
         }
         session = request.getSession();
 
@@ -95,7 +95,7 @@ public class loginController {
     //물품 추가 및 제거 수정
     @GetMapping("/adminPage")
     public String adminPage() {
-        return "/admin/adminPage";
+        return "admin/adminPage";
     }
 
 }

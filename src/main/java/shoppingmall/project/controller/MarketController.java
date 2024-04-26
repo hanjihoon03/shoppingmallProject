@@ -52,7 +52,7 @@ public class MarketController {
         int discountAmount = marketService.discountAmount(totalPrice, userTier);
         model.addAttribute("discount", discountAmount);
 
-        return "/order/purchase";
+        return "order/purchase";
     }
     @GetMapping("/purchase/delete/{id}")
     public String delete(@PathVariable Long id, HttpSession session) {

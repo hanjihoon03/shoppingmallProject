@@ -123,7 +123,7 @@ public class ItemController {
 
         model.addAttribute("allBook", allBook);
 
-        return "/list/bookList";
+        return "list/bookList";
     }
     @GetMapping("/clothesList")
     public String clothesList(Model model) {
@@ -131,7 +131,7 @@ public class ItemController {
 
         model.addAttribute("allClothes", allClothes);
 
-        return "/list/clothesList";
+        return "list/clothesList";
     }
     @GetMapping("/electronicsList")
     public String electronicsList(Model model) {
@@ -139,7 +139,7 @@ public class ItemController {
 
         model.addAttribute("allElectronics", allElectronics);
 
-        return "/list/electronicsList";
+        return "list/electronicsList";
     }
     @GetMapping("/foodList")
     public String foodList(Model model) {
@@ -147,7 +147,7 @@ public class ItemController {
 
         model.addAttribute("allFood", allFood);
 
-        return "/list/foodList";
+        return "list/foodList";
     }
     @PostMapping("/addCart")
     public String buyItem(@RequestParam("itemId") Long itemId,
@@ -180,7 +180,7 @@ public class ItemController {
 
         model.addAttribute("allBook", allBook);
 
-        return "/admin/modifyBook";
+        return "admin/modifyBook";
     }
 
     @GetMapping("/admin/modifyBook/{itemId}/edit")
@@ -225,7 +225,7 @@ public class ItemController {
 
         model.addAttribute("allClothes", allClothes);
 
-        return "/admin/modifyClothes";
+        return "admin/modifyClothes";
     }
 
     @GetMapping("/admin/modifyClothes/{itemId}/edit")
@@ -271,7 +271,7 @@ public class ItemController {
         List<ElectronicsAndFileDto> allElectronics = itemService.findAllElectronics();
 
         model.addAttribute("allElectronics", allElectronics);
-        return "/admin/modifyElectronics";
+        return "admin/modifyElectronics";
     }
 
 
@@ -318,7 +318,7 @@ public class ItemController {
 
         model.addAttribute("allFood", allFood);
 
-        return "/admin/modifyFood";
+        return "admin/modifyFood";
     }
 
 
