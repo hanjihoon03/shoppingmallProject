@@ -7,7 +7,7 @@
     <div>
         <table class="table table-striped">
             <thead> <tr>
-                <th>#</th> <th>상품</th> <th>상품명</th> <th>가격</th> <th>재고수량</th><th>저자</th><th>isbn</th><th>수량</th> <th></th>
+                <th>Number</th> <th>상품</th> <th>상품명</th> <th>가격</th> <th>재고수량</th><th>저자</th><th>isbn</th><th>수량</th> <th></th>
             </tr>
             </thead>
             <tbody>
@@ -39,6 +39,33 @@
             </tbody>
         </table>
     </div>
+    <div th:if="${!allBook.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!allBook.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{|?page=${allBook.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, allBook.totalPages-1)}"
+                th:if="${page >= allBook.number-5 and page <= allBook.number+5}"
+                th:classappend="${page == allBook.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!allBook.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${allBook.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->
+
+
+
+
+
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->
 </body>
