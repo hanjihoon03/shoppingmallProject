@@ -1,8 +1,13 @@
-FROM openjdk:21
+FROM gradle:jdk21 as builder
 
 WORKDIR /app
+COPY . .
 
-CMD ["./gradlew", "clean", "build"]
+RUN gradle build
+
+FROM openjdk:21
+
+
 
 VOLUME /app/storefile
 

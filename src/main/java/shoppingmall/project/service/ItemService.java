@@ -3,6 +3,9 @@ package shoppingmall.project.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shoppingmall.project.domain.UploadFile;
@@ -102,37 +105,34 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookAndFileDto> findAllBook() {
-
-
-
-
-        return itemRepository.findBookWithUploadFile();
-
-
-
+    public Page<BookAndFileDto> findAllBook(int page) {
+        Pageable pageable = PageRequest.of(page,30);
+        return itemRepository.pagingBook(pageable);
 
     }
     public Book findOneBook(Long id) {
         return itemRepository.findBook(id);
     }
     @Transactional(readOnly = true)
-    public List<ClothesAndFileDto> findAllClothes() {
-        return itemRepository.findClothesWithUploadFile();
+    public Page<ClothesAndFileDto> findAllClothes(int page) {
+        Pageable pageable = PageRequest.of(page,30);
+        return itemRepository.pagingClothes(pageable);
     }
     public Clothes findOneClothes(Long id) {
         return itemRepository.findClothes(id);
     }
     @Transactional(readOnly = true)
-    public List<ElectronicsAndFileDto> findAllElectronics() {
-        return itemRepository.findElectronicsWithUploadFile();
+    public Page<ElectronicsAndFileDto> findAllElectronics(int page) {
+        Pageable pageable = PageRequest.of(page,30);
+        return itemRepository.pagingElectronics(pageable);
     }
     public Electronics findOneElectronics(Long id) {
         return itemRepository.findElectronics(id);
     }
     @Transactional(readOnly = true)
-    public List<FoodAndFileDto> findAllFood() {
-        return itemRepository.findFoodWithUploadFile();
+    public Page<FoodAndFileDto> findAllFood(int page) {
+        Pageable pageable = PageRequest.of(page,30);
+        return itemRepository.pagingFood(pageable);
     }
     public Food findOneFood(Long id) {
         return itemRepository.findFood(id);

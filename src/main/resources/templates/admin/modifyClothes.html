@@ -73,6 +73,29 @@
             </tbody>
         </table>
     </div>
+
+    <div th:if="${!allClothes.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!allClothes.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{|?page=${allClothes.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, allClothes.totalPages-1)}"
+                th:if="${page >= allClothes.number-5 and page <= allClothes.number+5}"
+                th:classappend="${page == allClothes.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!allClothes.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${allClothes.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->
 </body>

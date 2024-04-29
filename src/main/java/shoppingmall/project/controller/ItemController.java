@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -118,32 +121,34 @@ public class ItemController {
     }
 
     @GetMapping("/bookList")
-    public String bookList(Model model) {
-        List<BookAndFileDto> allBook = itemService.findAllBook();
+    public String bookList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        Page<BookAndFileDto> allBook = itemService.findAllBook(page);
 
         model.addAttribute("allBook", allBook);
 
         return "list/bookList";
     }
     @GetMapping("/clothesList")
-    public String clothesList(Model model) {
-        List<ClothesAndFileDto> allClothes = itemService.findAllClothes();
+    public String clothesList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        Page<ClothesAndFileDto> allClothes = itemService.findAllClothes(page);
 
         model.addAttribute("allClothes", allClothes);
 
         return "list/clothesList";
     }
     @GetMapping("/electronicsList")
-    public String electronicsList(Model model) {
-        List<ElectronicsAndFileDto> allElectronics = itemService.findAllElectronics();
+    public String electronicsList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<ElectronicsAndFileDto> allElectronics = itemService.findAllElectronics(page);
 
         model.addAttribute("allElectronics", allElectronics);
 
         return "list/electronicsList";
     }
     @GetMapping("/foodList")
-    public String foodList(Model model) {
-        List<FoodAndFileDto> allFood = itemService.findAllFood();
+    public String foodList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<FoodAndFileDto> allFood = itemService.findAllFood(page);
 
         model.addAttribute("allFood", allFood);
 
@@ -174,9 +179,9 @@ public class ItemController {
     }
 
     @GetMapping("/admin/modifyBook")
-    public String itemBookList(Model model) {
+    public String itemBookList(Model model,@RequestParam(value = "page", defaultValue = "0") int page) {
         //수정을 위한 현재 아이템 표시
-        List<BookAndFileDto> allBook = itemService.findAllBook();
+        Page<BookAndFileDto> allBook = itemService.findAllBook(page);
 
         model.addAttribute("allBook", allBook);
 
@@ -219,9 +224,9 @@ public class ItemController {
     }
 
     @GetMapping("/admin/modifyClothes")
-    public String itemClothesList(Model model) {
+    public String itemClothesList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         //수정을 위한 현재 아이템 표시
-        List<ClothesAndFileDto> allClothes = itemService.findAllClothes();
+        Page<ClothesAndFileDto> allClothes = itemService.findAllClothes(page);
 
         model.addAttribute("allClothes", allClothes);
 
@@ -266,9 +271,9 @@ public class ItemController {
 
 
     @GetMapping("/admin/modifyElectronics")
-    public String itemElectronicsList(Model model) {
+    public String itemElectronicsList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         //수정을 위한 현재 아이템 표시
-        List<ElectronicsAndFileDto> allElectronics = itemService.findAllElectronics();
+        Page<ElectronicsAndFileDto> allElectronics = itemService.findAllElectronics(page);
 
         model.addAttribute("allElectronics", allElectronics);
         return "admin/modifyElectronics";
@@ -312,9 +317,9 @@ public class ItemController {
 
 
     @GetMapping("/admin/modifyFood")
-    public String itemFoodList(Model model) {
+    public String itemFoodList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         //수정을 위한 현재 아이템 표시
-        List<FoodAndFileDto> allFood = itemService.findAllFood();
+        Page<FoodAndFileDto> allFood = itemService.findAllFood(page);
 
         model.addAttribute("allFood", allFood);
 
@@ -387,4 +392,32 @@ public class ItemController {
     public String ioError() {
         return "error/ioError";
     }
+
+    /**
+     * 화면에 이미지를 보여주기 위한 컨트롤러
+     * @param filename
+     * @return
+     * @throws MalformedURLException
+     */
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        // 파일 경로를 이용하여 실제 파일의 위치를 확인
+        String fullPath = fileService.getFullPath(filename);
+        Path filePath = Paths.get(fullPath);
+
+        // 파일이 존재하고, 허용된 디렉토리에 있는지 확인
+        if (Files.exists(filePath) && filePath.startsWith(Paths.get(fileDir))) {
+            // UrlResource를 사용하여 리소스를 반환
+            Resource resource = new UrlResource(filePath.toUri());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG) // 이미지인 경우에는 적절한 미디어 타입을 설정
+                    .body(resource).getBody();
+        } else {
+            // 파일이 존재하지 않거나 허용되지 않은 디렉토리에 있는 경우 404 에러 반환
+            return (Resource) ResponseEntity.notFound().build();
+        }
+    }
+
+
 }

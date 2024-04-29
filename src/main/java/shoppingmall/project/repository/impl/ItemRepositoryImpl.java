@@ -1,11 +1,15 @@
 package shoppingmall.project.repository.impl;
 
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import shoppingmall.project.domain.UploadFile;
 import shoppingmall.project.domain.apidto.ItemApiDto;
@@ -48,7 +52,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
         // @QueryProjection은 dto가 querydsl을 의존하게 되므로 Projections.bean사용.
         //업로드 파일을 기준으로 아이템과 아이템에 해당하는 파일이 존재하면 Dto를 채워서 반환해주는 쿼리
         //쿼리를 한 방으로 줄였으며 코드도 깔끔해지고 원래 아이템과 파일을 저장하는 부분에서 파일을 저장하는 메서드를 따로 사용했지만 메서드를 사용할 필요도 없어짐
-        //전제 조건으로 아이템은 그 아이템을 보여줄 이미지가 필요하기 때문에 아래의 쿼리로 이미지가 없는 아이템은 조건에 부합하지 않기 때문에 결과에 들어가지 않음으 DB에서 신뢰되는 데이터만 얻을 수 있다.
+        //전제 조건으로 아이템은 그 아이템을 보여줄 이미지가 필요하기 때문에 아래의 쿼리로 이미지가 없는 아이템은 조건에 부합하지 않기 때문에 결과에 들어가지 않음으로 DB에서 신뢰되는 데이터만 얻을 수 있다.
         return queryFactory.select(Projections.bean(BookAndFileDto.class,
                         uploadFile.item.id,
                         uploadFile.item.name,
@@ -66,6 +70,39 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .on(item.id.eq(book.id))
                 .where(item.dtype.eq("Book"))
                 .fetch();
+    }
+
+    @Override
+    public Page<BookAndFileDto> pagingBook(Pageable pageable) {
+
+        List<BookAndFileDto> content = queryFactory.select(Projections.bean(BookAndFileDto.class,
+                        uploadFile.item.id,
+                        uploadFile.item.name,
+                        uploadFile.item.price,
+                        uploadFile.item.quantity,
+                        uploadFile.uploadFileName,
+                        uploadFile.storeFileName,
+                        Expressions.as(book.isbn, "isbn"), // 부모 클래스인 Item에서 직접 접근
+                        Expressions.as(book.author, "author") // 부모 클래스인 Item에서 직접 접근
+                ))
+                .from(uploadFile)
+                .leftJoin(item)
+                .on(uploadFile.item.id.eq(item.id))
+                .leftJoin(book)
+                .on(item.id.eq(book.id))
+                .where(item.dtype.eq("Book"))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long total = queryFactory
+                .select(uploadFile.count())
+                .from(uploadFile)
+                .leftJoin(uploadFile.item, item)
+                .where(item.dtype.eq("Book"))
+                .fetchOne();
+
+        return new PageImpl<>(content,pageable,total);
     }
 
     @Override
@@ -125,6 +162,36 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
     }
 
     @Override
+    public Page<ClothesAndFileDto> pagingClothes(Pageable pageable) {
+        List<ClothesAndFileDto> content = queryFactory.select(Projections.bean(ClothesAndFileDto.class,
+                        uploadFile.item.id,
+                        uploadFile.item.name,
+                        uploadFile.item.price,
+                        uploadFile.item.quantity,
+                        uploadFile.uploadFileName,
+                        uploadFile.storeFileName,
+                        Expressions.as(clothes.clothesType, "clothesType"), // 부모 클래스인 Item에서 직접 접근
+                        Expressions.as(clothes.brand, "brand"), // 부모 클래스인 Item에서 직접 접근
+                        Expressions.as(clothes.size, "size") // 부모 클래스인 Item에서 직접 접근
+                ))
+                .from(uploadFile)
+                .leftJoin(item)
+                .on(uploadFile.item.id.eq(item.id))
+                .leftJoin(clothes)
+                .on(item.id.eq(clothes.id))
+                .where(item.dtype.eq("Clothes"))
+                .fetch();
+        Long total = queryFactory
+                .select(uploadFile.count())
+                .from(uploadFile)
+                .leftJoin(uploadFile.item, item)
+                .where(item.dtype.eq("Clothes"))
+                .fetchOne();
+
+        return new PageImpl<>(content,pageable,total);
+    }
+
+    @Override
     public List<ElectronicsAndFileDto> findElectronicsWithUploadFile() {
 
         return queryFactory.select(Projections.bean(ElectronicsAndFileDto.class,
@@ -166,6 +233,35 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 //            dtos.add(dto);
 //        }
 //        return dtos;
+    }
+
+    @Override
+    public Page<ElectronicsAndFileDto> pagingElectronics(Pageable pageable) {
+
+        List<ElectronicsAndFileDto> content = queryFactory.select(Projections.bean(ElectronicsAndFileDto.class,
+                        uploadFile.item.id,
+                        uploadFile.item.name,
+                        uploadFile.item.price,
+                        uploadFile.item.quantity,
+                        uploadFile.uploadFileName,
+                        uploadFile.storeFileName,
+                        Expressions.as(electronics.brand, "brand") // 부모 클래스인 Item에서 직접 접근
+                ))
+                .from(uploadFile)
+                .leftJoin(item)
+                .on(uploadFile.item.id.eq(item.id))
+                .leftJoin(electronics)
+                .on(item.id.eq(electronics.id))
+                .where(item.dtype.eq("Electronics"))
+                .fetch();
+        Long total = queryFactory
+                .select(uploadFile.count())
+                .from(uploadFile)
+                .leftJoin(uploadFile.item, item)
+                .where(item.dtype.eq("Electronics"))
+                .fetchOne();
+
+        return new PageImpl<>(content,pageable,total);
     }
 
     @Override
@@ -215,6 +311,33 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 //        return dtos;
     }
 
+    @Override
+    public Page<FoodAndFileDto> pagingFood(Pageable pageable) {
+        List<FoodAndFileDto> content = queryFactory.select(Projections.bean(FoodAndFileDto.class,
+                        uploadFile.item.id,
+                        uploadFile.item.name,
+                        uploadFile.item.price,
+                        uploadFile.item.quantity,
+                        uploadFile.uploadFileName,
+                        uploadFile.storeFileName,
+                        Expressions.as(food.brand, "brand") // 부모 클래스인 Item에서 직접 접근
+                ))
+                .from(uploadFile)
+                .leftJoin(item)
+                .on(uploadFile.item.id.eq(item.id))
+                .leftJoin(food)
+                .on(item.id.eq(food.id))
+                .where(item.dtype.eq("Food"))
+                .fetch();
+        Long total = queryFactory
+                .select(uploadFile.count())
+                .from(uploadFile)
+                .leftJoin(uploadFile.item, item)
+                .where(item.dtype.eq("Food"))
+                .fetchOne();
+
+        return new PageImpl<>(content,pageable,total);
+    }
 
     @Override
     public Book findBook(Long id) {

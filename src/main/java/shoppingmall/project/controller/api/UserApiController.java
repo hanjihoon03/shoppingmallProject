@@ -18,11 +18,13 @@ import shoppingmall.project.domain.subdomain.Tier;
 import shoppingmall.project.service.api.UserApiService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "User", description = "User API")
 @RestController
 @RequiredArgsConstructor
 public class UserApiController {
+
 
     private final UserApiService userApiService;
 
