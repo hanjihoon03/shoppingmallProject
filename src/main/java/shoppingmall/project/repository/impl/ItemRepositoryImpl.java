@@ -180,6 +180,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .leftJoin(clothes)
                 .on(item.id.eq(clothes.id))
                 .where(item.dtype.eq("Clothes"))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
         Long total = queryFactory
                 .select(uploadFile.count())
@@ -211,28 +213,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .where(item.dtype.eq("Electronics"))
                 .fetch();
 
-
-//        List<Electronics> electronic = queryFactory
-//                .selectFrom(electronics)
-//                .leftJoin(electronics.uploadFiles).fetchJoin()
-//                .fetch();
-//
-//        List<UploadFile> uploadFiles = queryFactory.selectFrom(uploadFile).fetch();
-//
-//        List<ElectronicsAndFileDto> dtos = new ArrayList<>();
-//        for (Electronics electronics : electronic) {
-//            ElectronicsAndFileDto dto = new ElectronicsAndFileDto(
-//                    electronics.getId(),
-//                    electronics.getName(),
-//                    electronics.getPrice(),
-//                    electronics.getQuantity(),
-//                    electronics.getBrand(),
-//                    initializeUploadFileNameElectronics(electronics,uploadFiles),
-//                    initializeStoreFileNameElectronics(electronics,uploadFiles)
-//            );
-//            dtos.add(dto);
-//        }
-//        return dtos;
     }
 
     @Override
@@ -253,6 +233,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .leftJoin(electronics)
                 .on(item.id.eq(electronics.id))
                 .where(item.dtype.eq("Electronics"))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
         Long total = queryFactory
                 .select(uploadFile.count())
@@ -284,31 +266,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .where(item.dtype.eq("Food"))
                 .fetch();
 
-
-//        List<Food> foods = queryFactory
-//                .selectFrom(food)
-//                .leftJoin(food.uploadFiles).fetchJoin()
-//                .fetch();
-//
-//        List<UploadFile> uploadFiles = queryFactory.selectFrom(uploadFile).fetch();
-//
-//        List<FoodAndFileDto> dtos = new ArrayList<>();
-//
-//        for (Food food : foods) {
-//            FoodAndFileDto dto = new FoodAndFileDto(
-//                    food.getId(),
-//                    food.getName(),
-//                    food.getPrice(),
-//                    food.getQuantity(),
-//                    food.getBrand(),
-//                    initializeUploadFileNameFood(food,uploadFiles),
-//                    initializeStoreFileNameFood(food,uploadFiles)
-//            );
-//
-//            dtos.add(dto);
-//        }
-//
-//        return dtos;
     }
 
     @Override
@@ -328,6 +285,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .leftJoin(food)
                 .on(item.id.eq(food.id))
                 .where(item.dtype.eq("Food"))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
         Long total = queryFactory
                 .select(uploadFile.count())
