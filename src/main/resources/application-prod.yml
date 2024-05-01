@@ -1,0 +1,51 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  thymeleaf:
+  prefix: classpath:/templates/
+  suffix: .html
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://host.docker.internal:3306/project?serverTimezone=Asia/Seoul
+    username: root
+    password: raik1353
+
+  jpa:
+    #mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    #mysql
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        # show_sql: true # 주석 처리하여 주석 처리된 상태로 둠
+        format_sql: true
+        default_batch_fetch_size: 10
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
+
+#도커에서 파일 저장 경로
+file:
+  dir: /app/storefile/
+
+
+#springdoc
+springdoc:
+  api-docs:
+    path: /api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: method
+    tags-sorter: alpha
+    path: /swagger-ui.html
+    display-request-duration: true
+    disable-swagger-default-url: true
+    doc-expansion: none
+  paths-to-match:
+    - /api/**
