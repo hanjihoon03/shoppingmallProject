@@ -180,6 +180,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .leftJoin(clothes)
                 .on(item.id.eq(clothes.id))
                 .where(item.dtype.eq("Clothes"))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
         Long total = queryFactory
                 .select(uploadFile.count())
@@ -231,6 +233,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .leftJoin(electronics)
                 .on(item.id.eq(electronics.id))
                 .where(item.dtype.eq("Electronics"))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
         Long total = queryFactory
                 .select(uploadFile.count())
@@ -281,6 +285,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .leftJoin(food)
                 .on(item.id.eq(food.id))
                 .where(item.dtype.eq("Food"))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
         Long total = queryFactory
                 .select(uploadFile.count())
