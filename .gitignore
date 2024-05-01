@@ -180,6 +180,7 @@ Temporary Items
 *.icloud
 
 application.yml
+application-ec2.yml
 application-dev.yml
 application-ec2.yml
 application-prod.yml
