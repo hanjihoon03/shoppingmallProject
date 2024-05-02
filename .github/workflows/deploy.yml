@@ -75,3 +75,4 @@ jobs:
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name project-app \
             --s3-location bucket=project-app-bucket,bundleType=zip,key=spring-build.zip
+
