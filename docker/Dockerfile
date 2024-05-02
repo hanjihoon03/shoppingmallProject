@@ -1,11 +1,11 @@
-# Docker 이미지를 생성할 때 기반이 되는 베이스 이미지를 설정한다.
-FROM openjdk:21
+# 기반 이미지 설정
+FROM openjdk:11
 
-# Dockerfile 내에서 사용할 변수 JAR_FILE을 정의한다.
-ARG JAR_FILE=build/libs/*.jar
+# 애플리케이션 파일 복사
+COPY project-0.0.1-SNAPSHOT.jar /usr/src/app/
 
-# JAR_FILE 경로에 해당하는 파일을 Docker 이미지 내부로 복사한다.
-COPY ${JAR_FILE} app.jar
+# 작업 디렉토리 설정
+WORKDIR /usr/src/app
 
-# Docker 컨테이너가 시작될 때 실행할 명령을 지정한다.
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# 애플리케이션 실행
+CMD ["java", "-jar", "project-0.0.1-SNAPSHOT.jar"]
