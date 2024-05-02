@@ -1,5 +1,5 @@
 # 기반 이미지 설정
-FROM openjdk:11
+FROM openjdk:21
 
 # 애플리케이션 파일 복사
 COPY project-0.0.1-SNAPSHOT.jar /usr/src/app/
