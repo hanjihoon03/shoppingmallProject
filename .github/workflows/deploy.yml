@@ -65,11 +65,11 @@ jobs:
         run: |
           aws s3 cp \
           --region ap-northeast-2 \
-          ./spring-build.zip s3://backend-rex-bucket
+          ./spring-build.zip s3://project-app-bucket
 
       - name: Code Deploy 배포 요청
         run: |
-          aws deploy create-deployment --application-name backend-deploy-group \
+          aws deploy create-deployment --application-name project-app \
             --deployment-config-name CodeDeployDefault.OneAtATime \
-            --deployment-group-name backend-deploy-group \
-            --s3-location bucket=backend-rex-bucket,bundleType=zip,key=spring-build.zip
+            --deployment-group-name project-app \
+            --s3-location bucket=project-app-bucket,bundleType=zip,key=spring-build.zip
