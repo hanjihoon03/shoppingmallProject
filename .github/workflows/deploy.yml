@@ -68,6 +68,7 @@ jobs:
           --region ap-northeast-2 \
           ./spring-build.zip s3://project-app-bucket
 
+
       - name: Code Deploy 배포 요청
         run: |
           aws deploy create-deployment --application-name project-app \
