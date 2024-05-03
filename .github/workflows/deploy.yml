@@ -2,10 +2,10 @@ name: BackEnd - CI/CD
 
 on:
   push:
-    branches: ["main"]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-permissions:
-  contents: read
 
 jobs:
   build:
@@ -47,10 +47,7 @@ jobs:
       - name: zip file 생성
         run: |
           mkdir -p deploy
-          cp ./docker/docker-compose.blue.yml ./deploy/
-          cp ./docker/docker-compose.green.yml ./deploy/
           cp ./appspec.yml ./deploy/
-          cp ./docker/Dockerfile ./deploy/
           cp ./*.sh ./deploy/
           cp ./build/libs/*.jar ./deploy/
           zip -r -qq -j ./spring-build.zip ./deploy
