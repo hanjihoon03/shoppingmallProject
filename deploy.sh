@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-
+#애플리케이션의 소스 코드 및 실행가능한 jar 파일이 있는 디렉토리의 경로 지정
 REPOSITORY=/home/ubuntu/app
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
-
-CURRENT_PID=$(pgrep -fla java | grep hayan | awk '{print $1}')
+# 현재 실행 중인 애플리케이션의 PID를 찾습니다.
+CURRENT_PID=$(pgrep -fla java | grep project | awk '{print $1}')
 
 echo "현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
 
