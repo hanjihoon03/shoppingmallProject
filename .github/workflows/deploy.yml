@@ -3,20 +3,19 @@ name: BackEnd - CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
-
+    branches: [main]
 
 jobs:
   build:
-    #build를 진행할 운영체제
+    # build를 진행할 운영체제
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-        #JDK 버전 설정
-      - name: Set up JDK 21 
+        # JDK 버전 설정
+      - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
           java-version: '21'
@@ -36,7 +35,7 @@ jobs:
         run: |
           cd ./src/main
           mkdir -p resources
-#           등록해둔 Github Secrets의 내용을 이용해서 yml 파일의 내용을 써줍니다.
+#          등록해둔 Github Secrets의 내용을 이용해서 yml 파일의 내용을 써줍니다.
           echo "$APPLICATION" > ./resources/application.yml
         env:
           APPLICATION: ${{ secrets.APPLICATION }}
@@ -62,18 +61,17 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      #S3에 프로젝트를 업로드 한다.
+      # S3에 프로젝트를 업로드 한다.
       - name: S3에 프로젝트 업로드
         run: |
           aws s3 cp \
           --region ap-northeast-2 \
           ./spring-build.zip s3://project-app-bucket
 
-      #CodeDeploy에 배포를 요청
-      - name: Code Deploy 배포 요청
+      # CodeDeploy에 배포를 요청
+      - name: CodeDeploy 배포 요청
         run: |
           aws deploy create-deployment --application-name project-app \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name project-app \
             --s3-location bucket=project-app-bucket,bundleType=zip,key=spring-build.zip
-
