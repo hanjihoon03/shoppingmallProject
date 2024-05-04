@@ -2,6 +2,7 @@ package shoppingmall.project.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shoppingmall.project.additional.log.template.AbstractTemplate;
@@ -23,18 +24,28 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
+    /**
+     * 테스트용 메서드
+     * @param loginId
+     * @return
+     */
     @Transactional(readOnly = true)
     public User findByLoginId(String loginId) {
-        Optional<User> optionalUser = userRepository.findByLoginId(loginId);
-                //호출부에서 null 반환시 처리하는 로직 필요
-        return optionalUser.orElse(null);
+        return userRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new IllegalArgumentException(loginId));
+
 
     }
 
-    //회원 가입시 유저를 생성하고 저장하는 로직
-    public User createSaveUser(UserForm userForm) {
+    /**
+     * 회원 가입시 회원을 저장하는 로직
+     * @param userForm signup 폼에서 받아온 데이터
+     * @return
+     */
+    public void createSaveUser(UserForm userForm) {
         Address address = new Address(userForm.getZipcode(), userForm.getCity(), userForm.getStreet());
 
         User user = new User(
@@ -45,7 +56,8 @@ public class UserService {
                 userForm.getPassword(),
                 address,
                 Tier.NORMAL);
-        return userRepository.save(user);
+        user.encodePassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
     public boolean existsId(String loginId) {
         return userRepository.existsByLoginId(loginId);

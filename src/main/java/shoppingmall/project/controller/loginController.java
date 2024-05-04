@@ -23,14 +23,14 @@ public class loginController {
     private final UserService userService;
 
 
-    @GetMapping("login")
+    @GetMapping("/login")
     public String loginPage(@ModelAttribute("loginForm") LoginForm loginForm) {
 
         return "login/login";
 
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
                         HttpServletRequest request,
                         HttpSession session,
