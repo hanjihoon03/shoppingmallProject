@@ -15,6 +15,12 @@ java,springboot,springdatajpa,querydsl,mysql,aws,github
 ![image](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/df101623-9170-42d2-a007-f1b202611d7e)
 
 ## API 구성
+(http://3.36.206.59:8080/swagger-ui/index.html)
+
+![api](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/3c67ae77-3208-4927-9235-8f4780d67c6d)
+
+
+
 
 
 ## 프로젝트 아키텍쳐
