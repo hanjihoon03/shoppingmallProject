@@ -14,4 +14,4 @@
 ## EER 다이어 그램
 
 ## 프로젝트 아키텍쳐
-
+![architecture](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/28485217-fb69-40cc-ab0f-d94973c16179)
