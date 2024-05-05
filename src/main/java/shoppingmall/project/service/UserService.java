@@ -2,6 +2,11 @@ package shoppingmall.project.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,16 +17,19 @@ import shoppingmall.project.additional.log.trace.TraceStatus;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.subdomain.Address;
 import shoppingmall.project.domain.subdomain.Tier;
+import shoppingmall.project.domain.subdomain.UserRole;
 import shoppingmall.project.form.UserForm;
 import shoppingmall.project.repository.UserRepository;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -81,6 +89,29 @@ public class UserService {
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
     }
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+
+        Optional<User> optionalUser = userRepository.findByLoginId(loginId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            if (!user.getLoginId().equals("admin")) {
+                grantedAuthorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
+
+                return new org.springframework.security.core.userdetails.User(user.getLoginId(), user.getPassword(), grantedAuthorities);
+            } else {
+
+                grantedAuthorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+                return new org.springframework.security.core.userdetails.User(user.getLoginId(), user.getPassword(), grantedAuthorities);
+            }
+        } else {
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다");
+        }
+
+    }
 
     /**
      * 구매시 구매한 item의 총 가격만큼 누적금액을 더하고 티어를 바꿔주는 로직
@@ -108,7 +139,6 @@ public class UserService {
         User findUser = user.orElseThrow(null);
         return findUser.getTier();
     }
-
 
 
 }

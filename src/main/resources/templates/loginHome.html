@@ -135,7 +135,7 @@
 
       <div class="col-md-3 text-end">
         <div class="d-flex align-items-center">
-          <h3 class="mb-3 me-3" th:text="|${user.loginId} 님|">로그인 사용자 이름</h3>
+          <h3 class="mb-3 me-3" th:text="|${loginId} 님|">로그인 사용자 이름</h3>
           <form th:action="@{/logout}" method="post">
             <button class="btn btn-dark btn-lg" type="submit">
               로그아웃

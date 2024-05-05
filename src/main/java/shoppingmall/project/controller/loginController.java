@@ -5,6 +5,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,46 +27,45 @@ public class loginController {
 
 
     @GetMapping("/login")
-    public String loginPage(@ModelAttribute("loginForm") LoginForm loginForm) {
+    public String loginPage() {
 
         return "login/login";
-
     }
 
-    @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
-                        HttpServletRequest request,
-                        HttpSession session,
-                        Model model) {
-
-        if (bindingResult.hasErrors()){
-            return "login/login";
-        }
-
-        User loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
-
-        if (loginUser == null) {
-            bindingResult.reject("loginFail", "아이디 혹은 비밀번호가 다릅니다.");
-            model.addAttribute("error","아이디 혹은 비밀번호가 다릅니다.");
-            return "login/login";
-        }
-        if (loginUser.getLoginId().equals("admin")) {
-            session = request.getSession();
-            session.setAttribute(SessionConst.ADMIN,loginUser);
-            return "admin/adminPage";
-        }
-        session = request.getSession();
-
-        session.setAttribute(SessionConst.LOGIN_USER,loginUser);
-
-
-        return "redirect:/";
-    }
+//    @PostMapping("/login")
+//    public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
+//                        HttpServletRequest request,
+//                        HttpSession session,
+//                        Model model) {
+//
+//        if (bindingResult.hasErrors()) {
+//            return "login/login";
+//        }
+//
+//        User loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
+//
+//        if (loginUser == null) {
+//            bindingResult.reject("loginFail", "아이디 혹은 비밀번호가 다릅니다.");
+//            model.addAttribute("error", "아이디 혹은 비밀번호가 다릅니다.");
+//            return "login/login";
+//        }
+//        if (loginUser.getLoginId().equals("admin")) {
+//            session = request.getSession();
+//            session.setAttribute(SessionConst.ADMIN, loginUser);
+//            return "admin/adminPage";
+//        }
+//        session = request.getSession();
+//
+//        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
+//
+//
+//        return "redirect:/";
+//    }
 
 
     @GetMapping("sign-up")
     public String signUp(@ModelAttribute("userForm") UserForm userForm) {
-            return "login/sign-up";
+        return "login/sign-up";
     }
 
     @PostMapping("sign-up")
@@ -74,23 +76,24 @@ public class loginController {
         }
 
         if (bindingResult.hasErrors()) {
-                return "login/sign-up";
-            }
-            userService.createSaveUser(userForm);
-
-            return "redirect:/";
-    }
-
-
-    @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            //세션 해제
-            session.invalidate();
+            return "login/sign-up";
         }
+        userService.createSaveUser(userForm);
+
         return "redirect:/";
     }
+
+
+//    @PostMapping("/logout")
+//    public String logout(HttpServletRequest request) {
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            //세션 해제
+//            session.invalidate();
+//        }
+//        return "redirect:/";
+//    }
+
     //어드민 페이지 이동
     //물품 추가 및 제거 수정
     @GetMapping("/adminPage")
@@ -98,4 +101,18 @@ public class loginController {
         return "admin/adminPage";
     }
 
+    @GetMapping("/loginHome")
+    public String loginHome(Model model) {
+        //인증 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        //사용자 로그인 ID 가져오기
+        String loginId = authentication.getName();
+        log.info("loginId={}",loginId);
+        model.addAttribute("loginId", loginId);
+        if (loginId.equals("admin")) {
+            return "admin/adminPage";
+        }
+        return "loginHome";
+    }
 }

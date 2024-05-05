@@ -2,16 +2,19 @@ package shoppingmall.project.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,65 +32,52 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @Slf4j
 public class WebSecurityConfig {
+    private final UserService userService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        log.info("1111111111111111111111111111111111111111111");
-        http
-                // 모든 인증되지 않은 요청을 허가
-                // authorizeHttpRequests: 스프링 시큐리티에서 HTTP 규칙을 정의 메서드. 특정 URL 패턴의 접근 제어에 사용
-                // AntPathRequestMatcher("/**")).permitAll(): /로 시작하는 URL (모든 URL) 에 대한 접근 허가
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-
-
-                // ignoringRequestMatchers: 특정 요청을 무시하도록 지시하는 메서드
-                .csrf((csrf) -> csrf
-                        .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui.html/**")))
-
-                // URL 요청시 X-Frame-Options 헤더값을 sameorigin으로 설정
-                // 스프링 시큐리티는 사이트 콘텐츠가 다른 사이트에 포함되지 않기 위해 X-Frame-Options 사용
-                // frame에 포함된 페이지가 제공하는 사이트와 동일한 경우 사용 가능하도록 설정
-                .headers((headers) -> headers
-                        .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-
-                // formLogin 메서드: 로그인 설정 담당.
-                // loginPage(String loginFormUrl): 로그인 폼 URL
-                // defaultSuccessUrl(loginSuccessUrl): 로그인 성공 후 이동할 URL
-                // 로그인 URL: "/user/login", 로그인 성공시: "/" 로 이동
-                .formLogin((formLogin) -> formLogin
-                        .loginPage("/login/login")
-                        .defaultSuccessUrl("/loginHome"))
-
-                // logout 메서드: 로그아웃 설정 담당
-                // logoutSuccessUrl(String logoutSuccessUrl): 로그아웃 성공 후 이동할 URL
-                // invalidateHttpSession(boolean invalidateHttpSession): HTTP 세션 무효화 결정
-                // deleteCookies(String cookieNames): 삭제할 쿠키 이름 지정
+        return http
+                // 주소마다 접근 권한 설정
+                .authorizeHttpRequests((authorizeHttpRequests) ->
+                        authorizeHttpRequests
+                                // 특정 주소에 대한 접근 허용
+                                .requestMatchers(
+                                        "/", "/login/**", "logout", "/images/**", "/home", "/loginHome",
+                                        "/css/**", "/js/**", "/*.ico", "/error/**", "/sign-up", "/bookList",
+                                        "/admin/**", "/adminPage", "/ioError", "/clothesList", "/electronicsList",
+                                        "/foodList", "/purchase/**", "/api/**", "/swagger-ui/**", "/deleteItem/**")
+                                .permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN") // 특정 역할이 있는 사용자만 허용
+                                .anyRequest().authenticated() // 그 외의 요청은 인증 필요
+                )
+                // 폼 로그인 설정
+                .formLogin((formLogin) ->
+                        formLogin
+                                .loginPage("/login") // 로그인 페이지 URL
+                                .defaultSuccessUrl("/loginHome") // 로그인 성공 시 이동할 URL
+                                .permitAll() // 모든 사용자에게 접근 허용
+                )
+                // 로그아웃 설정
                 .logout((logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true));
-        log.info("1111111111111111111111111111111111111111111");
-        return http.build();
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 요청 URL
+                        .logoutSuccessUrl("/") // 로그아웃 성공 시 이동할 URL
+                        .invalidateHttpSession(true) // HTTP 세션 무효화
+
+                )
+                .csrf(AbstractHttpConfigurer::disable) // CSRF 보호 비활성화
+                .build(); // 보안 필터 체인 생성
     }
 
-    // 회원가입 메서드에서 사용할 암호화 방식: PasswordEncoder 객체 빈 주입
+    // 비밀번호 암호화를 위한 PasswordEncoder 빈 등록
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // AuthenticationManager 객체 빈 주입
-    // AuthenticationManager 는 스프링 시큐리티의 인증을 담당
-    // 사용자 인증시 UserService와 PasswordEncoder 사용
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    // 사용자 인증 정보를 가져오는데 사용되는 UserDetailsService와 PasswordEncoder를 설정
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
-
-
-
-
 }

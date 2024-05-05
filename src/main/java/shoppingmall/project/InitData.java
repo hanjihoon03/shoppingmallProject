@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shoppingmall.project.domain.UploadFile;
@@ -25,15 +26,18 @@ public class InitData {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final FileRepository fileRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @EventListener(value = ApplicationReadyEvent.class)
     @Transactional
     public void initUser() {
+
         Address address = new Address("1","1","1");
         User user = new User("1","1",1,"1@1","1",address, Tier.NORMAL);
+        user.encodePassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        Address adminaddress = new Address("1","1","1");
         User admin = new User("admin","1",1,"2@2","1",address, Tier.NORMAL);
+        admin.encodePassword(passwordEncoder.encode(admin.getPassword()));
         userRepository.save(admin);
     }
     @EventListener(value = ApplicationReadyEvent.class)

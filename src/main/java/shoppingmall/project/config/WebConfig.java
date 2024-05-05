@@ -27,13 +27,13 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**","/*.ico","/error","/swagger-ui/**");
 
-        registry.addInterceptor(new LoginCheckInterceptor())
-                .order(3)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/","/login/**","logout","/images/**",
-                        "/css/**","/js/**","/*.ico","/error/**", "/sign-up","/bookList","/admin/**","/adminPage","/ioError",
-                        "/clothesList","/electronicsList","/foodList","/purchase/**","/api/**","/swagger-ui/**","/deleteItem/**"
-                );
+//        registry.addInterceptor(new LoginCheckInterceptor())
+//                .order(3)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/","/login/**","logout","/images/**",
+//                        "/css/**","/js/**","/*.ico","/error/**", "/sign-up","/bookList","/admin/**","/adminPage","/ioError",
+//                        "/clothesList","/electronicsList","/foodList","/purchase/**","/api/**","/swagger-ui/**","/deleteItem/**"
+//                );
         registry.addInterceptor(new AdminInterceptor())
                 .order(2)
                 .addPathPatterns("/admin/*");
