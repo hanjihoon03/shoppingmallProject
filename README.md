@@ -12,6 +12,8 @@
 ## 유스케이스
 
 ## EER 다이어 그램
+![image](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/df101623-9170-42d2-a007-f1b202611d7e)
+
 
 ## 프로젝트 아키텍쳐
 ![architecture](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/28485217-fb69-40cc-ab0f-d94973c16179)
