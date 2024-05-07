@@ -11,6 +11,8 @@ import shoppingmall.project.domain.Market;
 import shoppingmall.project.domain.Purchase;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.ItemDto;
+import shoppingmall.project.domain.dto.MarketPayDto;
+import shoppingmall.project.domain.dto.PurchasePayDto;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.domain.subdomain.DeliveryStatus;
 import shoppingmall.project.domain.subdomain.Tier;
@@ -69,6 +71,45 @@ public class MarketService {
     public void deleteMarketItem(Long id, Long userId) {
         marketRepository.deleteMarketOfItem(id, userId);
     }
+
+
+    /**
+     * user id를 받아 구매 목록을 결제하기 위한 메서드
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public PurchasePayDto payRequest(Long id) {
+        try {
+            List<MarketPayDto> marketPay = marketRepository.shoppingBasket(id);
+            if (marketPay.isEmpty()) {
+                log.info("구매 목록이 없습니다.");
+                return null;
+            }
+
+            PurchasePayDto purchasePayDto = new PurchasePayDto();
+            int pur_total_price = 0;
+            int pur_quantity = 0;
+            int count = 0;
+            for (MarketPayDto marketPayDto : marketPay) {
+                pur_total_price += marketPayDto.getOrderQuantity() * marketPayDto.getOrderQuantity();
+                pur_quantity += marketPayDto.getOrderQuantity();
+                count ++;
+            }
+
+            purchasePayDto.setItemName(marketPay.get(0).getName() + "외 " + --count + "개"); // 첫 번째 아이템의 이름으로 설정
+            purchasePayDto.setUserId(marketPay.get(0).getId());
+            purchasePayDto.setTotal_price(String.valueOf(pur_total_price));
+            purchasePayDto.setQuantity(String.valueOf(pur_quantity));
+            return purchasePayDto;
+        } catch (Exception e) {
+            log.error("구매 목록을 조회하는 중 오류가 발생했습니다.", e);
+            return null;
+        }
+    }
+
+
+
 
     public int purchaseTotalPrice(List<ItemDto> itemDto, User user) {
         int totalPrice = 0;

@@ -48,6 +48,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Delivery> deliveries = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Purchase> purchases = new ArrayList<>();
+
 
 
     public User(String loginId, String name, Integer age, String email, String password, Address address, Tier tier) {

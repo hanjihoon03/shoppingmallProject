@@ -11,6 +11,8 @@ import shoppingmall.project.domain.QMarket;
 import shoppingmall.project.domain.QUploadFile;
 import shoppingmall.project.domain.UploadFile;
 import shoppingmall.project.domain.dto.ItemDto;
+import shoppingmall.project.domain.dto.MarketPayDto;
+import shoppingmall.project.domain.dto.PurchasePayDto;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.domain.item.QItem;
 import shoppingmall.project.repository.custom.MarketRepositoryCustom;
@@ -72,6 +74,21 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
         queryFactory.delete(market)
                 .where(market.user.id.eq(userId))
                 .execute();
+    }
+
+
+    @Override
+    public List<MarketPayDto> shoppingBasket(Long id) {
+        return queryFactory.select(Projections.bean(MarketPayDto.class,
+                market.user.id,
+                market.items.name,
+                item.price,
+                market.orderQuantity
+        ))
+                .from(market)
+                .leftJoin(market.items,item)
+                .where(market.user.id.eq(id))
+                .fetch();
     }
 
 

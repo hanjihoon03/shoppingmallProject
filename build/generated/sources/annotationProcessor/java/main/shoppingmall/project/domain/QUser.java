@@ -42,6 +42,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath password = createString("password");
 
+    public final ListPath<Purchase, QPurchase> purchases = this.<Purchase, QPurchase>createList("purchases", Purchase.class, QPurchase.class, PathInits.DIRECT2);
+
     public final EnumPath<shoppingmall.project.domain.subdomain.Tier> tier = createEnum("tier", shoppingmall.project.domain.subdomain.Tier.class);
 
     public QUser(String variable) {
