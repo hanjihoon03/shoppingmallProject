@@ -48,6 +48,9 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
+	// actuator 추가
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 	//AWS mysql connection
 	implementation 'com.mysql:mysql-connector-j'
 
@@ -62,6 +65,9 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+springBoot {
+	buildInfo()
 }
 clean {
 	delete file('src/main/generated')

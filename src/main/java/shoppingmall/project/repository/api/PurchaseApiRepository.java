@@ -1,4 +1,4 @@
-package shoppingmall.project.repository;
+package shoppingmall.project.repository.api;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

@@ -161,7 +161,6 @@ public class ItemController {
 
         // 상품 아이디와 수량 세션에 저장
         // 장바구니추가시마다 정보 누적 생성
-        log.info("itemId={}", itemId);
         Item cartAddItem = itemService.findById(itemId);
 
         if (quantity > cartAddItem.getQuantity()) {
@@ -170,8 +169,6 @@ public class ItemController {
 
 
         marketService.addToCart(itemId, quantity, session, cartAddItem);
-        log.info("inCart={}, {}",itemId, quantity);
-        log.info("item={}", cartAddItem.getName());
 
         return "redirect:";
 

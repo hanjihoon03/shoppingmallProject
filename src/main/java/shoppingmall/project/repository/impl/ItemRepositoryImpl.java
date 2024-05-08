@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import shoppingmall.project.domain.UploadFile;
 import shoppingmall.project.domain.apidto.ItemApiDto;
@@ -25,7 +26,9 @@ import shoppingmall.project.repository.custom.ItemRepositoryCustom;
 import java.util.ArrayList;
 import java.util.List;
 
+import static shoppingmall.project.domain.QMarket.market;
 import static shoppingmall.project.domain.QUploadFile.*;
+import static shoppingmall.project.domain.QUser.user;
 import static shoppingmall.project.domain.item.QBook.book;
 import static shoppingmall.project.domain.item.QClothes.*;
 import static shoppingmall.project.domain.item.QElectronics.*;
@@ -325,49 +328,19 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .from(food)
                 .where(food.id.eq(id)).fetchOne();
     }
-
-    //api
     @Override
-    public List<Item> findPriceRange(ItemCond itemCond) {
-        return queryFactory.selectFrom(item)
-                .where(item.price.between(itemCond.getMin(), itemCond.getMax()))
+    public List<Item> findItemsByUserId(Long userId) {
+
+        return queryFactory
+                .select(item)
+                .from(item)
+                .innerJoin(item.markets, market)
+                .innerJoin(market.user, user)
+                .where(user.id.eq(userId))
                 .fetch();
     }
 
-    @Override
-    public List<Item> findDtypePriceRange(ItemCond itemCond) {
-        return queryFactory.selectFrom(item)
-                .where(item.dtype.eq(itemCond.getDtype()).and(item.price.between(itemCond.getMin(), itemCond.getMax())))
-                .fetch();
-    }
 
-    @Override
-    public Book updateBook(Long id) {
-        return queryFactory.select(book)
-                .from(book)
-                .where((book.id.eq(id)))
-                .fetchOne();
-    }
-    @Override
-    public Clothes updateClothes(Long id) {
-        return queryFactory.select(clothes)
-                .from(clothes)
-                .where((clothes.id.eq(id)))
-                .fetchOne();
-    }
-    @Override
-    public Electronics updateElectronics(Long id) {
-        return queryFactory.select(electronics)
-                .from(electronics)
-                .where((electronics.id.eq(id)))
-                .fetchOne();
-    }
-    @Override
-    public Food updateFood(Long id) {
-        return queryFactory.select(food)
-                .from(food)
-                .where((food.id.eq(id)))
-                .fetchOne();
-    }
+
 
 }

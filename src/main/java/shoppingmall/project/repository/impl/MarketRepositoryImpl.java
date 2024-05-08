@@ -33,18 +33,6 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-    @Override
-    public List<Item> findItemsByUserId(Long userId) {
-
-        return queryFactory
-                .select(item)
-                .from(item)
-                .innerJoin(item.markets, market)
-                .innerJoin(market.user, user)
-                .where(user.id.eq(userId))
-                .fetch();
-    }
-
 
     @Override
     public List<ItemDto> findItemAndFile(List<Long> itemIds) {

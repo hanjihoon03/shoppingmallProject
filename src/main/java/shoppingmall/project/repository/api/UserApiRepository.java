@@ -1,24 +1,21 @@
-package shoppingmall.project.repository.impl;
+package shoppingmall.project.repository.api;
 
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import shoppingmall.project.domain.QUser;
 import shoppingmall.project.domain.apidto.UserDto;
 import shoppingmall.project.domain.apidto.UserLoginIdPwDto;
 import shoppingmall.project.domain.subdomain.Tier;
-import shoppingmall.project.repository.custom.UserRepositoryCustom;
 
 import java.util.List;
 
 import static shoppingmall.project.domain.QUser.*;
 
-public class UserRepositoryImpl implements UserRepositoryCustom {
+public class UserApiRepository{
     private final JPAQueryFactory queryFactory;
 
-    public UserRepositoryImpl(EntityManager em) {
+    public UserApiRepository(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
@@ -29,7 +26,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
      * @param age
      * @return
      */
-    @Override
+
     public List<UserDto> findUserTierAndAge(Tier tier, int age) {
 
        return queryFactory.select(Projections.bean(UserDto.class,
@@ -47,7 +44,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .fetch();
     }
 
-    @Override
+
     public UserLoginIdPwDto findByNameAndEmail(String name, String email) {
         return queryFactory.select(Projections.bean(UserLoginIdPwDto.class,
                 user.loginId,

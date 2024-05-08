@@ -11,6 +11,7 @@ import shoppingmall.project.domain.apidto.save.FoodSaveApiDto;
 import shoppingmall.project.domain.apidto.update.*;
 import shoppingmall.project.domain.item.*;
 import shoppingmall.project.repository.ItemRepository;
+import shoppingmall.project.repository.api.ItemApiRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @Transactional
 public class ItemApiService {
 
+    private final ItemApiRepository ItemApiRepository;
     private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
@@ -55,7 +57,7 @@ public class ItemApiService {
     @Transactional(readOnly = true)
     public List<ItemApiDto> findPriceRange(int min, int max) {
         ItemCond itemCond = new ItemCond(min, max);
-        List<Item> allItem = itemRepository.findPriceRange(itemCond);
+        List<Item> allItem = ItemApiRepository.findPriceRange(itemCond);
         return allItem.stream()
                 .map(item -> {
                     ItemApiDto itemApiDto = new ItemApiDto();
@@ -70,7 +72,7 @@ public class ItemApiService {
     @Transactional(readOnly = true)
     public List<ItemApiDto> findDtypePriceRange(String dtype, int min, int max) {
         ItemCond itemCond = new ItemCond(min, max, dtype);
-        List<Item> allItem = itemRepository.findDtypePriceRange(itemCond);
+        List<Item> allItem = ItemApiRepository.findDtypePriceRange(itemCond);
         return allItem.stream()
                 .map(item -> {
                     ItemApiDto itemApiDto = new ItemApiDto();
@@ -105,7 +107,7 @@ public class ItemApiService {
     }
 
     public void updateApiBook(Long id, UpdateBookDto request) {
-        Book book = itemRepository.updateBook(id);
+        Book book = ItemApiRepository.updateBook(id);
         book.updateBook(
                 request.getName(),
                 request.getPrice(),
@@ -128,7 +130,7 @@ public class ItemApiService {
     }
 
     public void updateApiClothes(Long id, UpdateClothesDto request) {
-        Clothes clothes = itemRepository.updateClothes(id);
+        Clothes clothes = ItemApiRepository.updateClothes(id);
         clothes.updateClothes(
                 request.getName(),
                 request.getPrice(),
@@ -153,7 +155,7 @@ public class ItemApiService {
     }
 
     public void updateApiElectronics(Long id, UpdateElectronicsDto request) {
-        Electronics electronics = itemRepository.updateElectronics(id);
+        Electronics electronics = ItemApiRepository.updateElectronics(id);
         electronics.updateElectronics(
                 request.getName(),
                 request.getPrice(),
@@ -174,7 +176,7 @@ public class ItemApiService {
     }
 
     public void updateApiFood(Long id, UpdateFoodDto request) {
-        Food food = itemRepository.updateFood(id);
+        Food food = ItemApiRepository.updateFood(id);
         food.updateFood(
                 request.getName(),
                 request.getPrice(),

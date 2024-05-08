@@ -16,10 +16,7 @@ import shoppingmall.project.domain.dto.PurchasePayDto;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.domain.subdomain.DeliveryStatus;
 import shoppingmall.project.domain.subdomain.Tier;
-import shoppingmall.project.repository.DeliveryRepository;
-import shoppingmall.project.repository.MarketRepository;
-import shoppingmall.project.repository.PurchaseRepository;
-import shoppingmall.project.repository.UserRepository;
+import shoppingmall.project.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -31,9 +28,9 @@ import java.util.*;
 public class MarketService {
 
     private final MarketRepository marketRepository;
-    private final DeliveryRepository deliveryRepository;
+
     private final UserRepository userRepository;
-    private final PurchaseRepository purchaseRepository;
+    private final ItemRepository itemRepository;
 
     public void addToCart(Long itemId, int quantity, HttpSession session, Item item) {
         session.setAttribute("itemId", itemId);
@@ -54,7 +51,8 @@ public class MarketService {
         }
 
         // 로그인 한 사용자의 아이디를 사용하여 구매된 상품 목록을 가져옵니다.
-        List<Item> itemsByUserId = marketRepository.findItemsByUserId(loginUser.getId());
+        List<Item> itemsByUserId = itemRepository.findItemsByUserId(loginUser.getId());
+
 
         //장바구니의 아이템 리스트의 아이디들 반환
         List<Long> purchaseCartItemId = new ArrayList<>();

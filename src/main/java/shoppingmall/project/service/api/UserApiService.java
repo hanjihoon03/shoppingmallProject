@@ -10,6 +10,7 @@ import shoppingmall.project.domain.apidto.save.UserSaveDto;
 import shoppingmall.project.domain.subdomain.Address;
 import shoppingmall.project.domain.subdomain.Tier;
 import shoppingmall.project.repository.UserRepository;
+import shoppingmall.project.repository.api.UserApiRepository;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Transactional
 public class UserApiService {
 
+    private final UserApiRepository userApiRepository;
     private final UserRepository userRepository;
 
     public UserDto saveUser(UserSaveDto userSaveDto) {
@@ -52,11 +54,11 @@ public class UserApiService {
 
     @Transactional(readOnly = true)
     public UserLoginIdPwDto findByNameAndEmail(String name, String email) {
-        return userRepository.findByNameAndEmail(name,email);
+        return userApiRepository.findByNameAndEmail(name,email);
     }
 
     @Transactional(readOnly = true)
     public List<UserDto> findUserTierAndAge(Tier tier, int age) {
-        return userRepository.findUserTierAndAge(tier,age);
+        return userApiRepository.findUserTierAndAge(tier,age);
     }
 }
