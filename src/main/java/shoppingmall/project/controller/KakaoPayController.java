@@ -73,4 +73,12 @@ public class KakaoPayController {
         return "order/buyItem";
     }
 
+    @GetMapping("/cancel")
+    public String kakaoPayCancel() {
+        return "order/cancel";
+    }
+    @GetMapping("/fail")
+    public String kakaoPayFail() {
+        return "order/fail";
+    }
 }

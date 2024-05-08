@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
 import shoppingmall.project.domain.apidto.UserDto;
 import shoppingmall.project.domain.apidto.UserLoginIdPwDto;
 import shoppingmall.project.domain.subdomain.Tier;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static shoppingmall.project.domain.QUser.*;
 
+@Repository
 public class UserApiRepository{
     private final JPAQueryFactory queryFactory;
 
