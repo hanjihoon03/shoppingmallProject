@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MarketRepositoryCustom {
 
-     List<ItemDto> findItemAndFile(List<Long> itemIds);
+     List<ItemDto> findItemAndFile(List<Long> itemIds,Long userId);
      void deleteMarketOfItem(Long itemId, Long userId);
      void deleteMarketOfUser(Long userId);
      List<MarketPayDto> shoppingBasket(Long id);

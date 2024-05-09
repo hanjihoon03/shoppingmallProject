@@ -53,14 +53,13 @@ public class MarketService {
         // 로그인 한 사용자의 아이디를 사용하여 구매된 상품 목록을 가져옵니다.
         List<Item> itemsByUserId = itemRepository.findItemsByUserId(loginUser.getId());
 
-
         //장바구니의 아이템 리스트의 아이디들 반환
         List<Long> purchaseCartItemId = new ArrayList<>();
         for (Item item : itemsByUserId) {
             purchaseCartItemId.add(item.getId());
         }
         //장바구니 리스트의 아이디에 대한 아이템 반환
-        return marketRepository.findItemAndFile(purchaseCartItemId);
+        return marketRepository.findItemAndFile(purchaseCartItemId,loginUser.getId());
     }
 
     public void deleteMarketUser(Long id){

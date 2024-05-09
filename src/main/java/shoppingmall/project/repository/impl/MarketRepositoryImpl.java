@@ -35,7 +35,7 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
 
 
     @Override
-    public List<ItemDto> findItemAndFile(List<Long> itemIds) {
+    public List<ItemDto> findItemAndFile(List<Long> itemIds,Long userId) {
 
         return queryFactory.select(Projections.constructor(ItemDto.class,
                         item.id, item.name, item.price, market.orderQuantity,
@@ -43,8 +43,9 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
                 .from(market)
                 .join(market.items, item)
                 .join(item.uploadFiles, uploadFile)
-                .where(item.id.in(itemIds))
+                .where(item.id.in(itemIds).and(market.user.id.eq(userId)))
                 .fetch();
+        //where에서 item.id.in(itemIds)없어도 됨 한번에 장바구니 안에 userid기준으로 아이템을 찾을 수 있음
 
 
     }

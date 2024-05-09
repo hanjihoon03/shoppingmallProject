@@ -48,7 +48,6 @@ public class MarketController {
 
         Tier userTier = userService.findUserTier(user.getId());
 
-
         int discountAmount = marketService.discountAmount(totalPrice, userTier);
         model.addAttribute("discount", discountAmount);
 

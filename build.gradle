@@ -50,6 +50,8 @@ dependencies {
 
 	// actuator 추가
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	// prometheus 추가
+	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 	//AWS mysql connection
 	implementation 'com.mysql:mysql-connector-j'
