@@ -1,8 +1,14 @@
 package shoppingmall.project.repository.api;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import shoppingmall.project.domain.apidto.BookApiDto;
+import shoppingmall.project.domain.apidto.FoodApiDto;
 import shoppingmall.project.domain.apidto.ItemCond;
 import shoppingmall.project.domain.item.*;
 
@@ -66,6 +72,64 @@ public class ItemApiRepository {
                 .from(food)
                 .where((food.id.eq(id)))
                 .fetchOne();
+    }
+
+    public List<BookApiDto> findAllBook() {
+       return queryFactory.select(Projections.constructor(BookApiDto.class,
+                item.id,
+                item.name,
+                item.price,
+                item.quantity,
+                book.isbn,
+                book.author
+                ))
+                .from(item)
+                .leftJoin(book)
+               .on(item.id.eq(book.id))
+                .fetch();
+    }
+
+    public Page<BookApiDto> findAllBookPaging(Pageable pageable) {
+        List<BookApiDto> content = queryFactory.select(Projections.constructor(BookApiDto.class,
+                        item.id,
+                        item.name,
+                        item.price,
+                        item.quantity,
+                        book.isbn,
+                        book.author
+                ))
+                .from(item)
+                .leftJoin(book)
+                .on(item.id.eq(book.id))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long total = queryFactory.select(item.count())
+                .from(item)
+                .leftJoin(book)
+                .on(item.id.eq(book.id))
+                .fetchOne();
+
+        return new PageImpl<>(content,pageable,total);
+    }
+
+
+    public List<BookApiDto> jpqlPaging(int offset, int limit) {
+        return entityManager.createQuery("SELECT NEW shoppingmall.project.domain.apidto.BookApiDto("
+                + "item.id, "
+                + "item.name, "
+                + "item.price, "
+                + "item.quantity, "
+                + "book.isbn, "
+                + "book.author) "
+                + "FROM Item item "
+                + "JOIN fetch Book book "
+                + "ON item.id = book.id "
+                , BookApiDto.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
     }
 
 

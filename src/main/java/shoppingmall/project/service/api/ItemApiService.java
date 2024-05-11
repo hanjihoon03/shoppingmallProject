@@ -1,6 +1,9 @@
 package shoppingmall.project.service.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shoppingmall.project.domain.apidto.*;
@@ -9,6 +12,7 @@ import shoppingmall.project.domain.apidto.save.ClothesSaveApiDto;
 import shoppingmall.project.domain.apidto.save.ElectronicsSaveApiDto;
 import shoppingmall.project.domain.apidto.save.FoodSaveApiDto;
 import shoppingmall.project.domain.apidto.update.*;
+import shoppingmall.project.domain.dto.BookAndFileDto;
 import shoppingmall.project.domain.item.*;
 import shoppingmall.project.repository.ItemRepository;
 import shoppingmall.project.repository.api.ItemApiRepository;
@@ -269,5 +273,20 @@ public class ItemApiService {
                 saveFood.getBrand()
         );
     }
+
+    @Transactional(readOnly = true)
+    public Page<BookApiDto> findAllBookPaging(int page) {
+        Pageable pageable = PageRequest.of(page,30);
+        return ItemApiRepository.findAllBookPaging(pageable);
+    }
+    @Transactional(readOnly = true)
+    public List<BookApiDto> findAllBookRe() {
+        return ItemApiRepository.findAllBook();
+    }
+    @Transactional(readOnly = true)
+    public List<BookApiDto> jpqlPaging(int offset,int limit) {
+        return ItemApiRepository.jpqlPaging(offset,limit);
+    }
+
 
 }

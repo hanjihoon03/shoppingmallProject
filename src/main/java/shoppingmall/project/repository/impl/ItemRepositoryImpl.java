@@ -93,7 +93,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .on(uploadFile.item.id.eq(item.id))
                 .leftJoin(book)
                 .on(item.id.eq(book.id))
-                .where(item.dtype.eq("Book"))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -102,7 +101,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .select(uploadFile.count())
                 .from(uploadFile)
                 .leftJoin(uploadFile.item, item)
-                .where(item.dtype.eq("Book"))
+                .on(item.id.eq(book.id))
                 .fetchOne();
 
         return new PageImpl<>(content,pageable,total);
@@ -182,7 +181,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .on(uploadFile.item.id.eq(item.id))
                 .leftJoin(clothes)
                 .on(item.id.eq(clothes.id))
-                .where(item.dtype.eq("Clothes"))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -190,7 +188,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .select(uploadFile.count())
                 .from(uploadFile)
                 .leftJoin(uploadFile.item, item)
-                .where(item.dtype.eq("Clothes"))
+                .on(item.id.eq(clothes.id))
                 .fetchOne();
 
         return new PageImpl<>(content,pageable,total);
@@ -235,7 +233,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .on(uploadFile.item.id.eq(item.id))
                 .leftJoin(electronics)
                 .on(item.id.eq(electronics.id))
-                .where(item.dtype.eq("Electronics"))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -243,7 +240,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .select(uploadFile.count())
                 .from(uploadFile)
                 .leftJoin(uploadFile.item, item)
-                .where(item.dtype.eq("Electronics"))
+                .on(item.id.eq(electronics.id))
                 .fetchOne();
 
         return new PageImpl<>(content,pageable,total);
@@ -287,7 +284,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .on(uploadFile.item.id.eq(item.id))
                 .leftJoin(food)
                 .on(item.id.eq(food.id))
-                .where(item.dtype.eq("Food"))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -295,7 +291,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .select(uploadFile.count())
                 .from(uploadFile)
                 .leftJoin(uploadFile.item, item)
-                .where(item.dtype.eq("Food"))
+                .on(item.id.eq(food.id))
                 .fetchOne();
 
         return new PageImpl<>(content,pageable,total);
