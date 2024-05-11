@@ -20,9 +20,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
-    private final PurchaseRepository purchaseRepository;
 
-    public void addDelivery(ItemDto item, User user) {
+    public Delivery addDelivery(User user) {
 
         Delivery delivery = new Delivery(
                 user.getAddress(),
@@ -30,13 +29,7 @@ public class DeliveryService {
                 LocalDateTime.now(),
                 user
         );
-        Purchase purchase = new Purchase(
-                item.getName(),
-                item.getPrice(),
-                item.getQuantity(),
-                delivery
-        );
         deliveryRepository.save(delivery);
-        purchaseRepository.save(purchase);
+        return delivery;
     }
 }

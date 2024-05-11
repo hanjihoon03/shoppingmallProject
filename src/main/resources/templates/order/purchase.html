@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header" />
+<head th:replace="~{fragments/header :: header}" />
 <body>
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
     <div>
         <table class="table table-striped">
             <thead> <tr>
@@ -24,7 +24,7 @@
                             </a>
                         <td th:text="${itemDto.name}"></td>
                         <td th:text="${itemDto.price}"></td>
-                        <td th:text="${itemDto.quantity}"></td>
+                        <td th:text="${itemDto.orderQuantity}"></td>
                     <td>
                         <a th:href="@{'/purchase/delete/' + ${itemDto.id}}" class="btn btn-danger">삭제</a>
                     </td>
@@ -44,12 +44,12 @@
         </div>
     </div>
 
-    <div class="buy-button-container">
+        <div class="buy-button-container">
         <a th:href="@{/buy(totalPrice=${totalPrice})}" class="btn btn-dark btn-lg">구매</a>
     </div>
 
 
-    <div th:replace="fragments/footer :: footer"/>
+    <div th:replace="~{fragments/footer :: footer}"/>
 </div> <!-- /container -->
 </body>
 </html>

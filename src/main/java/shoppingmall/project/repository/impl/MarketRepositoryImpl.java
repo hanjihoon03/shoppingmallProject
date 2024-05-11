@@ -1,18 +1,15 @@
 package shoppingmall.project.repository.impl;
 
-import com.querydsl.core.Tuple;
+
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+
 import org.springframework.stereotype.Repository;
-import shoppingmall.project.domain.Market;
-import shoppingmall.project.domain.QMarket;
-import shoppingmall.project.domain.QUploadFile;
-import shoppingmall.project.domain.UploadFile;
 import shoppingmall.project.domain.dto.ItemDto;
-import shoppingmall.project.domain.item.Item;
-import shoppingmall.project.domain.item.QItem;
+import shoppingmall.project.domain.dto.MarketPayDto;
+import shoppingmall.project.domain.dto.MarketPayDtoV2;
 import shoppingmall.project.repository.custom.MarketRepositoryCustom;
 
 import java.util.ArrayList;
@@ -31,21 +28,9 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-    @Override
-    public List<Item> findItemsByUserId(Long userId) {
-
-        return queryFactory
-                .select(item)
-                .from(item)
-                .innerJoin(item.markets, market)
-                .innerJoin(market.user, user)
-                .where(user.id.eq(userId))
-                .fetch();
-    }
-
 
     @Override
-    public List<ItemDto> findItemAndFile(List<Long> itemIds) {
+    public List<ItemDto> findItemAndFile(List<Long> itemIds,Long userId) {
 
         return queryFactory.select(Projections.constructor(ItemDto.class,
                         item.id, item.name, item.price, market.orderQuantity,
@@ -53,8 +38,9 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
                 .from(market)
                 .join(market.items, item)
                 .join(item.uploadFiles, uploadFile)
-                .where(item.id.in(itemIds))
+                .where(item.id.in(itemIds).and(market.user.id.eq(userId)))
                 .fetch();
+        //where에서 item.id.in(itemIds)없어도 됨 한번에 장바구니 안에 userid기준으로 아이템을 찾을 수 있음
 
 
     }
@@ -73,6 +59,58 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
                 .where(market.user.id.eq(userId))
                 .execute();
     }
+
+
+    @Override
+    public List<MarketPayDto> shoppingBasket(Long id) {
+        return queryFactory.select(Projections.bean(MarketPayDto.class,
+                market.user.id,
+                market.items.name,
+                item.price,
+                market.orderQuantity
+        ))
+                .from(market)
+                .leftJoin(market.items,item)
+                .where(market.user.id.eq(id))
+                .fetch();
+    }
+
+
+    @Override
+    public List<MarketPayDtoV2> shoppingBasketV2(Long id) {
+
+
+//        Projections.bean(MarketPayDtoV2.class,
+//                market.items.id,
+//                market.items.name,
+//                item.price,
+//                market.orderQuantity,
+//                uploadFile.uploadFileName,
+//                uploadFile.storeFileName
+//        new QMarketPayDtoV2(market.items.id,
+//                market.items.name,
+//                item.price,
+//                market.orderQuantity,
+//                uploadFile.uploadFileName,
+//                uploadFile.storeFileName)
+
+
+        return queryFactory.select(Projections.constructor(MarketPayDtoV2.class,
+                        market.items.id,
+                        market.items.name,
+                        item.price,
+                        market.orderQuantity,
+                        uploadFile.uploadFileName,
+                        uploadFile.storeFileName))
+                .from(market)
+                .join(market.items,item)
+                .join(item.uploadFiles, uploadFile)
+                .where(market.user.id.eq(id))
+                .fetch();
+    }
+
+
+
 
 
 }

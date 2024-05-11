@@ -7,7 +7,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import shoppingmall.project.apiresponse.CustomErrorResponse;
 import shoppingmall.project.domain.apidto.*;
@@ -16,7 +18,9 @@ import shoppingmall.project.domain.apidto.save.ClothesSaveApiDto;
 import shoppingmall.project.domain.apidto.save.ElectronicsSaveApiDto;
 import shoppingmall.project.domain.apidto.save.FoodSaveApiDto;
 import shoppingmall.project.domain.apidto.update.*;
+import shoppingmall.project.domain.dto.BookAndFileDto;
 import shoppingmall.project.service.api.ItemApiService;
+import shoppingmall.project.service.api.UploadApiService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +31,7 @@ import java.util.List;
 public class ItemApiController {
 
     private final ItemApiService itemApiService;
+    private final UploadApiService uploadApiService;
 
     @Operation(
             summary = "Item",
@@ -152,6 +157,7 @@ public class ItemApiController {
     @DeleteMapping("/api/item/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         itemApiService.deleteByItemId(id);
+        uploadApiService.deleteUploadFileFromItemId(id);
 
         return ResponseEntity.ok()
                 .build();
@@ -370,6 +376,68 @@ public class ItemApiController {
         return ResponseEntity.ok()
                 .body(foodApiDto).getBody();
     }
+
+    @Operation(
+            summary = "PageBook",
+            description = "Book을 paging해서 반환합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK")
+    @ApiResponse(
+            responseCode = "400",
+            description = "올바르지 않은 요청 값입니다.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
+    )
+    @GetMapping("/api/bookList")
+    public Page<BookApiDto> bookList(@RequestParam(value = "page", defaultValue = "0") int page) {
+
+        Page<BookApiDto> allBook = itemApiService.findAllBookPaging(page);
+
+        return ResponseEntity.ok()
+                .body(allBook).getBody();
+    }
+    @Operation(
+            summary = "allBook",
+            description = "모든 Book의 자세한 정보를 반환합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK")
+    @ApiResponse(
+            responseCode = "400",
+            description = "올바르지 않은 요청 값입니다.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
+    )
+    @GetMapping("/api/allBook")
+    public List<BookApiDto> allBook() {
+        List<BookApiDto> allBookRe = itemApiService.findAllBookRe();
+        return ResponseEntity.ok()
+                .body(allBookRe).getBody();
+    }
+
+    @Operation(
+            summary = "PageBookJPQL",
+            description = "Book을 jpql로 paging해서 반환합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK")
+    @ApiResponse(
+            responseCode = "400",
+            description = "올바르지 않은 요청 값입니다.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
+    )
+    @GetMapping("/api/Book/Jpql")
+    public List<BookApiDto> bookListJpql(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                         @RequestParam(value = "limit") int limit) {
+
+        List<BookApiDto> bookApiDtos = itemApiService.jpqlPaging(offset,limit);
+
+        return ResponseEntity.ok()
+                .body(bookApiDtos).getBody();
+    }
+
 
 
 }

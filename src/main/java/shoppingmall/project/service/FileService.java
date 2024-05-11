@@ -32,6 +32,7 @@ public class FileService {
 
 
     //아이템 아이디에 해당하는 아이템의 이미지 파일을 찾아오기 위한 메서드
+    @Transactional(readOnly = true)
     public UploadFile findUploadFileItemId(Long id) {
         return fileRepository.findByItemId(id);
     }
@@ -40,7 +41,7 @@ public class FileService {
         return fileDir + filename;
     }
 
-    UploadFile storeFile(MultipartFile multipartFile) throws FileStorageException {
+    public UploadFile storeFile(MultipartFile multipartFile) throws FileStorageException {
         try {
 
             if (multipartFile == null || multipartFile.isEmpty()) {

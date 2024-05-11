@@ -1,11 +1,13 @@
 package shoppingmall.project.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class Purchase {
 
     @Id
@@ -15,6 +17,10 @@ public class Purchase {
     private String itemName;
     private int orderPrice;
     private int orderQuantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
@@ -33,6 +39,14 @@ public class Purchase {
         this.itemName = itemName;
         this.orderPrice = orderPrice;
         this.orderQuantity = orderQuantity;
+        this.delivery = delivery;
+    }
+
+    public Purchase(String itemName, int orderPrice, int orderQuantity, User user, Delivery delivery) {
+        this.itemName = itemName;
+        this.orderPrice = orderPrice;
+        this.orderQuantity = orderQuantity;
+        this.user = user;
         this.delivery = delivery;
     }
 }

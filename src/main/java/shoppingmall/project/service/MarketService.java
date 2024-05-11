@@ -6,20 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shoppingmall.project.additional.web.session.SessionConst;
-import shoppingmall.project.domain.Delivery;
 import shoppingmall.project.domain.Market;
-import shoppingmall.project.domain.Purchase;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.ItemDto;
+import shoppingmall.project.domain.dto.MarketPayDto;
+import shoppingmall.project.domain.dto.MarketPayDtoV2;
+import shoppingmall.project.domain.dto.PurchasePayDto;
 import shoppingmall.project.domain.item.Item;
-import shoppingmall.project.domain.subdomain.DeliveryStatus;
 import shoppingmall.project.domain.subdomain.Tier;
-import shoppingmall.project.repository.DeliveryRepository;
-import shoppingmall.project.repository.MarketRepository;
-import shoppingmall.project.repository.PurchaseRepository;
-import shoppingmall.project.repository.UserRepository;
+import shoppingmall.project.repository.*;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -29,9 +25,9 @@ import java.util.*;
 public class MarketService {
 
     private final MarketRepository marketRepository;
-    private final DeliveryRepository deliveryRepository;
+
     private final UserRepository userRepository;
-    private final PurchaseRepository purchaseRepository;
+    private final ItemRepository itemRepository;
 
     public void addToCart(Long itemId, int quantity, HttpSession session, Item item) {
         session.setAttribute("itemId", itemId);
@@ -44,7 +40,13 @@ public class MarketService {
         session.setAttribute(SessionConst.SHOPPING_CART,market);
         marketRepository.save(market);
     }
-    public List<ItemDto> purchaseItem(HttpSession session) {
+    @Transactional(readOnly = true)
+    public List<MarketPayDtoV2> purchaseItem(Long userId) {
+        return marketRepository.shoppingBasketV2(userId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ItemDto> purchaseItemV2(HttpSession session) {
         User loginUser = (User) session.getAttribute(SessionConst.LOGIN_USER);
         if (loginUser == null) {
             log.error("로그인 사용자를 찾을 수 없습니다.");
@@ -52,7 +54,7 @@ public class MarketService {
         }
 
         // 로그인 한 사용자의 아이디를 사용하여 구매된 상품 목록을 가져옵니다.
-        List<Item> itemsByUserId = marketRepository.findItemsByUserId(loginUser.getId());
+        List<Item> itemsByUserId = itemRepository.findItemsByUserId(loginUser.getId());
 
         //장바구니의 아이템 리스트의 아이디들 반환
         List<Long> purchaseCartItemId = new ArrayList<>();
@@ -60,8 +62,12 @@ public class MarketService {
             purchaseCartItemId.add(item.getId());
         }
         //장바구니 리스트의 아이디에 대한 아이템 반환
-        return marketRepository.findItemAndFile(purchaseCartItemId);
+        return marketRepository.findItemAndFile(purchaseCartItemId,loginUser.getId());
     }
+
+
+
+
 
     public void deleteMarketUser(Long id){
         marketRepository.deleteMarketOfUser(id);
@@ -70,13 +76,64 @@ public class MarketService {
         marketRepository.deleteMarketOfItem(id, userId);
     }
 
-    public int purchaseTotalPrice(List<ItemDto> itemDto, User user) {
+
+    /**
+     * user id를 받아 구매 목록을 결제하기 위한 메서드
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public PurchasePayDto payRequest(Long id) {
+        try {
+            List<MarketPayDto> marketPay = marketRepository.shoppingBasket(id);
+            if (marketPay.isEmpty()) {
+                log.info("구매 목록이 없습니다.");
+                return null;
+            }
+
+            PurchasePayDto purchasePayDto = new PurchasePayDto();
+            int pur_total_price = 0;
+            int pur_quantity = 0;
+            int count = 0;
+            for (MarketPayDto marketPayDto : marketPay) {
+                pur_total_price += marketPayDto.getOrderQuantity() * marketPayDto.getOrderQuantity();
+                pur_quantity += marketPayDto.getOrderQuantity();
+                count ++;
+            }
+
+            purchasePayDto.setItemName(marketPay.get(0).getName() + "외 " + --count + "개"); // 첫 번째 아이템의 이름으로 설정
+            purchasePayDto.setUserId(marketPay.get(0).getId());
+            purchasePayDto.setTotal_price(String.valueOf(pur_total_price));
+            purchasePayDto.setQuantity(String.valueOf(pur_quantity));
+            return purchasePayDto;
+        } catch (Exception e) {
+            log.error("구매 목록을 조회하는 중 오류가 발생했습니다.", e);
+            return null;
+        }
+    }
+
+
+    public int purchaseTotalPriceV2(List<ItemDto> itemDto, User user) {
         int totalPrice = 0;
 
         for (ItemDto dto : itemDto) {
             totalPrice += dto.getPrice() * dto.getQuantity();
         }
 
+        totalPrice = discountLogic(user, totalPrice);
+
+        return totalPrice;
+
+    }
+
+
+
+
+    public int purchaseTotalPrice(List<MarketPayDtoV2> items, User user) {
+        int totalPrice = 0;
+        for (MarketPayDtoV2 item : items) {
+            totalPrice += item.getPrice() * item.getOrderQuantity();
+        }
         totalPrice = discountLogic(user, totalPrice);
 
         return totalPrice;

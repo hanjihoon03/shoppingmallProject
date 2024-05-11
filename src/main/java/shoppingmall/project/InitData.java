@@ -45,7 +45,7 @@ public class InitData {
         UploadFile uploadFile = new UploadFile("book1.png","2b809c46-2c88-4c54-a5a9-8ac33a99e3f6.png",book);
         fileRepository.save(uploadFile);
         }
-        for (int i = 1; i <= 300; i++) {
+        for (int i = 1; i <= 1000; i++) {
             Clothes clothes = new Clothes("i",i,i, ClothesType.PANTS,"i",1);
             itemRepository.save(clothes);
             UploadFile uploadFile = new UploadFile("book1.png","2b809c46-2c88-4c54-a5a9-8ac33a99e3f6.png",clothes);

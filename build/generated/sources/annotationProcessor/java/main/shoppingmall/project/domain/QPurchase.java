@@ -32,6 +32,8 @@ public class QPurchase extends EntityPathBase<Purchase> {
 
     public final NumberPath<Integer> orderQuantity = createNumber("orderQuantity", Integer.class);
 
+    public final QUser user;
+
     public QPurchase(String variable) {
         this(Purchase.class, forVariable(variable), INITS);
     }
@@ -51,6 +53,7 @@ public class QPurchase extends EntityPathBase<Purchase> {
     public QPurchase(Class<? extends Purchase> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.delivery = inits.isInitialized("delivery") ? new QDelivery(forProperty("delivery"), inits.get("delivery")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }
