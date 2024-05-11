@@ -8,20 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import shoppingmall.project.additional.web.session.SessionConst;
-import shoppingmall.project.domain.Delivery;
-import shoppingmall.project.domain.Purchase;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.*;
-import shoppingmall.project.domain.item.Item;
 
 import shoppingmall.project.domain.subdomain.Tier;
-import shoppingmall.project.repository.PurchaseRepository;
-import shoppingmall.project.repository.UserRepository;
 import shoppingmall.project.service.*;
 
-import java.nio.channels.SeekableByteChannel;
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
@@ -30,22 +23,18 @@ import java.util.Optional;
 public class MarketController {
 
     private final MarketService marketService;
-    private final ItemService itemService;
     private final UserService userService;
-    private final DeliveryService deliveryService;
-    private final PurchaseService purchaseService;
 
 
     @GetMapping("/purchase")
     public String purchase(Model model, HttpSession session) {
         User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
 
-        List<ItemDto> itemDtos = marketService.purchaseItem(session);
-        model.addAttribute("items", itemDtos);
+        List<MarketPayDtoV2> shoppingBasket = marketService.purchaseItem(user.getId());
+        model.addAttribute("items", shoppingBasket);
 
-        int totalPrice = marketService.purchaseTotalPrice(itemDtos, user);
+        int totalPrice = marketService.purchaseTotalPrice(shoppingBasket, user);
         model.addAttribute("totalPrice", totalPrice);
-
         Tier userTier = userService.findUserTier(user.getId());
 
         int discountAmount = marketService.discountAmount(totalPrice, userTier);
@@ -53,6 +42,32 @@ public class MarketController {
 
         return "order/purchase";
     }
+
+
+    @GetMapping("/purchaseV2")
+    public String purchaseV2(Model model, HttpSession session) {
+        User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
+
+        List<ItemDto> itemDtos = marketService.purchaseItemV2(session);
+        model.addAttribute("items", itemDtos);
+
+        int totalPrice = marketService.purchaseTotalPriceV2(itemDtos, user);
+        model.addAttribute("totalPrice", totalPrice);
+
+        Tier userTier = userService.findUserTier(user.getId());
+
+
+        int discountAmount = marketService.discountAmount(totalPrice, userTier);
+        model.addAttribute("discount", discountAmount);
+
+        return "order/purchaseV2";
+    }
+
+
+
+
+
+
     @GetMapping("/purchase/delete/{id}")
     public String delete(@PathVariable Long id, HttpSession session) {
         // 삭제 작업 수행

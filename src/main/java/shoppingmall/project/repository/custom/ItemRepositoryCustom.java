@@ -11,10 +11,10 @@ import shoppingmall.project.repository.FileRepository;
 import java.util.List;
 
 public interface ItemRepositoryCustom{
-    List<BookAndFileDto> findBookWithUploadFile();
-    List<ClothesAndFileDto> findClothesWithUploadFile();
-    List<ElectronicsAndFileDto> findElectronicsWithUploadFile();
-    List<FoodAndFileDto> findFoodWithUploadFile();
+//    List<BookAndFileDto> findBookWithUploadFile();
+//    List<ClothesAndFileDto> findClothesWithUploadFile();
+//    List<ElectronicsAndFileDto> findElectronicsWithUploadFile();
+//    List<FoodAndFileDto> findFoodWithUploadFile();
 
     List<Item> findItemsByUserId(Long userId);
     Book findBook(Long id);
@@ -27,6 +27,8 @@ public interface ItemRepositoryCustom{
     Page<ClothesAndFileDto> pagingClothes(Pageable pageable);
     Page<FoodAndFileDto> pagingFood(Pageable pageable);
     Page<ElectronicsAndFileDto> pagingElectronics(Pageable pageable);
+
+
 
 
 }

@@ -110,6 +110,7 @@ public class ItemService {
         return itemRepository.pagingBook(pageable);
 
     }
+    @Transactional(readOnly = true)
     public Book findOneBook(Long id) {
         return itemRepository.findBook(id);
     }
@@ -118,6 +119,7 @@ public class ItemService {
         Pageable pageable = PageRequest.of(page,30);
         return itemRepository.pagingClothes(pageable);
     }
+    @Transactional(readOnly = true)
     public Clothes findOneClothes(Long id) {
         return itemRepository.findClothes(id);
     }
@@ -126,6 +128,7 @@ public class ItemService {
         Pageable pageable = PageRequest.of(page,30);
         return itemRepository.pagingElectronics(pageable);
     }
+    @Transactional(readOnly = true)
     public Electronics findOneElectronics(Long id) {
         return itemRepository.findElectronics(id);
     }
@@ -134,6 +137,7 @@ public class ItemService {
         Pageable pageable = PageRequest.of(page,30);
         return itemRepository.pagingFood(pageable);
     }
+    @Transactional(readOnly = true)
     public Food findOneFood(Long id) {
         return itemRepository.findFood(id);
     }

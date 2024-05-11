@@ -17,6 +17,7 @@ import shoppingmall.project.domain.apidto.save.ElectronicsSaveApiDto;
 import shoppingmall.project.domain.apidto.save.FoodSaveApiDto;
 import shoppingmall.project.domain.apidto.update.*;
 import shoppingmall.project.service.api.ItemApiService;
+import shoppingmall.project.service.api.UploadApiService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
 public class ItemApiController {
 
     private final ItemApiService itemApiService;
+    private final UploadApiService uploadApiService;
 
     @Operation(
             summary = "Item",
@@ -152,6 +154,7 @@ public class ItemApiController {
     @DeleteMapping("/api/item/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         itemApiService.deleteByItemId(id);
+        uploadApiService.deleteUploadFileFromItemId(id);
 
         return ResponseEntity.ok()
                 .build();

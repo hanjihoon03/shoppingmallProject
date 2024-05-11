@@ -18,6 +18,7 @@ public class PurchaseApiService {
 
     private final PurchaseApiRepository purchaseApiRepository;
 
+    @Transactional(readOnly = true)
     public List<UserPurchaseDto> purchaseList(Long id) {
         List<Delivery> deliveryList = purchaseApiRepository.userDeliveryList(id);
 

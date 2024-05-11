@@ -1,20 +1,15 @@
 package shoppingmall.project.repository.impl;
 
-import com.querydsl.core.Tuple;
+
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+
 import org.springframework.stereotype.Repository;
-import shoppingmall.project.domain.Market;
-import shoppingmall.project.domain.QMarket;
-import shoppingmall.project.domain.QUploadFile;
-import shoppingmall.project.domain.UploadFile;
 import shoppingmall.project.domain.dto.ItemDto;
 import shoppingmall.project.domain.dto.MarketPayDto;
-import shoppingmall.project.domain.dto.PurchasePayDto;
-import shoppingmall.project.domain.item.Item;
-import shoppingmall.project.domain.item.QItem;
+import shoppingmall.project.domain.dto.MarketPayDtoV2;
 import shoppingmall.project.repository.custom.MarketRepositoryCustom;
 
 import java.util.ArrayList;
@@ -79,6 +74,43 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom {
                 .where(market.user.id.eq(id))
                 .fetch();
     }
+
+
+    @Override
+    public List<MarketPayDtoV2> shoppingBasketV2(Long id) {
+
+
+//        Projections.bean(MarketPayDtoV2.class,
+//                market.items.id,
+//                market.items.name,
+//                item.price,
+//                market.orderQuantity,
+//                uploadFile.uploadFileName,
+//                uploadFile.storeFileName
+//        new QMarketPayDtoV2(market.items.id,
+//                market.items.name,
+//                item.price,
+//                market.orderQuantity,
+//                uploadFile.uploadFileName,
+//                uploadFile.storeFileName)
+
+
+        return queryFactory.select(Projections.constructor(MarketPayDtoV2.class,
+                        market.items.id,
+                        market.items.name,
+                        item.price,
+                        market.orderQuantity,
+                        uploadFile.uploadFileName,
+                        uploadFile.storeFileName))
+                .from(market)
+                .join(market.items,item)
+                .join(item.uploadFiles, uploadFile)
+                .where(market.user.id.eq(id))
+                .fetch();
+    }
+
+
+
 
 
 }

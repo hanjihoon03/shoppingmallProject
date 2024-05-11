@@ -6,19 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shoppingmall.project.additional.web.session.SessionConst;
-import shoppingmall.project.domain.Delivery;
 import shoppingmall.project.domain.Market;
-import shoppingmall.project.domain.Purchase;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.ItemDto;
 import shoppingmall.project.domain.dto.MarketPayDto;
+import shoppingmall.project.domain.dto.MarketPayDtoV2;
 import shoppingmall.project.domain.dto.PurchasePayDto;
 import shoppingmall.project.domain.item.Item;
-import shoppingmall.project.domain.subdomain.DeliveryStatus;
 import shoppingmall.project.domain.subdomain.Tier;
 import shoppingmall.project.repository.*;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -43,7 +40,13 @@ public class MarketService {
         session.setAttribute(SessionConst.SHOPPING_CART,market);
         marketRepository.save(market);
     }
-    public List<ItemDto> purchaseItem(HttpSession session) {
+    @Transactional(readOnly = true)
+    public List<MarketPayDtoV2> purchaseItem(Long userId) {
+        return marketRepository.shoppingBasketV2(userId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ItemDto> purchaseItemV2(HttpSession session) {
         User loginUser = (User) session.getAttribute(SessionConst.LOGIN_USER);
         if (loginUser == null) {
             log.error("로그인 사용자를 찾을 수 없습니다.");
@@ -61,6 +64,10 @@ public class MarketService {
         //장바구니 리스트의 아이디에 대한 아이템 반환
         return marketRepository.findItemAndFile(purchaseCartItemId,loginUser.getId());
     }
+
+
+
+
 
     public void deleteMarketUser(Long id){
         marketRepository.deleteMarketOfUser(id);
@@ -106,15 +113,27 @@ public class MarketService {
     }
 
 
-
-
-    public int purchaseTotalPrice(List<ItemDto> itemDto, User user) {
+    public int purchaseTotalPriceV2(List<ItemDto> itemDto, User user) {
         int totalPrice = 0;
 
         for (ItemDto dto : itemDto) {
             totalPrice += dto.getPrice() * dto.getQuantity();
         }
 
+        totalPrice = discountLogic(user, totalPrice);
+
+        return totalPrice;
+
+    }
+
+
+
+
+    public int purchaseTotalPrice(List<MarketPayDtoV2> items, User user) {
+        int totalPrice = 0;
+        for (MarketPayDtoV2 item : items) {
+            totalPrice += item.getPrice() * item.getOrderQuantity();
+        }
         totalPrice = discountLogic(user, totalPrice);
 
         return totalPrice;

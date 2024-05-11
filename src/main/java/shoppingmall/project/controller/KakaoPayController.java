@@ -10,6 +10,7 @@ import shoppingmall.project.additional.web.session.SessionConst;
 import shoppingmall.project.domain.Delivery;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.ItemDto;
+import shoppingmall.project.domain.dto.MarketPayDtoV2;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.pay.KakaoPayApprovalVO;
 import shoppingmall.project.service.*;
@@ -44,25 +45,21 @@ public class KakaoPayController {
 
         int newTotalPrice = userService.addAccumulatedAmount(user, totalPrice);
         // 장바구니의 아이템 id find하고 수량만 set 열어서 사용
-        List<ItemDto> itemDtos = marketService.purchaseItem(session);
+        List<MarketPayDtoV2> shoppingBasket = marketService.purchaseItem(user.getId());
 
         //구매한 배송 정보 저장
         Delivery delivery = deliveryService.addDelivery(user);
 
-        for (ItemDto itemDto : itemDtos) {
-            Item buyItem = itemService.findById(itemDto.getId());
-
+        for (MarketPayDtoV2 marketPayDtoV2 : shoppingBasket) {
             ItemDto item = new ItemDto(
-                    itemDto.getId(),
-                    itemDto.getName(),
-                    itemDto.getPrice(),
-                    itemDto.getQuantity()
+                    marketPayDtoV2.getId(),
+                    marketPayDtoV2.getName(),
+                    marketPayDtoV2.getPrice(),
+                    marketPayDtoV2.getOrderQuantity()
             );
-            //구매한 배송정보 delivery_id에 맞는 구매 목록 저장
+            Item findById = itemService.findById(item.getId());
             purchaseService.addPurchase(item,delivery,user);
-
-
-            buyItem.purchaseAfterQuantity(itemDto.getQuantity());
+            findById.purchaseAfterQuantity(marketPayDtoV2.getOrderQuantity());
         }
 
         marketService.deleteMarketUser(user.getId());
