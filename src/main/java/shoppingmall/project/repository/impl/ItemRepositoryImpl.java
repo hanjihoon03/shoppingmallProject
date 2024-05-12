@@ -101,7 +101,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .select(uploadFile.count())
                 .from(uploadFile)
                 .leftJoin(uploadFile.item, item)
-                .on(item.id.eq(book.id))
+                .where(item.dtype.eq("Book"))
                 .fetchOne();
 
         return new PageImpl<>(content,pageable,total);
@@ -188,7 +188,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .select(uploadFile.count())
                 .from(uploadFile)
                 .leftJoin(uploadFile.item, item)
-                .on(item.id.eq(clothes.id))
+                .where(item.dtype.eq("Clothes"))
                 .fetchOne();
 
         return new PageImpl<>(content,pageable,total);
@@ -240,7 +240,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .select(uploadFile.count())
                 .from(uploadFile)
                 .leftJoin(uploadFile.item, item)
-                .on(item.id.eq(electronics.id))
+                .where(item.dtype.eq("Electronics"))
                 .fetchOne();
 
         return new PageImpl<>(content,pageable,total);
@@ -291,7 +291,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .select(uploadFile.count())
                 .from(uploadFile)
                 .leftJoin(uploadFile.item, item)
-                .on(item.id.eq(food.id))
+                .where(item.dtype.eq("Food"))
                 .fetchOne();
 
         return new PageImpl<>(content,pageable,total);
