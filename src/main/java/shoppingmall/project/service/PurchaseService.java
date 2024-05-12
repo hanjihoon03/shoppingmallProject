@@ -1,5 +1,6 @@
 package shoppingmall.project.service;
 
+import io.micrometer.core.annotation.Counted;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.repository.PurchaseRepository;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +23,7 @@ import java.util.List;
 public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
 
+    @Counted("order.count")
     public void addPurchase(ItemDto item, Delivery delivery,User user) {
         Purchase purchase = new Purchase(
                 item.getName(),
