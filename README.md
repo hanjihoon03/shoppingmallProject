@@ -24,6 +24,9 @@ java,springboot,springdatajpa,querydsl,mysql,aws,github
 ![api](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/3c67ae77-3208-4927-9235-8f4780d67c6d)
 
 
+<img width="833" alt="스크린샷 2024-05-14 오전 5 24 57" src="https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/4f280232-46fd-4f7a-82ce-ffee0f9d8d7d">
+
+
 
 
 
