@@ -8,8 +8,9 @@
 
 
 ## 유스 케이스
+![_usecase drawio](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/8abe0b59-3c15-465f-bb73-b3d9a2d96a4a)
 
-![_usecase drawio](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/00af56a0-9948-4be1-84d3-e17f1da09989)
+
 
 
 ## 사용 기술
