@@ -10,7 +10,9 @@
 ## 유스 케이스
 ![_usecase drawio](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/8abe0b59-3c15-465f-bb73-b3d9a2d96a4a)
 
+# 유스 케이스 명세서
 
+<img width="833" alt="스크린샷 2024-05-14 오전 6 42 33" src="https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/434f1be9-73ac-456b-8eb4-1619ba6add71">
 
 
 ## 사용 기술
