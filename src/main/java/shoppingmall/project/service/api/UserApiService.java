@@ -20,7 +20,6 @@ import java.util.List;
 public class UserApiService {
 
     private final UserApiRepository userApiRepository;
-    private final UserRepository userRepository;
 
     public UserDto saveUser(UserSaveDto userSaveDto) {
         Address address = new Address(
@@ -38,7 +37,7 @@ public class UserApiService {
                 Tier.NORMAL,
                 0
         );
-        User saveUser = userRepository.save(user);
+        User saveUser = userApiRepository.save(user);
         return new UserDto(
                 saveUser.getId(),
                 saveUser.getLoginId(),
@@ -55,10 +54,5 @@ public class UserApiService {
     @Transactional(readOnly = true)
     public UserLoginIdPwDto findByNameAndEmail(String name, String email) {
         return userApiRepository.findByNameAndEmail(name,email);
-    }
-
-    @Transactional(readOnly = true)
-    public List<UserDto> findUserTierAndAge(Tier tier, int age) {
-        return userApiRepository.findUserTierAndAge(tier,age);
     }
 }

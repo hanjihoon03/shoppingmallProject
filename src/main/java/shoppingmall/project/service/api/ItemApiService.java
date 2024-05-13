@@ -12,9 +12,7 @@ import shoppingmall.project.domain.apidto.save.ClothesSaveApiDto;
 import shoppingmall.project.domain.apidto.save.ElectronicsSaveApiDto;
 import shoppingmall.project.domain.apidto.save.FoodSaveApiDto;
 import shoppingmall.project.domain.apidto.update.*;
-import shoppingmall.project.domain.dto.BookAndFileDto;
 import shoppingmall.project.domain.item.*;
-import shoppingmall.project.repository.ItemRepository;
 import shoppingmall.project.repository.api.ItemApiRepository;
 
 import java.util.List;
@@ -26,11 +24,10 @@ import java.util.Optional;
 public class ItemApiService {
 
     private final ItemApiRepository ItemApiRepository;
-    private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
     public List<ItemApiDto> findAllItem() {
-        List<Item> allItem = itemRepository.findAll();
+        List<Item> allItem = ItemApiRepository.findAll();
 
         return allItem.stream()
                 .map(item -> {
@@ -45,7 +42,7 @@ public class ItemApiService {
     }
     @Transactional(readOnly = true)
     public List<ItemApiDto> findAllDtype(String dtype) {
-        List<Item> allItem = itemRepository.findByDtype(dtype);
+        List<Item> allItem = ItemApiRepository.findByDtype(dtype);
         return allItem.stream()
                 .map(item -> {
                     ItemApiDto itemApiDto = new ItemApiDto();
@@ -90,7 +87,7 @@ public class ItemApiService {
     }
 
     public ItemApiDto updateItem(Long id, UpdateItemDto request) {
-        Optional<Item> byId = itemRepository.findById(id);
+        Optional<Item> byId = ItemApiRepository.findById(id);
 
 
         Item item = byId.orElseThrow(() -> new IllegalArgumentException("not found:" + id));
@@ -107,7 +104,7 @@ public class ItemApiService {
     }
 
     public void deleteByItemId(Long id) {
-        itemRepository.deleteById(id);
+        ItemApiRepository.deleteById(id);
     }
 
     public void updateApiBook(Long id, UpdateBookDto request) {
@@ -122,7 +119,7 @@ public class ItemApiService {
     }
     @Transactional(readOnly = true)
     public BookApiDto findBook(Long id) {
-        Book book = itemRepository.findBook(id);
+        Book book = ItemApiRepository.findBook(id);
         return new BookApiDto(
                 book.getId(),
                 book.getName(),
@@ -146,7 +143,7 @@ public class ItemApiService {
     }
     @Transactional(readOnly = true)
     public ClothesApiDto findClothes(Long id) {
-        Clothes clothes = itemRepository.findClothes(id);
+        Clothes clothes = ItemApiRepository.findClothes(id);
         return new ClothesApiDto(
                 clothes.getId(),
                 clothes.getName(),
@@ -169,7 +166,7 @@ public class ItemApiService {
     }
     @Transactional(readOnly = true)
     public ElectronicsApiDto findElectronics(Long id) {
-        Electronics electronics = itemRepository.findElectronics(id);
+        Electronics electronics = ItemApiRepository.findElectronics(id);
         return new ElectronicsApiDto(
                 electronics.getId(),
                 electronics.getName(),
@@ -190,7 +187,7 @@ public class ItemApiService {
     }
     @Transactional(readOnly = true)
     public FoodApiDto findFood(Long id) {
-        Food food = itemRepository.findFood(id);
+        Food food = ItemApiRepository.findFood(id);
         return new FoodApiDto(
                 food.getId(),
                 food.getName(),
@@ -208,7 +205,7 @@ public class ItemApiService {
                 request.getIsbn(),
                 request.getAuthor()
         );
-        Book saveBook = itemRepository.save(book);
+        Book saveBook = ItemApiRepository.save(book);
         return new BookApiDto(
                 saveBook.getId(),
                 saveBook.getName(),
@@ -228,7 +225,7 @@ public class ItemApiService {
                 request.getBrand(),
                 request.getSize()
         );
-        Clothes saveClothes = itemRepository.save(clothes);
+        Clothes saveClothes = ItemApiRepository.save(clothes);
         return new ClothesApiDto(
                 saveClothes.getId(),
                 saveClothes.getName(),
@@ -247,7 +244,7 @@ public class ItemApiService {
                 request.getQuantity(),
                 request.getBrand()
         );
-        Electronics saveElectronics = itemRepository.save(electronics);
+        Electronics saveElectronics = ItemApiRepository.save(electronics);
         return new ElectronicsApiDto(
                 saveElectronics.getId(),
                 saveElectronics.getName(),
@@ -264,7 +261,7 @@ public class ItemApiService {
                 request.getQuantity(),
                 request.getBrand()
         );
-        Food saveFood = itemRepository.save(food);
+        Food saveFood = ItemApiRepository.save(food);
         return new FoodApiDto(
                 saveFood.getId(),
                 saveFood.getName(),
@@ -279,6 +276,25 @@ public class ItemApiService {
         Pageable pageable = PageRequest.of(page,30);
         return ItemApiRepository.findAllBookPaging(pageable);
     }
+
+    @Transactional(readOnly = true)
+    public Page<ElectronicsApiDto> findAllElectricPaging(int page) {
+        Pageable pageable = PageRequest.of(page,30);
+        return ItemApiRepository.findAllElectronicsPaging(pageable);
+    }
+    @Transactional(readOnly = true)
+    public Page<ClothesApiDto> findAllClothesPaging(int page) {
+        Pageable pageable = PageRequest.of(page,30);
+        return ItemApiRepository.findAllClothesPaging(pageable);
+    }
+    @Transactional(readOnly = true)
+    public Page<FoodApiDto> findAllFoodPaging(int page) {
+        Pageable pageable = PageRequest.of(page,30);
+        return ItemApiRepository.findAllFoodPaging(pageable);
+    }
+
+
+
     @Transactional(readOnly = true)
     public List<BookApiDto> findAllBookRe() {
         return ItemApiRepository.findAllBook();
@@ -289,4 +305,8 @@ public class ItemApiService {
     }
 
 
+    @Transactional(readOnly = true)
+    public List<ItemApiDto> searchItem(String itemName) {
+        return ItemApiRepository.itemNameSearch(itemName);
+    }
 }

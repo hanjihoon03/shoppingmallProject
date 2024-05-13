@@ -13,28 +13,26 @@ import java.time.LocalDateTime;
 @Schema(description = "find user PurchaseList")
 public class UserPurchaseDto {
     private Long userId;
-    private LocalDateTime purchaseTime;
+    private LocalDateTime orderTime;
     private Address address;
     private String itemName;
     private int orderPrice;
     private int orderQuantity;
 
-    public UserPurchaseDto(Long userId, LocalDateTime purchaseTime, Address address, String itemName, int orderPrice, int orderQuantity) {
-        this.userId = userId;
-        this.purchaseTime = purchaseTime;
-        this.address = address;
-        this.itemName = itemName;
-        this.orderPrice = orderPrice;
-        this.orderQuantity = orderQuantity;
+    public UserPurchaseDto() {
     }
 
-    public UserPurchaseDto(Long userId, LocalDateTime purchaseTime, Address address) {
+
+    public UserPurchaseDto(Long userId, LocalDateTime orderTime, Address address) {
         this.userId = userId;
-        this.purchaseTime = purchaseTime;
+        this.orderTime = orderTime;
         this.address = address;
     }
 
-    public UserPurchaseDto(String itemName, int orderPrice, int orderQuantity) {
+    public UserPurchaseDto(Long userId, LocalDateTime orderTime, Address address, String itemName, int orderPrice, int orderQuantity) {
+        this.userId = userId;
+        this.orderTime = orderTime;
+        this.address = address;
         this.itemName = itemName;
         this.orderPrice = orderPrice;
         this.orderQuantity = orderQuantity;

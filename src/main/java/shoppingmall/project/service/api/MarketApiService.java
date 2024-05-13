@@ -1,19 +1,17 @@
 package shoppingmall.project.service.api;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shoppingmall.project.additional.web.session.SessionConst;
 import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.ItemDto;
 import shoppingmall.project.domain.item.Item;
 import shoppingmall.project.domain.subdomain.Tier;
 import shoppingmall.project.repository.ItemRepository;
-import shoppingmall.project.repository.MarketRepository;
 import shoppingmall.project.repository.UserRepository;
 import shoppingmall.project.repository.api.MarketApiRepository;
+import shoppingmall.project.repository.api.impl.MarketApiRepositoryImpl;
 import shoppingmall.project.service.UserService;
 
 import java.util.ArrayList;
