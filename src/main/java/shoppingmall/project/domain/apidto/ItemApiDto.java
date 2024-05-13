@@ -14,4 +14,15 @@ public class ItemApiDto {
     private int price;
     private int quantity;
     private String dtype;
+
+    public ItemApiDto() {
+    }
+
+    public ItemApiDto(Long id, String name, int price, int quantity, String dtype) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.dtype = dtype;
+    }
 }

@@ -156,8 +156,8 @@ public class ItemApiController {
 
     @DeleteMapping("/api/item/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
-        itemApiService.deleteByItemId(id);
         uploadApiService.deleteUploadFileFromItemId(id);
+        itemApiService.deleteByItemId(id);
 
         return ResponseEntity.ok()
                 .build();
@@ -397,6 +397,73 @@ public class ItemApiController {
         return ResponseEntity.ok()
                 .body(allBook).getBody();
     }
+
+    @Operation(
+            summary = "PageClothes",
+            description = "Clothes paging해서 반환합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK")
+    @ApiResponse(
+            responseCode = "400",
+            description = "올바르지 않은 요청 값입니다.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
+    )
+    @GetMapping("/api/clothesList")
+    public Page<ClothesApiDto> clothesList(@RequestParam(value = "page", defaultValue = "0") int page) {
+
+        Page<ClothesApiDto> allClothesPaging = itemApiService.findAllClothesPaging(page);
+
+        return ResponseEntity.ok()
+                .body(allClothesPaging).getBody();
+    }
+
+    @Operation(
+            summary = "PageFood",
+            description = "Food을 paging해서 반환합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK")
+    @ApiResponse(
+            responseCode = "400",
+            description = "올바르지 않은 요청 값입니다.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
+    )
+    @GetMapping("/api/foodList")
+    public Page<FoodApiDto> foodList(@RequestParam(value = "page", defaultValue = "0") int page) {
+
+        Page<FoodApiDto> allFoodPaging = itemApiService.findAllFoodPaging(page);
+
+        return ResponseEntity.ok()
+                .body(allFoodPaging).getBody();
+    }
+
+
+    @Operation(
+            summary = "PageElectronics",
+            description = "Electronics를 paging해서 반환합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK")
+    @ApiResponse(
+            responseCode = "400",
+            description = "올바르지 않은 요청 값입니다.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
+    )
+    @GetMapping("/api/electronicsList")
+    public Page<ElectronicsApiDto> electronicsList(@RequestParam(value = "page", defaultValue = "0") int page) {
+
+        Page<ElectronicsApiDto> allElectricPaging = itemApiService.findAllElectricPaging(page);
+
+        return ResponseEntity.ok()
+                .body(allElectricPaging).getBody();
+    }
+
+
+
     @Operation(
             summary = "allBook",
             description = "모든 Book의 자세한 정보를 반환합니다."
@@ -436,6 +503,28 @@ public class ItemApiController {
 
         return ResponseEntity.ok()
                 .body(bookApiDtos).getBody();
+    }
+
+
+    @Operation(
+            summary = "Search ItemName",
+            description = "검색하는 ItemName을 포함한 Item을 반환합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK")
+    @ApiResponse(
+            responseCode = "400",
+            description = "올바르지 않은 요청 값입니다.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
+    )
+    @GetMapping("/api/searchItem/{itemName}")
+    public List<ItemApiDto> searchItem(@PathVariable String itemName) {
+
+        List<ItemApiDto> searchItem = itemApiService.searchItem(itemName);
+
+        return ResponseEntity.ok()
+                .body(searchItem).getBody();
     }
 
 

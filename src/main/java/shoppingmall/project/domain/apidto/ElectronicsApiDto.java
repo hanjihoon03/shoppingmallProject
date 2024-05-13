@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@Schema(description = "Electronics update request")
+@Schema(description = "Electronics request")
 public class ElectronicsApiDto {
     private Long id;
     private String name;

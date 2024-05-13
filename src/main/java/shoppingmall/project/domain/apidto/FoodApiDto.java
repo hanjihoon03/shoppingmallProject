@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@Schema(description = "Food update request")
+@Schema(description = "Food request")
 public class FoodApiDto {
 
     private Long id;

@@ -20,26 +20,7 @@ public class PurchaseApiService {
 
     @Transactional(readOnly = true)
     public List<UserPurchaseDto> purchaseList(Long id) {
-        List<Delivery> deliveryList = purchaseApiRepository.userDeliveryList(id);
-
-        List<UserPurchaseDto> userPurchaseDtos = new ArrayList<>();
-        for (Delivery delivery : deliveryList) {
-            UserPurchaseDto userPurchaseDto = new UserPurchaseDto(
-                    delivery.getId(),
-                    delivery.getOrderTime(),
-                    delivery.getAddress()
-            );
-            userPurchaseDtos.add(userPurchaseDto);
-        }
-        List<Purchase> purchases = purchaseApiRepository.userPurchaseList(id);
-        for (Purchase purchase : purchases) {
-            for (UserPurchaseDto userPurchaseDto : userPurchaseDtos) {
-                userPurchaseDto.setOrderPrice(purchase.getOrderPrice());
-                userPurchaseDto.setOrderQuantity(purchase.getOrderQuantity());
-                userPurchaseDto.setItemName(purchase.getItemName());
-            }
-        }
-        return userPurchaseDtos;
-
+    return purchaseApiRepository.purchaseList(id);
     }
+
 }

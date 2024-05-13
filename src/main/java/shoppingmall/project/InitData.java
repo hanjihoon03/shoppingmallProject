@@ -40,25 +40,25 @@ public class InitData {
     @Transactional
     public void initItem() {
         for (int i = 1; i <= 300; i++) {
-        Book book = new Book("i",i,i,"i","i");
+        Book book = new Book("B"+ i,i,i,"i","i");
         itemRepository.save(book);
         UploadFile uploadFile = new UploadFile("book1.png","2b809c46-2c88-4c54-a5a9-8ac33a99e3f6.png",book);
         fileRepository.save(uploadFile);
         }
         for (int i = 1; i <= 1000; i++) {
-            Clothes clothes = new Clothes("i",i,i, ClothesType.PANTS,"i",1);
+            Clothes clothes = new Clothes("C"+ i,i,i, ClothesType.PANTS,"i",1);
             itemRepository.save(clothes);
             UploadFile uploadFile = new UploadFile("book1.png","2b809c46-2c88-4c54-a5a9-8ac33a99e3f6.png",clothes);
             fileRepository.save(uploadFile);
         }
         for (int i = 1; i <= 300; i++) {
-            Electronics electronics = new Electronics("i",i,i,"i");
+            Electronics electronics = new Electronics("E"+ i,i,i,"i");
             itemRepository.save(electronics);
             UploadFile uploadFile = new UploadFile("book1.png","2b809c46-2c88-4c54-a5a9-8ac33a99e3f6.png",electronics);
             fileRepository.save(uploadFile);
         }
         for (int i = 1; i <= 300; i++) {
-            Food food = new Food("i",i,i,"i");
+            Food food = new Food("F"+ i,i,i,"i");
             itemRepository.save(food);
             UploadFile uploadFile = new UploadFile("book1.png","2b809c46-2c88-4c54-a5a9-8ac33a99e3f6.png",food);
             fileRepository.save(uploadFile);

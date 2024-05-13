@@ -5,7 +5,7 @@ import lombok.Data;
 import shoppingmall.project.domain.item.ClothesType;
 
 @Data
-@Schema(description = "Clothes update request")
+@Schema(description = "Clothes request")
 public class ClothesApiDto {
     private Long id;
     private String name;
