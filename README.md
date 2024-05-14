@@ -30,7 +30,9 @@ java,springboot,springdatajpa,querydsl,mysql,aws,github
 <img width="833" alt="스크린샷 2024-05-14 오전 5 24 57" src="https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/4f280232-46fd-4f7a-82ce-ffee0f9d8d7d">
 
 ## 사용자 흐름
-
+![project1](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/ca4c8eaa-ede5-4a34-9a5b-5018fa475da4)
+![project2](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/54ab142f-fd30-4f89-be67-75fb51aecff8)
+![project3](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/fcc51e3b-bc8b-42b5-8e9d-cc8f62604d70)
 
 
 
