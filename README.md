@@ -19,7 +19,7 @@
 java,springboot,springdatajpa,querydsl,mysql,aws,github
 
 ## EER 다이어 그램
-![image](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/df101623-9170-42d2-a007-f1b202611d7e)
+<img width="954" alt="스크린샷 2024-05-14 오후 10 27 52" src="https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/bccaa56c-d9a5-444a-9fff-d32d5a8ff474">
 
 ## API 구성
 (http://3.36.206.59:8080/swagger-ui/index.html)
@@ -29,6 +29,7 @@ java,springboot,springdatajpa,querydsl,mysql,aws,github
 
 <img width="833" alt="스크린샷 2024-05-14 오전 5 24 57" src="https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/4f280232-46fd-4f7a-82ce-ffee0f9d8d7d">
 
+## 사용자 흐름
 
 
 
