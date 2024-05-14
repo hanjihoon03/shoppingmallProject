@@ -17,7 +17,13 @@
 
 ## 사용 기술
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
-java,springboot,springdatajpa,querydsl,mysql,aws,github
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"/>
+<img src="https://img.shields.io/badge/querydsl-6DB33F?style=for-the-badge&logoColor=white"/>
 
 ## EER 다이어 그램
 <img width="954" alt="스크린샷 2024-05-14 오후 10 27 52" src="https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/bccaa56c-d9a5-444a-9fff-d32d5a8ff474">
