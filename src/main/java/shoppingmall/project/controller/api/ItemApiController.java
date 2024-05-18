@@ -45,7 +45,7 @@ public class ItemApiController {
             description = "올바르지 않은 요청 값입니다.",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
     )
-    @GetMapping("/api/item")
+    @GetMapping("/api/items")
     public List<ItemApiDto> allItemSearch() {
         return itemApiService.findAllItem();
     }
@@ -296,7 +296,7 @@ public class ItemApiController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
             )
     })
-    @PostMapping("/api/save/Book")
+    @PostMapping("/api/item/Book")
     public BookApiDto saveApiBook(@RequestBody BookSaveApiDto request) {
         BookApiDto bookApiDto = itemApiService.saveBook(request);
 
@@ -320,7 +320,7 @@ public class ItemApiController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
             )
     })
-    @PostMapping("/api/save/Clothes")
+    @PostMapping("/api/item/Clothes")
     public ClothesApiDto saveApiClothes(@RequestBody ClothesSaveApiDto request) {
         ClothesApiDto clothesApiDto = itemApiService.saveClothes(request);
 
@@ -344,7 +344,7 @@ public class ItemApiController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
             )
     })
-    @PostMapping("/api/save/Electronics")
+    @PostMapping("/api/item/Electronics")
     public ElectronicsApiDto saveApiElectronics(@RequestBody ElectronicsSaveApiDto request) {
         ElectronicsApiDto electronicsApiDto = itemApiService.saveElectronics(request);
 
@@ -369,7 +369,7 @@ public class ItemApiController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
             )
     })
-    @PostMapping("/api/save/Food")
+    @PostMapping("/api/item/Food")
     public FoodApiDto saveApiFood(@RequestBody FoodSaveApiDto request) {
         FoodApiDto foodApiDto = itemApiService.saveFood(request);
 
