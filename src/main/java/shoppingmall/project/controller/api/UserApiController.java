@@ -45,11 +45,11 @@ public class UserApiController {
             )
     })
     @PostMapping("/api/signUp")
-    public UserDto saveUser(@RequestBody UserSaveDto request) {
+    public ResponseEntity<UserDto> saveUser(@RequestBody UserSaveDto request) {
         UserDto userDto = userApiService.saveUser(request);
 
         return ResponseEntity.ok()
-                .body(userDto).getBody();
+                .body(userDto);
     }
 
     @Operation(

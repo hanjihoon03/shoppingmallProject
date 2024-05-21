@@ -225,6 +225,8 @@ public class ItemController {
         //수정을 위한 현재 아이템 표시
         Page<ClothesAndFileDto> allClothes = itemService.findAllClothes(page);
 
+
+
         model.addAttribute("allClothes", allClothes);
 
         return "admin/modifyClothes";
