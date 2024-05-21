@@ -297,11 +297,11 @@ public class ItemApiController {
             )
     })
     @PostMapping("/api/item/Book")
-    public BookApiDto saveApiBook(@RequestBody BookSaveApiDto request) {
+    public ResponseEntity<BookApiDto> saveApiBook(@RequestBody BookSaveApiDto request) {
         BookApiDto bookApiDto = itemApiService.saveBook(request);
 
         return ResponseEntity.ok()
-                .body(bookApiDto).getBody();
+                .body(bookApiDto);
     }
 
     @Operation(
@@ -321,11 +321,11 @@ public class ItemApiController {
             )
     })
     @PostMapping("/api/item/Clothes")
-    public ClothesApiDto saveApiClothes(@RequestBody ClothesSaveApiDto request) {
+    public ResponseEntity<ClothesApiDto> saveApiClothes(@RequestBody ClothesSaveApiDto request) {
         ClothesApiDto clothesApiDto = itemApiService.saveClothes(request);
 
         return ResponseEntity.ok()
-                .body(clothesApiDto).getBody();
+                .body(clothesApiDto);
     }
 
     @Operation(
@@ -345,11 +345,11 @@ public class ItemApiController {
             )
     })
     @PostMapping("/api/item/Electronics")
-    public ElectronicsApiDto saveApiElectronics(@RequestBody ElectronicsSaveApiDto request) {
+    public ResponseEntity<ElectronicsApiDto> saveApiElectronics(@RequestBody ElectronicsSaveApiDto request) {
         ElectronicsApiDto electronicsApiDto = itemApiService.saveElectronics(request);
 
         return ResponseEntity.ok()
-                .body(electronicsApiDto).getBody();
+                .body(electronicsApiDto);
     }
 
 
@@ -370,11 +370,11 @@ public class ItemApiController {
             )
     })
     @PostMapping("/api/item/Food")
-    public FoodApiDto saveApiFood(@RequestBody FoodSaveApiDto request) {
+    public ResponseEntity<FoodApiDto> saveApiFood(@RequestBody FoodSaveApiDto request) {
         FoodApiDto foodApiDto = itemApiService.saveFood(request);
 
         return ResponseEntity.ok()
-                .body(foodApiDto).getBody();
+                .body(foodApiDto);
     }
 
     @Operation(
@@ -390,12 +390,12 @@ public class ItemApiController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
     )
     @GetMapping("/api/bookList")
-    public Page<BookApiDto> bookList(@RequestParam(value = "page", defaultValue = "0") int page) {
+    public ResponseEntity<Page<BookApiDto>> bookList(@RequestParam(value = "page", defaultValue = "0") int page) {
 
         Page<BookApiDto> allBook = itemApiService.findAllBookPaging(page);
 
         return ResponseEntity.ok()
-                .body(allBook).getBody();
+                .body(allBook);
     }
 
     @Operation(
@@ -411,12 +411,12 @@ public class ItemApiController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
     )
     @GetMapping("/api/clothesList")
-    public Page<ClothesApiDto> clothesList(@RequestParam(value = "page", defaultValue = "0") int page) {
+    public ResponseEntity<Page<ClothesApiDto>> clothesList(@RequestParam(value = "page", defaultValue = "0") int page) {
 
         Page<ClothesApiDto> allClothesPaging = itemApiService.findAllClothesPaging(page);
 
         return ResponseEntity.ok()
-                .body(allClothesPaging).getBody();
+                .body(allClothesPaging);
     }
 
     @Operation(
@@ -432,12 +432,12 @@ public class ItemApiController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
     )
     @GetMapping("/api/foodList")
-    public Page<FoodApiDto> foodList(@RequestParam(value = "page", defaultValue = "0") int page) {
+    public ResponseEntity<Page<FoodApiDto>> foodList(@RequestParam(value = "page", defaultValue = "0") int page) {
 
         Page<FoodApiDto> allFoodPaging = itemApiService.findAllFoodPaging(page);
 
         return ResponseEntity.ok()
-                .body(allFoodPaging).getBody();
+                .body(allFoodPaging);
     }
 
 
@@ -454,12 +454,12 @@ public class ItemApiController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
     )
     @GetMapping("/api/electronicsList")
-    public Page<ElectronicsApiDto> electronicsList(@RequestParam(value = "page", defaultValue = "0") int page) {
+    public ResponseEntity<Page<ElectronicsApiDto>> electronicsList(@RequestParam(value = "page", defaultValue = "0") int page) {
 
         Page<ElectronicsApiDto> allElectricPaging = itemApiService.findAllElectricPaging(page);
 
         return ResponseEntity.ok()
-                .body(allElectricPaging).getBody();
+                .body(allElectricPaging);
     }
 
 
@@ -477,10 +477,10 @@ public class ItemApiController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
     )
     @GetMapping("/api/allBook")
-    public List<BookApiDto> allBook() {
+    public ResponseEntity<List<BookApiDto>> allBook() {
         List<BookApiDto> allBookRe = itemApiService.findAllBookRe();
         return ResponseEntity.ok()
-                .body(allBookRe).getBody();
+                .body(allBookRe);
     }
 
     @Operation(
@@ -496,13 +496,13 @@ public class ItemApiController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
     )
     @GetMapping("/api/Book/Jpql")
-    public List<BookApiDto> bookListJpql(@RequestParam(value = "offset", defaultValue = "0") int offset,
+    public ResponseEntity<List<BookApiDto>> bookListJpql(@RequestParam(value = "offset", defaultValue = "0") int offset,
                                          @RequestParam(value = "limit") int limit) {
 
         List<BookApiDto> bookApiDtos = itemApiService.jpqlPaging(offset,limit);
 
         return ResponseEntity.ok()
-                .body(bookApiDtos).getBody();
+                .body(bookApiDtos);
     }
 
 
@@ -519,12 +519,12 @@ public class ItemApiController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class))
     )
     @GetMapping("/api/searchItem/{itemName}")
-    public List<ItemApiDto> searchItem(@PathVariable String itemName) {
+    public ResponseEntity<List<ItemApiDto>> searchItem(@PathVariable String itemName) {
 
         List<ItemApiDto> searchItem = itemApiService.searchItem(itemName);
 
         return ResponseEntity.ok()
-                .body(searchItem).getBody();
+                .body(searchItem);
     }
 
 
