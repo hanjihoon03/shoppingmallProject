@@ -1,7 +1,7 @@
 # 프로젝트 소개
 
 쇼핑몰 프로젝트
-1인 개발로 할 수 있는 구성을 갖춘 실제 서비스상 부족한 점이 있지만 기능적으로 구성할 수 있는 부분은 갖춘 쇼핑몰 서비스
+1인 개발로 진행 가능한 쇼핑몰 프로젝트로, 실제 서비스에서 부족할 수 있는 점이 있음에도 불구하고 필요한 기능적 구성은 갖추고 있는 서비스입니다.
 
 ## 요구사항 정리
 ![요구사항 정리 drawio](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/7eee5460-a8b0-49b9-adc5-ae30b5e3a969)
@@ -30,7 +30,6 @@
 <img width="954" alt="스크린샷 2024-05-14 오후 10 27 52" src="https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/bccaa56c-d9a5-444a-9fff-d32d5a8ff474">
 
 ## API 구성
-(http://3.36.206.59:8080/swagger-ui/index.html)
 
 ![api](https://github.com/hanjihoon03/shoppingmallProject/assets/163777923/3c67ae77-3208-4927-9235-8f4780d67c6d)
 
