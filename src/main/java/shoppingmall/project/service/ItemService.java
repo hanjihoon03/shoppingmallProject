@@ -51,6 +51,12 @@ public class ItemService {
     }
 
     //아이템보다 파일을 먼저 저장해서 파일의 아이템 아이디가 비어서 업데이트 쿼리가 한 방 더 나가는 문제를 아이템을 먼저 저장해서 해결
+
+    /**
+     * book을 저장하는 로직
+     * @param bookForm 저장할 book의 정보와 이미지를 받아 저장
+     * @throws IOException 이미지가 누락될 경우 IOException 발생
+     */
     public void saveBook(BookForm bookForm) throws IOException {
 
             UploadFile attachFile = fileService.storeFile(bookForm.getAttachFile());

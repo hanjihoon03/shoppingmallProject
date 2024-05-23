@@ -11,6 +11,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import shoppingmall.project.additional.annotation.Login;
 import shoppingmall.project.additional.web.session.SessionConst;
 import shoppingmall.project.domain.User;
+
+/**
+ * @Login 애노테이션이 있는 User를 파라미터로 받아 세션에서 User 객체를 반환하는 ArgumentResolver
+ */
 @Slf4j
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override

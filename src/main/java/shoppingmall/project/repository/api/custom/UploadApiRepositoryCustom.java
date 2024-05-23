@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface UploadApiRepositoryCustom {
     void deleteFromItemId(Long itemId);
-    List<BookAndFileDto> findAllBook();
 }

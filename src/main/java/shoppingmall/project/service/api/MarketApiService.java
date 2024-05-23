@@ -30,6 +30,11 @@ public class MarketApiService {
     private final UserService userService;
     private final UserRepository userRepository;
 
+    /**
+     * 현재 사용자의 장바구니 정보를 반환하는 로직
+     * @param userId 현재 사용자의 id
+     * @return 사용자의 장바구니를 dto로 반환
+     */
     @Transactional(readOnly = true)
     public List<ItemDto> purchaseItem(Long userId) {
         Optional<User> user = userRepository.findById(userId);
@@ -47,6 +52,11 @@ public class MarketApiService {
         return marketRepository.findItemAndFile(purchaseCartItemId, userId);
     }
 
+    /**
+     * 현재 사용자의 장바구니 정보를 반환하는 로직을 리팩토링해 필요 없는 부분을 삭제
+     * @param userId 현재 사용자의 id
+     * @return 사용자의 장바구니를 dto로 반환
+     */
     @Transactional(readOnly = true)
     public List<ItemDto> shoppingBasket(Long userId) {
         return marketRepository.findItemAndFileRefactor(userId);

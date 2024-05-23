@@ -38,6 +38,11 @@ public class MarketApiRepositoryImpl implements MarketApiRepositoryCustom {
 
     }
 
+    /**
+     * 구매할 아이템을 찾아 반환합니다.
+     * @param userId 구매할 아이템을 담은 user의 id
+     * @return 장바구니에 담은 아이템의 List
+     */
     @Override
     public List<ItemDto> findItemAndFileRefactor(Long userId) {
 

@@ -12,7 +12,7 @@ import shoppingmall.project.domain.User;
 import shoppingmall.project.domain.dto.ItemDto;
 import shoppingmall.project.domain.dto.MarketPayDtoV2;
 import shoppingmall.project.domain.item.Item;
-import shoppingmall.project.pay.KakaoPayApprovalVO;
+import shoppingmall.project.pay.KakaoPayApprovalV0;
 import shoppingmall.project.service.*;
 
 import java.util.List;
@@ -30,20 +30,33 @@ public class KakaoPayController {
     private final PurchaseService purchaseService;
 
 
+    /**
+     * 로그인한 사용자의 장바구니 목록을 담아 카카오 결재 api에 요청한다.
+     * @param session
+     * @return
+     */
     @PostMapping("/ready")
     public String kakaoPay(HttpSession session) {
         User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
         return "redirect:" + kakaoService.getReadyParameters(user.getId());
     }
+
+    /**
+     * 구매시 구매 완료로 이동하고 pg_token를 이용해 구매 완료한 정보를 받아와 반환해주는 컨트롤러
+     * @param pg_token 생성된 토큰
+     * @param model 구매 목록을 담는 모델
+     * @param session 현재 로그인 된 유저의 세션
+     * @return
+     */
     @GetMapping("/buyItem")
     public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model,HttpSession session) {
         log.info("kakaoPaySuccess pg_token : " + pg_token);
         User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
 
-        KakaoPayApprovalVO kakaoPayApprovalVO = kakaoService.kakaoPayInfo(pg_token, user.getId());
-        int totalPrice = kakaoPayApprovalVO.getAmount().getTotal();
+        KakaoPayApprovalV0 kakaoPayApprovalV0 = kakaoService.kakaoPayInfo(pg_token, user.getId());
+        int totalPrice = kakaoPayApprovalV0.getAmount().getTotal();
 
-        int newTotalPrice = userService.addAccumulatedAmount(user, totalPrice);
+        userService.addAccumulatedAmount(user, totalPrice);
         // 장바구니의 아이템 id find하고 수량만 set 열어서 사용
         List<MarketPayDtoV2> shoppingBasket = marketService.purchaseItem(user.getId());
 
@@ -66,7 +79,7 @@ public class KakaoPayController {
 
 
 
-        model.addAttribute("info",kakaoPayApprovalVO);
+        model.addAttribute("info", kakaoPayApprovalV0);
         return "order/buyItem";
     }
 

@@ -23,6 +23,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
 
+    /**
+     * 결제 후 결제한 정보를 저장하기 위한 로직
+     * @param item 사용자가 구매한 아이템
+     * @param delivery 사용자의 배송 정보
+     * @param user 사용자
+     */
     @Counted("order.count")
     public void addPurchase(ItemDto item, Delivery delivery,User user) {
         Purchase purchase = new Purchase(

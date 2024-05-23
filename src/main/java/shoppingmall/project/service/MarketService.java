@@ -53,7 +53,7 @@ public class MarketService {
             return null;
         }
 
-        // 로그인 한 사용자의 아이디를 사용하여 구매된 상품 목록을 가져옵니다.
+        // 로그인 한 사용자의 아이디를 사용하여 구매할 상품 목록을 가져옵니다.
         List<Item> itemsByUserId = itemRepository.findItemsByUserId(loginUser.getId());
 
         //장바구니의 아이템 리스트의 아이디들 반환

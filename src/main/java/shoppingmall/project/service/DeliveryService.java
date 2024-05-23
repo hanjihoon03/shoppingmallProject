@@ -21,6 +21,11 @@ import java.time.LocalDateTime;
 public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
 
+    /**
+     * 구매한 아이템의 배송정보를 저장하기 위한 로직
+     * @param user 구매한 유저객체
+     * @return 저장한 배송정보 객체 반환
+     */
     public Delivery addDelivery(User user) {
 
         Delivery delivery = new Delivery(

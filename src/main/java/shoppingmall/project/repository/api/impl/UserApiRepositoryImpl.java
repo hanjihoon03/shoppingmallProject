@@ -22,7 +22,12 @@ public class UserApiRepositoryImpl implements UserApiRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-
+    /**
+     * 유저의 이름과 이메일로 비밀번호와 아이디를 찾습니다.
+     * @param name 유저의 이름
+     * @param email 유저의 이메일
+     * @return 유저의 아이디와 비밀번호를 반환합니다.
+     */
     @Override
     public UserLoginIdPwDto findByNameAndEmail(String name, String email) {
         return queryFactory.select(Projections.bean(UserLoginIdPwDto.class,

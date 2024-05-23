@@ -25,11 +25,19 @@ public class loginController {
 
     @GetMapping("login")
     public String loginPage(@ModelAttribute("loginForm") LoginForm loginForm) {
-
         return "login/login";
 
     }
 
+    /**
+     * 로그인을 db의 정보와 비교해 검증하는 컨트롤러 bindingResult로 에러를 반환해준다.
+     * @param loginForm
+     * @param bindingResult
+     * @param request
+     * @param session
+     * @param model
+     * @return
+     */
     @PostMapping("login")
     public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
                         HttpServletRequest request,
@@ -66,6 +74,12 @@ public class loginController {
             return "login/sign-up";
     }
 
+    /**
+     * 회원 가입 컨트롤러
+     * @param userForm
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("sign-up")
     public String createUser(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult) {
 

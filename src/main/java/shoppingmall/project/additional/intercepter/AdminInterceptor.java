@@ -8,6 +8,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import shoppingmall.project.additional.web.session.SessionConst;
 import shoppingmall.project.domain.User;
 
+/**
+ * 사용자 정보로 admin에 대해 admin에 대한 접근 권한을 판단하는 인터셉터
+ */
 @Slf4j
 public class AdminInterceptor implements HandlerInterceptor {
 

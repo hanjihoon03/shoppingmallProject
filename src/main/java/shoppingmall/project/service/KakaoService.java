@@ -12,8 +12,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import shoppingmall.project.domain.dto.PurchasePayDto;
-import shoppingmall.project.pay.KaKaoPayReadyVO;
-import shoppingmall.project.pay.KakaoPayApprovalVO;
+import shoppingmall.project.pay.KaKaoPayReadyV0;
+import shoppingmall.project.pay.KakaoPayApprovalV0;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -26,16 +26,16 @@ public class KakaoService {
 
     static final String cid = "TC0ONETIME"; // 가맹점 테스트 코드
     private final MarketService marketService;
-    private KakaoPayApprovalVO kakaoPayApprovalVO;
-    private KaKaoPayReadyVO kaKaoPayReadyVO;
+    private KakaoPayApprovalV0 kakaoPayApprovalV0;
+    private KaKaoPayReadyV0 kaKaoPayReadyV0;
 
     @Value("${pay.admin-key}")
     private String adminKey;
 
     /**
      * user id를 받아 구매 목록을 채우고 카카오페이 결제를 위해 요청 url을 만들어준다.
-     * @param id
-     * @return
+     * @param id 결재할 유저의 아이디
+     * @return 요청 url을 String으로 반환
      */
     @Transactional(readOnly = true)
     public String getReadyParameters(Long id) {
@@ -72,22 +72,28 @@ public class KakaoService {
 
         try {
 
-             kaKaoPayReadyVO = restTemplate.postForObject(new URI("https://kapi.kakao.com/v1/payment/ready"), http, KaKaoPayReadyVO.class);
-            return kaKaoPayReadyVO != null ? kaKaoPayReadyVO.getNext_redirect_pc_url() : null;
+             kaKaoPayReadyV0 = restTemplate.postForObject(new URI("https://kapi.kakao.com/v1/payment/ready"), http, KaKaoPayReadyV0.class);
+            return kaKaoPayReadyV0 != null ? kaKaoPayReadyV0.getNext_redirect_pc_url() : null;
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    public KakaoPayApprovalVO kakaoPayInfo(String pg_token, Long id) {
+    /**
+     * 카카오페이 결제 승인 요청을 처리한다.
+     * @param pg_token 결제 승인 토큰
+     * @param id 구매한 유저의 아이디
+     * @return 결제 승인 응답 객체
+     */
+    public KakaoPayApprovalV0 kakaoPayInfo(String pg_token, Long id) {
         PurchasePayDto purchasePayDto = marketService.payRequest(id);
         RestTemplate restTemplate = new RestTemplate();
 
         String orderId = "Order" + id;
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
         map.add("cid", cid);
-        map.add("tid", kaKaoPayReadyVO.getTid());
+        map.add("tid", kaKaoPayReadyV0.getTid());
         map.add("partner_order_id", orderId);
         map.add("partner_user_id", orderId);
         map.add("pg_token", pg_token);
@@ -96,10 +102,10 @@ public class KakaoService {
         HttpEntity<MultiValueMap<String, String>> http = new HttpEntity<>(map, this.getHeaders());
 
         try {
-            kakaoPayApprovalVO = restTemplate.postForObject(new URI("https://kapi.kakao.com/v1/payment/approve"), http, KakaoPayApprovalVO.class);
-            log.info("" + kakaoPayApprovalVO);
+            kakaoPayApprovalV0 = restTemplate.postForObject(new URI("https://kapi.kakao.com/v1/payment/approve"), http, KakaoPayApprovalV0.class);
+            log.info("" + kakaoPayApprovalV0);
 
-            return kakaoPayApprovalVO;
+            return kakaoPayApprovalV0;
 
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);

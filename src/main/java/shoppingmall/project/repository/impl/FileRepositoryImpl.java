@@ -27,6 +27,11 @@ public class FileRepositoryImpl implements FileRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
+    /**
+     * 아이템의 아이디로 아이템과 연관된 이미지 파일을 찾습니다.
+     * @param id 아이템의 id
+     * @return 아이템 id의 UploadFile 반환
+     */
     @Override
     public UploadFile findByItemId(Long id) {
         return queryFactory.select(uploadFile)
