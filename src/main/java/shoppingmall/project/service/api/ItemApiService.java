@@ -25,6 +25,10 @@ public class ItemApiService {
 
     private final ItemApiRepository ItemApiRepository;
 
+    /**
+     * 찾은 모든 아이템의 원본 객체는 숨기고 API에 반한하기 위해 DTO로 변환하는 로작
+     * @return 찾은 아이템이 변환된 아이템 dto의 리스트
+     */
     @Transactional(readOnly = true)
     public List<ItemApiDto> findAllItem() {
         List<Item> allItem = ItemApiRepository.findAll();
@@ -55,6 +59,12 @@ public class ItemApiService {
                 }).toList();
     }
 
+    /**
+     * 아이템을 찾을 때 금액의 최소 값과 최대 값 사이 아이템을 찾아 dto로 변환해주는 로직
+     * @param min 아이템의 최소 값
+     * @param max 아이템의 최대 값
+     * @return 찾은 아이템을 변환한 dto List
+     */
     @Transactional(readOnly = true)
     public List<ItemApiDto> findPriceRange(int min, int max) {
         ItemCond itemCond = new ItemCond(min, max);
@@ -70,6 +80,14 @@ public class ItemApiService {
                     return itemApiDto;
                 }).toList();
     }
+
+    /**
+     * 아이템을 찾을 때 타입에 따른 아이템을 찾고 타입에 따른 아이템의 최소 값과 최대 값 사이 아이템을 찾고 dto로 변환하는 로직
+     * @param dtype 찾을 타입
+     * @param min 아이템의 최소 값
+     * @param max 아이템의 최대 값
+     * @return 찾은 아이템을 변환한 dto List
+     */
     @Transactional(readOnly = true)
     public List<ItemApiDto> findDtypePriceRange(String dtype, int min, int max) {
         ItemCond itemCond = new ItemCond(min, max, dtype);
@@ -86,6 +104,13 @@ public class ItemApiService {
                 }).toList();
     }
 
+    /**
+     * 아이템을 업데이트 하기 위한 로직
+     * 받아온 아이템을 아이템의 변경로직으로 변경 후 변경 감지로 업데이트
+     * @param id 변경할 아이템의 id
+     * @param request 아이템을 변경할 아이템 정보
+     * @return 변경된 아이템 반환
+     */
     public ItemApiDto updateItem(Long id, UpdateItemDto request) {
         Optional<Item> byId = ItemApiRepository.findById(id);
 
@@ -197,6 +222,11 @@ public class ItemApiService {
         );
     }
 
+    /**
+     * book을 저장하기 위한 로직 dto로 저장할 book을 받아온다.
+     * @param request 저장할 book의 정보가 담긴 dto
+     * @return 저장 후 저장된 book을 반환
+     */
     public BookApiDto saveBook(BookSaveApiDto request) {
         Book book = new Book(
                 request.getName(),

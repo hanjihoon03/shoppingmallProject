@@ -34,6 +34,12 @@ public class ItemApiRepositoryImpl implements ItemApiRepositoryCustom {
     }
 
     //api
+    /**
+     * 주어진 조건에 맞는 아이템의 리스트를 찾습니다.
+     *
+     * @param itemCond 아이템 검색 조건을 담고 있는 ItemCond 객체
+     * @return 조건에 맞는 아이템 리스트
+     */
     @Override
     public List<Item> findPriceRange(ItemCond itemCond) {
         return queryFactory.selectFrom(item)
@@ -41,6 +47,12 @@ public class ItemApiRepositoryImpl implements ItemApiRepositoryCustom {
                 .fetch();
     }
 
+    /**
+     * 특정 타입(dtype)과 가격 범위에 해당하는 아이템들을 찾습니다.
+     *
+     * @param itemCond 아이템 검색 조건(타입과 가격 범위)을 담고 있는 ItemCond 객체
+     * @return 조건에 맞는 아이템 리스트
+     */
     @Override
     public List<Item> findDtypePriceRange(ItemCond itemCond) {
         return queryFactory.selectFrom(item)
@@ -48,6 +60,12 @@ public class ItemApiRepositoryImpl implements ItemApiRepositoryCustom {
                 .fetch();
     }
 
+    /**
+     * 주어진 ID에 해당하는 책 정보를 업데이트합니다.
+     *
+     * @param id 업데이트할 책의 ID
+     * @return 업데이트된 책 객체
+     */
     @Override
     public Book updateBook(Long id) {
         return queryFactory.select(book)
@@ -78,6 +96,11 @@ public class ItemApiRepositoryImpl implements ItemApiRepositoryCustom {
                 .fetchOne();
     }
 
+    /**
+     *  단건 책 정보를 반환합니다.
+     * @param id 찾아야할 책의 id
+     * @return
+     */
     @Override
     public Book findBook(Long id) {
         return queryFactory.select(book)
@@ -106,6 +129,11 @@ public class ItemApiRepositoryImpl implements ItemApiRepositoryCustom {
                 .where(food.id.eq(id)).fetchOne();
     }
 
+    /**
+     * 모든 책 정보를 리스트로 반환합니다.
+     *
+     * @return 책 정보를 담은 BookApiDto 객체 리스트
+     */
     @Override
     public List<BookApiDto> findAllBook() {
        return queryFactory.select(Projections.constructor(BookApiDto.class,
@@ -121,6 +149,12 @@ public class ItemApiRepositoryImpl implements ItemApiRepositoryCustom {
                .on(item.id.eq(book.id))
                 .fetch();
     }
+    /**
+     * 페이징 처리하여 모든 책 정보를 조회합니다.
+     *
+     * @param pageable 페이징 처리 정보
+     * @return 책 정보를 담은 Page 객체
+     */
     @Override
     public Page<BookApiDto> findAllBookPaging(Pageable pageable) {
         List<BookApiDto> content = queryFactory.select(Projections.constructor(BookApiDto.class,
@@ -245,15 +279,17 @@ public class ItemApiRepositoryImpl implements ItemApiRepositoryCustom {
                 .fetch();
     }
 
-
-
-
-
-
-
-
-
-
+    /**
+     * 주어진 오프셋과 한도를 사용하여 페이징 처리된 BookApiDto 목록을 조회합니다.
+     *
+     * <p>이 메소드는 JPQL을 사용하여 Item 엔티티와 Book 엔티티를 조인하여,
+     * 책 정보를 포함하는 BookApiDto 객체의 목록을 생성합니다. 이 과정에서
+     * 특정 오프셋에서 시작하여 제한된 수의 결과만 반환하도록 페이징 처리를 합니다.</p>
+     *
+     * @param offset 시작 위치(0부터 시작)
+     * @param limit 조회할 최대 항목 수
+     * @return 페이징 처리된 BookApiDto 객체의 목록
+     */
     @Override
     public List<BookApiDto> jpqlPaging(int offset, int limit) {
         return entityManager.createQuery("SELECT NEW shoppingmall.project.domain.apidto.BookApiDto("

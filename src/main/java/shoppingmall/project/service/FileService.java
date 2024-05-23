@@ -31,16 +31,32 @@ public class FileService {
     private String fileDir;
 
 
-    //아이템 아이디에 해당하는 아이템의 이미지 파일을 찾아오기 위한 메서드
+    /**
+     * 아이템 아이디에 해당하는 아이템의 이미지 파일을 찾기 위한 로직
+     * @param id 찾을 아이템의 id
+     * @return 아이템의 이미지를 담은 객체
+     */
     @Transactional(readOnly = true)
     public UploadFile findUploadFileItemId(Long id) {
         return fileRepository.findByItemId(id);
     }
 
+    /**
+     * 설정된 파일 저장 디렉토리와 파일이름을 결합해 전체 저장 경로 반환
+     * @param filename 파일 이름
+     * @return 전체 저장 경로 반환
+     */
     public String getFullPath(String filename) {
         return fileDir + filename;
     }
 
+    /**
+     * 사용자로부터 받은 MultipartFile을 서버에 저장하고, 저장된 파일에 대한 정보를 담은 UploadFile 객체를 반환
+     *
+     * @param multipartFile 사용자로부터 받은 파일
+     * @return 저장된 파일 정보를 담은 UploadFile 객체. 파일이 null이거나 비어 있을 경우 null을 반환
+     * @throws FileStorageException 파일 저장 중 발생하는 예외를 처리하기 위한 사용자 정의 예외
+     */
     public UploadFile storeFile(MultipartFile multipartFile) throws FileStorageException {
         try {
 

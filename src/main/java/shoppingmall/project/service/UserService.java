@@ -25,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
 
 
+
     @Transactional(readOnly = true)
     public User findByLoginId(String loginId) {
         Optional<User> optionalUser = userRepository.findByLoginId(loginId);
@@ -33,7 +34,11 @@ public class UserService {
 
     }
 
-    //회원 가입시 유저를 생성하고 저장하는 로직
+    /**
+     * 회원 가입시 사용자를 저장하는 로직
+     * @param userForm 회원 가입한 사용자의 정보
+     * @return 회원 가입한 사용자 객체
+     */
     public User createSaveUser(UserForm userForm) {
         Address address = new Address(userForm.getZipcode(), userForm.getCity(), userForm.getStreet());
 
@@ -47,6 +52,12 @@ public class UserService {
                 Tier.NORMAL);
         return userRepository.save(user);
     }
+
+    /**
+     * 회원가입시 아이디가 중복인지 검사해주는 로직
+     * @param loginId 검사할 아이디
+     * @return 중복시 true 중복 아닐시 false 반환
+     */
     public boolean existsId(String loginId) {
         return userRepository.existsByLoginId(loginId);
     }
@@ -70,25 +81,29 @@ public class UserService {
                 .orElse(null);
     }
 
+
     /**
-     * 구매시 구매한 item의 총 가격만큼 누적금액을 더하고 티어를 바꿔주는 로직
+     * 사용자가 결제한 금액을 누적해 티어를 바꿔주기 위한 로직
+     * @param user 결제한 사용자 객체
+     * @param totalPrice 사용자가 결제한 금액
      */
     @Transactional(readOnly = true)
-    public int addAccumulatedAmount(User user, int totalPrice) {
+    public void addAccumulatedAmount(User user, int totalPrice) {
         Optional<User> optionalUser = userRepository.findById(user.getId());
         User findUser = optionalUser.orElseThrow(null);
 
-        int resultPrice = findUser.addAmount(totalPrice);
+        findUser.addAmount(totalPrice);
 
         if (findUser.getAccumulatedAmount() <= 1000000) {
         findUser.upgradeTier(findUser.getAccumulatedAmount());
         }
-
-        return resultPrice;
     }
 
+
     /**
-     * 구매에서 할인에 필요한 user의 tier를 가져오기 위한 로직
+     * 결제할 때 사용자의 tier에 따라 할인을 위해 tier를 반환하는 로직
+     * @param userId 사용자의 id
+     * @return 사용자의 tier
      */
     @Transactional(readOnly = true)
     public Tier findUserTier(Long userId) {

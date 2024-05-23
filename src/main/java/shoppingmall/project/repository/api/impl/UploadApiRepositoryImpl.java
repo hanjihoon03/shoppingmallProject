@@ -23,26 +23,14 @@ public class UploadApiRepositoryImpl implements UploadApiRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
+    /**
+     *  아이템 삭제에 연계되어 삭제될 파일을 삭제합니다.
+     * @param itemId 삭제될 아이템의 id
+     */
     @Override
     public void deleteFromItemId(Long itemId) {
         queryFactory.delete(uploadFile)
                 .where(uploadFile.item.id.eq(itemId));
-    }
-    @Override
-    public List<BookAndFileDto> findAllBook() {
-        return queryFactory.select(Projections.bean(BookAndFileDto.class,
-                        uploadFile.item.id,
-                        uploadFile.item.name,
-                        uploadFile.item.price,
-                        uploadFile.item.quantity,
-                        uploadFile.uploadFileName,
-                        uploadFile.storeFileName,
-                        Expressions.as(book.isbn, "isbn"),
-                        Expressions.as(book.author, "author")))
-                .from(uploadFile)
-                .join(uploadFile.item,item)
-                .where(item.dtype.eq("Book"))
-                .fetch();
     }
 
 

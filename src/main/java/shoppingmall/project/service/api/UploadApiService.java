@@ -12,6 +12,10 @@ public class UploadApiService {
 
     private final UploadApiRepository uploadApiRepository;
 
+    /**
+     * 아이템을 삭제할 때 아이템과 연관된 이미지를 삭제하기 위한 로직
+     * @param itemId 삭제할 아이템의 아이디
+     */
     public void deleteUploadFileFromItemId(Long itemId) {
         uploadApiRepository.deleteFromItemId(itemId);
     }

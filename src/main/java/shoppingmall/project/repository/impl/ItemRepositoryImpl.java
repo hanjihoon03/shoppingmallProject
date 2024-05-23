@@ -328,6 +328,12 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .from(food)
                 .where(food.id.eq(id)).fetchOne();
     }
+
+    /**
+     * 유저의 아이디를 통해 유저가 장바구니에 담은 아이템을 반환합니다.
+     * @param userId 장바구니를 채운 유저의 아이디
+     * @return 유저가 담은 아이템을 list로 반환
+     */
     @Override
     public List<Item> findItemsByUserId(Long userId) {
 

@@ -25,6 +25,11 @@ public class PurchaseApiRepositoryImpl implements PurchaseApiRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
+    /**
+     * user가 구매를 완료한 구매 완료 정보를 반환합니다.
+     * @param id 구매 목록을 가진 user의 id
+     * @return 구매 정보들의 list
+     */
     @Override
     public List<UserPurchaseDto> purchaseList(Long id) {
         return queryFactory.select(Projections.constructor(UserPurchaseDto.class,
